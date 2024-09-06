@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './Alpha.css';
 import LetterPopup from './LetterPopup';
 
-// Define the Spanish alphabet with letters and pronunciations
 const spanishAlphabet = [
   { letter: 'A', pronunciation: 'ah' },
   { letter: 'B', pronunciation: 'beh' },
@@ -33,14 +32,27 @@ const spanishAlphabet = [
   { letter: 'Z', pronunciation: 'ZEH-tah' }
 ];
 
-function Alpha() {
-  const [showPopups, setShowPopups] = useState(Array(spanishAlphabet.length).fill(false));
-  const [markedLetters, setMarkedLetters] = useState(Array(spanishAlphabet.length).fill(false));
+const specialCharacters = [
+  { letter: 'á', pronunciation: 'a with acute' },
+  { letter: 'é', pronunciation: 'e with acute' },
+  { letter: 'í', pronunciation: 'i with acute' },
+  { letter: 'ó', pronunciation: 'o with acute' },
+  { letter: 'ú', pronunciation: 'u with acute' },
+  { letter: 'ü', pronunciation: 'u with diaeresis' }
+];
 
-  // Calculate progress
-  const totalLetters = spanishAlphabet.length;
+function Alpha() {
+  const [showPopups, setShowPopups] = useState(Array(spanishAlphabet.length + specialCharacters.length).fill(false));
+  const [markedLetters, setMarkedLetters] = useState(Array(spanishAlphabet.length + specialCharacters.length).fill(false));
+
+  const totalLetters = spanishAlphabet.length + specialCharacters.length;
   const learnedLetters = markedLetters.filter(Boolean).length;
   const progressPercentage = Math.round((learnedLetters / totalLetters) * 100);
+
+  const columns = 8;
+
+  const fullRows = spanishAlphabet.slice(0, Math.floor(spanishAlphabet.length / columns) * columns);
+  const leftovers = spanishAlphabet.slice(Math.floor(spanishAlphabet.length / columns) * columns);
 
   const handleLetterClick = (index) => {
     setShowPopups(prev => prev.map((_, i) => i === index));
@@ -63,8 +75,10 @@ function Alpha() {
           {progressPercentage}%
         </div>
       </div>
+
+      {/* Full Rows Grid */}
       <div className="letter-grid">
-        {spanishAlphabet.map((item, index) => (
+        {fullRows.map((item, index) => (
           <React.Fragment key={index}>
             <div
               className={`letter-card ${markedLetters[index] ? 'green' : ''}`}
@@ -79,6 +93,53 @@ function Alpha() {
                 pronunciation={item.pronunciation} 
                 onClose={handleClosePopup}
                 onMark={() => handleMarkLetter(index)}
+              />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+
+      {/* Leftover Items Grid */}
+      <div className="leftover-grid">
+        {leftovers.map((item, index) => (
+          <React.Fragment key={index + fullRows.length}>
+            <div
+              className={`letter-card ${markedLetters[index + fullRows.length] ? 'green' : ''}`}
+              onClick={() => handleLetterClick(index + fullRows.length)}
+            >
+              <div className="uppercase">{item.letter}</div>
+              <div className="lowercase">{item.letter.toLowerCase()}</div>
+            </div>
+            {showPopups[index + fullRows.length] && (
+              <LetterPopup 
+                letter={item.letter} 
+                pronunciation={item.pronunciation} 
+                onClose={handleClosePopup}
+                onMark={() => handleMarkLetter(index + fullRows.length)}
+              />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+
+      {/* Special Characters Section */}
+      <h2>Special Characters</h2>
+      <div className="special-characters-grid">
+        {specialCharacters.map((item, index) => (
+          <React.Fragment key={index + spanishAlphabet.length}>
+            <div
+              className={`letter-card ${markedLetters[index + spanishAlphabet.length] ? 'green' : ''}`}
+              onClick={() => handleLetterClick(index + spanishAlphabet.length)}
+            >
+              <div className="uppercase">{item.letter}</div>
+              <div className="lowercase">{item.letter.toLowerCase()}</div>
+            </div>
+            {showPopups[index + spanishAlphabet.length] && (
+              <LetterPopup 
+                letter={item.letter} 
+                pronunciation={item.pronunciation} 
+                onClose={handleClosePopup}
+                onMark={() => handleMarkLetter(index + spanishAlphabet.length)}
               />
             )}
           </React.Fragment>
