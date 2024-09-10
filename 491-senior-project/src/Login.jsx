@@ -1,72 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db } from './firebase';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
-  const [login, setLogin] = useState("");
-  const [logins, setLogins] = useState([]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const addLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    try {
-      const docRef = await addDoc(collection(db, "logins"), {
-        login: login,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
+    // Logic for handling login can be added here
+    console.log("Login attempted with:", { email, password });
   };
-
-  const fetchLogins = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "logins"));
-      const newData = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id
-      }));
-      setLogins(newData);
-    } catch (error) {
-      console.error("Error fetching documents: ", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchLogins();
-  }, []);
 
   return (
     <section className="login-container">
-      <div className="login">
-        <h1 className="header">LangLink</h1>
+      <div className="login-box">
+        {/* Add your website's logo here */}
+        <h1 className="logo">LangLink</h1>
         
-        <form onSubmit={addLogin} className="login-form">
-          <input
-            type="text"
-            placeholder="Please enter your name!"
-            value={login}
-            onChange={(e) => setLogin(e.target.value)}
-            className="input-field"
-          />
-          <button
-            type="submit"
-            className="btn"
-          >
-            Submit
-          </button>
+        <form onSubmit={handleLogin} className="login-form">
+          <div className="input-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn">Login</button>
         </form>
 
-        <div className="login-content">
-          {logins.length > 0 ? (
-            logins.map((loginItem, index) => (
-              <p key={index} className="login-item">
-                {loginItem.login}
-              </p>
-            ))
-          ) : (
-            <p>No logins available</p>
-          )}
+        <div className="login-links">
+          <Link to="#" className="forgot-password">Forgot password?</Link>
+          <Link to="/signup" className="signup-link">Create new account</Link>
         </div>
       </div>
     </section>
