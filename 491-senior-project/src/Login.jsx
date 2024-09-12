@@ -1,84 +1,56 @@
-import React, { useState, useEffect } from 'react'
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db } from './firebase';
-import './Login.css'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './Login.css';
 
 const Login = () => {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState(""); // New state for password
-  const [logins, setLogins] = useState([]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const addLogin = async (e) => {
-    e.preventDefault();  
-    
-    try {
-      const docRef = await addDoc(collection(db, "logins"), {
-        login: login,
-        password: password, // Add password to document
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
-
-  const fetchPost = async () => {
-    await getDocs(collection(db, "logins"))
-      .then((querySnapshot) => {              
-        const newData = querySnapshot.docs
-          .map((doc) => ({...doc.data(), id: doc.id }));
-        setLogins(newData);                
-        console.log(logins, newData);
-      });
-  }
- 
-  useEffect(() => {
-    fetchPost();
-  }, []);
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Logic for handling login can be added here
+    console.log("Login attempted with:", { email, password });
+  };
 
   return (
     <section className="login-container">
-      <h1 className="header">Welcome to Language Link!</h1>
-      <div className="login">
-        <div>
-          <input
-            type="text"
-            placeholder="Please enter your name!"
-            onChange={(e) => setLogin(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="password" // Password input type
-            placeholder="Please enter your password!"
-            onChange={(e) => setPassword(e.target.value)} // Update state with password
-          />
-        </div>
-        <div className="btn-container">
-          <button
-            type="submit"
-            className="btn"
-            onClick={addLogin}
-          >
-            Log In
-          </button>
-        </div>
-        <div className="forgot-password">
-          <a href="#">Forgot Password?</a>
-        </div>
-        <div className="create-account">
-          <button className="btn-create-account">Create New Account</button>
-        </div>
-        <div className="login-content">
-          {logins?.map((login, i) => (
-            <p key={i}>
-              {login.login}
-            </p>
-          ))}
+      <div className="login-box">
+        {/* Add your website's logo here */}
+        <h1 className="logo">LangLink</h1>
+        
+        <form onSubmit={handleLogin} className="login-form">
+          <div className="input-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn">Login</button>
+        </form>
+
+        <div className="login-links">
+          <Link to="#" className="forgot-password">Forgot password?</Link>
+          <Link to="/signup" className="signup-link">Create new account</Link>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default Login;
