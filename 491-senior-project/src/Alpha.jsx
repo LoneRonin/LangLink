@@ -32,7 +32,7 @@ const spanishAlphabet = [
   { letter: 'Z', pronunciation: 'ZEH-tah' }
 ];
 
-const specialCharacters = [
+const specialspanishCharacters = [
   { letter: 'á', pronunciation: 'a with acute' },
   { letter: 'é', pronunciation: 'e with acute' },
   { letter: 'í', pronunciation: 'i with acute' },
@@ -41,11 +41,61 @@ const specialCharacters = [
   { letter: 'ü', pronunciation: 'u with diaeresis' }
 ];
 
-function Alpha() {
-  const [showPopups, setShowPopups] = useState(Array(spanishAlphabet.length + specialCharacters.length).fill(false));
-  const [markedLetters, setMarkedLetters] = useState(Array(spanishAlphabet.length + specialCharacters.length).fill(false));
+const hiriganaAlphabet = [
+  { letter: 'あ', pronunciation: 'a' },
+  { letter: 'い', pronunciation: 'i' },
+  { letter: 'う', pronunciation: 'u' },
+  { letter: 'え', pronunciation: 'e' },
+  { letter: 'お', pronunciation: 'o' },
+  { letter: 'か', pronunciation: 'ka' },
+  { letter: 'き', pronunciation: 'ki' },
+  { letter: 'く', pronunciation: 'ku' },
+  { letter: 'け', pronunciation: 'ke' },
+  { letter: 'こ', pronunciation: 'ko' },
+  { letter: 'さ', pronunciation: 'sa' },
+  { letter: 'し', pronunciation: 'shi' },
+  { letter: 'す', pronunciation: 'su' },
+  { letter: 'せ', pronunciation: 'se' },
+  { letter: 'そ', pronunciation: 'so' },
+  { letter: 'た', pronunciation: 'ta' },
+  { letter: 'ち', pronunciation: 'chi' },
+  { letter: 'つ', pronunciation: 'tsu' },
+  { letter: 'て', pronunciation: 'te' },
+  { letter: 'と', pronunciation: 'to' },
+  { letter: 'な', pronunciation: 'na' },
+  { letter: 'に', pronunciation: 'ni' },
+  { letter: 'ぬ', pronunciation: 'nu' },
+  { letter: 'ね', pronunciation: 'ne' },
+  { letter: 'の', pronunciation: 'no' },
+  { letter: 'は', pronunciation: 'ha' },
+  { letter: 'ひ', pronunciation: 'hi' },
+  { letter: 'ふ', pronunciation: 'hu' },
+  { letter: 'へ', pronunciation: 'he' },
+  { letter: 'ほ', pronunciation: 'ho' },
+  { letter: 'ま', pronunciation: 'ma' },
+  { letter: 'み', pronunciation: 'mi' },
+  { letter: 'む', pronunciation: 'mu' },
+  { letter: 'め', pronunciation: 'me' },
+  { letter: 'も', pronunciation: 'mo' },
+  { letter: 'や', pronunciation: 'ya' },
+  { letter: 'ゆ', pronunciation: 'yu' },
+  { letter: 'よ', pronunciation: 'yo' },
+  { letter: 'ら', pronunciation: 'ra' },
+  { letter: 'り', pronunciation: 'ri' },
+  { letter: 'る', pronunciation: 'ru' },
+  { letter: 'れ', pronunciation: 're' },
+  { letter: 'ろ', pronunciation: 'ro' },
+  { letter: 'わ', pronunciation: 'wa' },
+  { letter: 'を', pronunciation: 'wo' },
+  { letter: 'ん', pronunciation: 'n' }
+];
 
-  const totalLetters = spanishAlphabet.length + specialCharacters.length;
+
+function Alpha() {
+  const [showPopups, setShowPopups] = useState(Array(spanishAlphabet.length + specialspanishCharacters.length).fill(false));
+  const [markedLetters, setMarkedLetters] = useState(Array(spanishAlphabet.length + specialspanishCharacters.length).fill(false));
+
+  const totalLetters = spanishAlphabet.length + specialspanishCharacters.length;
   const learnedLetters = markedLetters.filter(Boolean).length;
   const progressPercentage = Math.round((learnedLetters / totalLetters) * 100);
 
@@ -125,7 +175,7 @@ function Alpha() {
       {/* Special Characters Section */}
       <h2>Special Characters</h2>
       <div className="special-characters-grid">
-        {specialCharacters.map((item, index) => (
+        {specialspanishCharacters.map((item, index) => (
           <React.Fragment key={index + spanishAlphabet.length}>
             <div
               className={`letter-card ${markedLetters[index + spanishAlphabet.length] ? 'green' : ''}`}
