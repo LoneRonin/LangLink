@@ -1,0 +1,120 @@
+/* Base styles */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #242424;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  background-color: #333;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.nav-item a:hover {
+  text-decoration: underline;
+}
+
+/* Layout */
+.homepage-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #1e1e1e;
+  padding: 2rem;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding-top: 6rem; /* Adjust padding for navbar */
+}
+
+.homepage-content {
+  background-color: #2e2e2e;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 2.5em;
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Info Boxes */
+.info-boxes {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
+
+.info-box {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 30%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+
+.info-box:not(:last-child) {
+  margin-right: 1rem;
+}
+
+@media (max-width: 768px) {
+  .info-boxes {
+      flex-direction: column;
+  }
+
+  .info-box {
+      width: 100%;
+      margin-bottom: 1rem;
+  }
+
+  .info-box:last-child {
+      margin-bottom: 0;
+  }
+}
