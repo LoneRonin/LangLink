@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { auth } from '../firebase'; // Import Firebase auth
-import { createUserWithEmailAndPassword } from 'firebase/auth'; // Import createUserWithEmailAndPassword
+import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase'; // Ensure correct path to firebase.js
 import './Signup.css';
 
 const Signup = () => {
@@ -10,9 +12,8 @@ const Signup = () => {
     email: '',
     password: ''
   });
-
-  const [error, setError] = useState(null); // State to handle errors
-  const [success, setSuccess] = useState(null); // State to handle success
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,14 +22,26 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { firstName, lastName, email, password } = formData;
+
     try {
-      // Firebase function to create a new user
-      await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      setSuccess('Account created successfully!');
-      console.log('User signed up:', formData);
-    } catch (err) {
-      setError(err.message); // Handle errors
-      console.error('Error during sign-up:', err.message);
+      // Create user with email and password in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Store user data in Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        firstName,
+        lastName,
+        email,
+        language: '', // Language will be selected later
+      });
+
+      // Redirect to language selection page
+      navigate('/language-selection');
+    } catch (error) {
+      console.error("Error signing up:", error);
+      setError('Failed to create account. Please try again.');
     }
   };
 
@@ -36,6 +49,7 @@ const Signup = () => {
     <section className="signup-container">
       <div className="signup-content">
         <h1>Sign Up</h1>
+        {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="firstName">First Name</label>
@@ -81,8 +95,6 @@ const Signup = () => {
               required
             />
           </div>
-          {error && <p className="error-message">{error}</p>} {/* Display error message */}
-          {success && <p className="success-message">{success}</p>} {/* Display success message */}
           <button type="submit" className="continue-button">Continue</button>
         </form>
       </div>

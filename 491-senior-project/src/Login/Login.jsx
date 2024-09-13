@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { auth } from '../firebase'; // Import auth
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Firebase sign-in
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Login.css';
 
 const Login = () => {
@@ -8,6 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false); // State for login success
   const [error, setError] = useState(null); // State for login errors
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,6 +19,7 @@ const Login = () => {
       setLoginSuccess(true); // Set success state
       setError(null); // Clear any previous error
       console.log("Login successful:", { email });
+      navigate('/homepage'); // Redirect to homepage after successful login
     } catch (err) {
       setLoginSuccess(false); // Reset success state
       setError("Invalid email or password"); // Set error message
