@@ -1,0 +1,140 @@
+/* Layout for login container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #242424;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.login-box {
+  background-color: #1e1e1e;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  text-align: left;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.btn {
+  background-color: #4267B2;
+  color: white;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.btn:hover {
+  background-color: #365899;
+}
+
+.login-links {
+  margin-top: 1.5rem;
+}
+
+.login-links a {
+  display: block;
+  color: #4267B2;
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+
+.login-links a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .login-box {
+    padding: 1rem;
+  }
+  
+  .btn {
+    padding: 0.75rem;
+  }
+}
+/* Success message style */
+.success-message {
+  color: #4CAF50; /* Green color for success */
+  font-size: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Error message style */
+.error-message {
+  color: #ff4d4d; /* Red for errors */
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* Add success styles to login container */
+.login-container.login-success .login-box {
+  background-color: #2e7d32; /* Change background color on success */
+  border: 2px solid #4CAF50; /* Add green border */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* You can add animation or different styles when login is successful */
+.login-container.login-success h1 {
+  color: #ffffff; /* Ensure text remains readable */
+}
+
+.login-container.login-success input {
+  background-color: #ffffff; /* Change input background */
+  color: #2e7d32; /* Change text color */
+  border: 1px solid #4CAF50; /* Add green border */
+}
+
+.login-container.login-success .btn {
+  background-color: #4CAF50; /* Success button color */
+}
+
+.login-container.login-success .btn:hover {
+  background-color: #388e3c;
+}

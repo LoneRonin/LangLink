@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { auth } from '../firebase'; // Import Firebase auth
+import { createUserWithEmailAndPassword } from 'firebase/auth'; // Import createUserWithEmailAndPassword
 import './Signup.css';
 
 const Signup = () => {
@@ -9,15 +11,25 @@ const Signup = () => {
     password: ''
   });
 
+  const [error, setError] = useState(null); // State to handle errors
+  const [success, setSuccess] = useState(null); // State to handle success
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add logic for handling signup here
-    console.log('Form submitted:', formData);
+    try {
+      // Firebase function to create a new user
+      await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      setSuccess('Account created successfully!');
+      console.log('User signed up:', formData);
+    } catch (err) {
+      setError(err.message); // Handle errors
+      console.error('Error during sign-up:', err.message);
+    }
   };
 
   return (
@@ -69,6 +81,8 @@ const Signup = () => {
               required
             />
           </div>
+          {error && <p className="error-message">{error}</p>} {/* Display error message */}
+          {success && <p className="success-message">{success}</p>} {/* Display success message */}
           <button type="submit" className="continue-button">Continue</button>
         </form>
       </div>

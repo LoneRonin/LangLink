@@ -117,3 +117,14 @@ input:focus {
         font-size: 1rem;
     }
 }
+.error-message {
+    color: #ff4d4d; /* Red for error */
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .success-message {
+    color: #4CAF50; /* Green for success */
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }

@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "firebase": "^10.11.1"
+    "firebase": "^10.11.1",
+    "react-router-dom": "^6.26.2"
   },
   "name": "langlink",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

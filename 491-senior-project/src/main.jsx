@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Login from './Login.jsx';
-import Homepage from './Homepage.jsx';
-import Signup from './Signup.jsx'; // Import the new Signup page
+import Login from './Login/Login.jsx';
+import Homepage from './Homepage/Homepage.jsx';
+import Signup from './Signup/Signup.jsx'; // Import the new Signup page
 import './index.css';
 
 const App = () => (
   <Router>
     <nav className="navbar">
       <ul className="nav-list">
-        <li className="nav-item"><Link to="/">Login</Link></li>
+        <li className="nav-item"><Link to="/">Log In</Link></li>
         <li className="nav-item"><Link to="/homepage">Homepage</Link></li>
         <li className="nav-item"><Link to="/signup">Sign Up</Link></li> {/* Added Sign Up link */}
       </ul>
