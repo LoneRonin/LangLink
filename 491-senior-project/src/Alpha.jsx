@@ -32,7 +32,7 @@ const spanishAlphabet = [
   { letter: 'Z', pronunciation: 'ZEH-tah' }
 ];
 
-const specialspanishCharacters = [
+const specialSpanishCharacters = [
   { letter: 'á', pronunciation: 'a with acute' },
   { letter: 'é', pronunciation: 'e with acute' },
   { letter: 'í', pronunciation: 'i with acute' },
@@ -41,7 +41,7 @@ const specialspanishCharacters = [
   { letter: 'ü', pronunciation: 'u with diaeresis' }
 ];
 
-const hiriganaAlphabet = [
+const hiraganaAlphabet = [
   { letter: 'あ', pronunciation: 'a' },
   { letter: 'い', pronunciation: 'i' },
   { letter: 'う', pronunciation: 'u' },
@@ -90,52 +90,103 @@ const hiriganaAlphabet = [
   { letter: 'ん', pronunciation: 'n' }
 ];
 
+const specialHiraganaAlphabet = [
+  { letter: 'が', pronunciation: 'ga' },
+  { letter: 'ぎ', pronunciation: 'gi' },
+  { letter: 'ぐ', pronunciation: 'gu' },
+  { letter: 'げ', pronunciation: 'ge' },
+  { letter: 'ご', pronunciation: 'go' },
+  { letter: 'ざ', pronunciation: 'za' },
+  { letter: 'じ', pronunciation: 'zi' },
+  { letter: 'ず', pronunciation: 'zu' },
+  { letter: 'ぜ', pronunciation: 'ze' },
+  { letter: 'ぞ', pronunciation: 'zo' },
+  { letter: 'だ', pronunciation: 'da' },
+  { letter: 'ぢ', pronunciation: 'di' },
+  { letter: 'づ', pronunciation: 'du' },
+  { letter: 'で', pronunciation: 'de' },
+  { letter: 'ど', pronunciation: 'do' },
+  { letter: 'ば', pronunciation: 'ba' },
+  { letter: 'び', pronunciation: 'bi' },
+  { letter: 'ぶ', pronunciation: 'bu' },
+  { letter: 'べ', pronunciation: 'be' },
+  { letter: 'ぼ', pronunciation: 'bo' },
+  { letter: 'ぱ', pronunciation: 'pa' },
+  { letter: 'ぴ', pronunciation: 'pi' },
+  { letter: 'ぷ', pronunciation: 'pu' },
+  { letter: 'ぺ', pronunciation: 'pe' },
+  { letter: 'ぽ', pronunciation: 'po' }
+];
 
-function Alpha() {
-  const [showPopups, setShowPopups] = useState(Array(spanishAlphabet.length + specialspanishCharacters.length).fill(false));
-  const [markedLetters, setMarkedLetters] = useState(Array(spanishAlphabet.length + specialspanishCharacters.length).fill(false));
+function Alpha({ language }) {
+  // Determine the alphabet and special characters based on the selected language
+  const alphabet = language === 'es' ? spanishAlphabet : hiraganaAlphabet;
+  const specialCharacters = language === 'es' ? specialSpanishCharacters : specialHiraganaAlphabet;
 
-  const totalLetters = spanishAlphabet.length + specialspanishCharacters.length;
-  const learnedLetters = markedLetters.filter(Boolean).length;
+  // State to manage popups
+  const [showPopups, setShowPopups] = useState(Array(alphabet.length + specialCharacters.length).fill(false));
+
+  // State to manage marked letters for each language separately
+  const [markedLetters, setMarkedLetters] = useState({
+    es: Array(spanishAlphabet.length + specialSpanishCharacters.length).fill(false),
+    jp: Array(hiraganaAlphabet.length + specialHiraganaAlphabet.length).fill(false),
+  });
+
+  // Calculate progress based on the current language
+  const totalLetters = alphabet.length + specialCharacters.length;
+  const learnedLetters = markedLetters[language].filter(Boolean).length;
   const progressPercentage = Math.round((learnedLetters / totalLetters) * 100);
 
   const columns = 8;
 
-  const fullRows = spanishAlphabet.slice(0, Math.floor(spanishAlphabet.length / columns) * columns);
-  const leftovers = spanishAlphabet.slice(Math.floor(spanishAlphabet.length / columns) * columns);
+  // Full rows and leftovers for the main alphabet
+  const fullRows = alphabet.slice(0, Math.floor(alphabet.length / columns) * columns);
+  const leftovers = alphabet.slice(Math.floor(alphabet.length / columns) * columns);
 
+  // Full rows and leftovers for the special characters
+  const specialFullRows = specialCharacters.slice(0, Math.floor(specialCharacters.length / columns) * columns);
+  const specialLeftovers = specialCharacters.slice(Math.floor(specialCharacters.length / columns) * columns);
+
+  // Handle letter click to show popup
   const handleLetterClick = (index) => {
     setShowPopups(prev => prev.map((_, i) => i === index));
   };
 
+  // Close popup
   const handleClosePopup = () => {
     setShowPopups(prev => prev.map(() => false));
   };
 
+  // Mark letter as learned for the current language
   const handleMarkLetter = (index) => {
-    setMarkedLetters(prev => [...prev.slice(0, index), true, ...prev.slice(index + 1)]);
+    setMarkedLetters(prev => ({
+      ...prev,
+      [language]: [...prev[language].slice(0, index), true, ...prev[language].slice(index + 1)],
+    }));
     handleClosePopup();
   };
 
   return (
     <div className="alpha-container">
-      <h1>Learn Spanish Alphabet</h1>
+      <h1>{language === 'es' ? 'Learn Spanish Alphabet' : 'Learn Japanese Hiragana'}</h1>
+      
+      {/* Progress Bar */}
       <div className="progress-bar-container">
         <div className="progress-bar" style={{ width: `${progressPercentage}%` }}>
           {progressPercentage}%
         </div>
       </div>
 
-      {/* Full Rows Grid */}
+      {/* Full Rows Grid for Main Alphabet */}
       <div className="letter-grid">
         {fullRows.map((item, index) => (
           <React.Fragment key={index}>
             <div
-              className={`letter-card ${markedLetters[index] ? 'green' : ''}`}
+              className={`letter-card ${markedLetters[language][index] ? 'green' : ''}`}
               onClick={() => handleLetterClick(index)}
             >
               <div className="uppercase">{item.letter}</div>
-              <div className="lowercase">{item.letter.toLowerCase()}</div>
+              <div className="lowercase">{item.pronunciation}</div>
             </div>
             {showPopups[index] && (
               <LetterPopup 
@@ -149,16 +200,16 @@ function Alpha() {
         ))}
       </div>
 
-      {/* Leftover Items Grid */}
+      {/* Leftover Items Grid for Main Alphabet */}
       <div className="leftover-grid">
         {leftovers.map((item, index) => (
           <React.Fragment key={index + fullRows.length}>
             <div
-              className={`letter-card ${markedLetters[index + fullRows.length] ? 'green' : ''}`}
+              className={`letter-card ${markedLetters[language][index + fullRows.length] ? 'green' : ''}`}
               onClick={() => handleLetterClick(index + fullRows.length)}
             >
               <div className="uppercase">{item.letter}</div>
-              <div className="lowercase">{item.letter.toLowerCase()}</div>
+              <div className="lowercase">{item.pronunciation}</div>
             </div>
             {showPopups[index + fullRows.length] && (
               <LetterPopup 
@@ -175,21 +226,45 @@ function Alpha() {
       {/* Special Characters Section */}
       <h2>Special Characters</h2>
       <div className="special-characters-grid">
-        {specialspanishCharacters.map((item, index) => (
-          <React.Fragment key={index + spanishAlphabet.length}>
+        {/* Full Rows for Special Characters */}
+        {specialFullRows.map((item, index) => (
+          <React.Fragment key={index + alphabet.length}>
             <div
-              className={`letter-card ${markedLetters[index + spanishAlphabet.length] ? 'green' : ''}`}
-              onClick={() => handleLetterClick(index + spanishAlphabet.length)}
+              className={`letter-card ${markedLetters[language][index + alphabet.length] ? 'green' : ''}`}
+              onClick={() => handleLetterClick(index + alphabet.length)}
             >
               <div className="uppercase">{item.letter}</div>
-              <div className="lowercase">{item.letter.toLowerCase()}</div>
+              <div className="lowercase">{item.pronunciation}</div>
             </div>
-            {showPopups[index + spanishAlphabet.length] && (
+            {showPopups[index + alphabet.length] && (
               <LetterPopup 
                 letter={item.letter} 
                 pronunciation={item.pronunciation} 
                 onClose={handleClosePopup}
-                onMark={() => handleMarkLetter(index + spanishAlphabet.length)}
+                onMark={() => handleMarkLetter(index + alphabet.length)}
+              />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+
+      {/* Leftover Items Grid for Special Characters */}
+      <div className="leftover-grid">
+        {specialLeftovers.map((item, index) => (
+          <React.Fragment key={index + alphabet.length + specialFullRows.length}>
+            <div
+              className={`letter-card ${markedLetters[language][index + alphabet.length + specialFullRows.length] ? 'green' : ''}`}
+              onClick={() => handleLetterClick(index + alphabet.length + specialFullRows.length)}
+            >
+              <div className="uppercase">{item.letter}</div>
+              <div className="lowercase">{item.pronunciation}</div>
+            </div>
+            {showPopups[index + alphabet.length + specialFullRows.length] && (
+              <LetterPopup 
+                letter={item.letter} 
+                pronunciation={item.pronunciation} 
+                onClose={handleClosePopup}
+                onMark={() => handleMarkLetter(index + alphabet.length + specialFullRows.length)}
               />
             )}
           </React.Fragment>

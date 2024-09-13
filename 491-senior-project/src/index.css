@@ -55,28 +55,38 @@ button:focus-visible {
 }
 
 /* Navigation styles */
-nav {
-  margin-bottom: 1rem;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #333;
 }
 
-nav ul {
+.nav-list {
   list-style-type: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
   padding: 0;
 }
 
-nav li {
-  display: inline;
-  margin: 0 1rem;
-}
-
-nav a {
-  color: #646cff;
+.nav-item a {
+  color: white;
   text-decoration: none;
-  font-weight: bold;
 }
 
-nav a:hover {
-  text-decoration: underline;
+.language-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.flag-icon {
+  width: 30px;
+  height: 20px;
+  border-radius: 4px;
 }
 
 /* Additional page styles */

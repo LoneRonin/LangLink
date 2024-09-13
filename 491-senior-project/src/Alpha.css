@@ -1,7 +1,15 @@
+h1 {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
 .alpha-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 80px;
 }
 
 .letter-grid {
@@ -75,7 +83,8 @@
 
 /* Special Character Grid */
 .special-characters-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
   justify-content: center;
   justify-content: space-evenly;
   gap: 10px;
@@ -83,5 +92,16 @@
 }
 
 .special-characters-grid .letter-card {
+  flex: 0 1 calc(12.5% - 10px);
+}
+
+.special-characters-grid .leftover-grid {
+  display: flex;
+  justify-content: center;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+
+.special-characters-grid .leftover-grid .letter-card {
   flex: 0 1 calc(12.5% - 10px);
 }
