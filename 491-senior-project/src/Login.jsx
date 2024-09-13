@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Login.css';
+import React, { useState, useEffect } from 'react'
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { db } from './firebase';
+import './Login.css'
 
 const Login = () => {
   const [email, setEmail] = useState("");
