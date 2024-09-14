@@ -43,7 +43,7 @@
     width: 150px; /* Adjust size as needed */
     height: 150px; /* Adjust size as needed */
     object-fit: cover;
-    border: 2px solid #4CAF50; /* Optional border color */
+    border: 2px solid #0f0f0f; /* Optional border color */
     margin-bottom: 1rem;
   }
   

@@ -4,6 +4,7 @@ import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase'; // Ensure correct path to firebase.js
 import './Profile.css'; // Optional for styling
+import DefaultProf from '../ProfilePics/defaultprofile.png';
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -54,7 +55,7 @@ const Profile = () => {
     <section className="profile-container">
       <div className="profile-content">
         <div className="profile-header">
-          <img src={userData.profilePicture || '/default-profile.png'} alt="Profile" className="profile-picture" />
+          <img src={userData.profilePicture || DefaultProf} alt="Profile" className="profile-picture" />
           <h1>{`${userData.firstName || 'User'} ${userData.lastName || ''}'s Profile`}</h1>
         </div>
         <div className="profile-details">
