@@ -34,8 +34,8 @@ const LanguageSelection = () => {
           aboutMe: formData.aboutMe
         });
         
-        // Redirect to profile page or another page after successful submission
-        navigate('/profile'); // Or another page you want to navigate to
+        // Redirect to the profile page after successful submission
+        navigate('/profile', { state: { formData } });
       } catch (error) {
         console.error('Error updating profile:', error);
       }
@@ -45,7 +45,7 @@ const LanguageSelection = () => {
   return (
     <section className="language-selection-container">
       <div className="language-selection-content">
-        <h1>Language Preferences</h1>
+        <h1>Profile Setup</h1>
         <form onSubmit={handleSubmit}>
           {/* Language Selection */}
           <div className="input-group">

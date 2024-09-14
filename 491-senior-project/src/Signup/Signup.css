@@ -32,6 +32,7 @@ body {
     width: 100vw;
     background-color: #1e1e1e;
     box-sizing: border-box;
+    margin-top: 40px;
 }
 
 .signup-content {
