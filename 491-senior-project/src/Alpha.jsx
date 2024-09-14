@@ -42,80 +42,80 @@ const specialSpanishCharacters = [
 ];
 
 const hiraganaAlphabet = [
-  { letter: 'あ', pronunciation: 'a' },
-  { letter: 'い', pronunciation: 'i' },
-  { letter: 'う', pronunciation: 'u' },
-  { letter: 'え', pronunciation: 'e' },
-  { letter: 'お', pronunciation: 'o' },
-  { letter: 'か', pronunciation: 'ka' },
-  { letter: 'き', pronunciation: 'ki' },
-  { letter: 'く', pronunciation: 'ku' },
-  { letter: 'け', pronunciation: 'ke' },
-  { letter: 'こ', pronunciation: 'ko' },
-  { letter: 'さ', pronunciation: 'sa' },
-  { letter: 'し', pronunciation: 'shi' },
-  { letter: 'す', pronunciation: 'su' },
-  { letter: 'せ', pronunciation: 'se' },
-  { letter: 'そ', pronunciation: 'so' },
-  { letter: 'た', pronunciation: 'ta' },
-  { letter: 'ち', pronunciation: 'chi' },
-  { letter: 'つ', pronunciation: 'tsu' },
-  { letter: 'て', pronunciation: 'te' },
-  { letter: 'と', pronunciation: 'to' },
-  { letter: 'な', pronunciation: 'na' },
-  { letter: 'に', pronunciation: 'ni' },
-  { letter: 'ぬ', pronunciation: 'nu' },
-  { letter: 'ね', pronunciation: 'ne' },
-  { letter: 'の', pronunciation: 'no' },
-  { letter: 'は', pronunciation: 'ha' },
-  { letter: 'ひ', pronunciation: 'hi' },
-  { letter: 'ふ', pronunciation: 'hu' },
-  { letter: 'へ', pronunciation: 'he' },
-  { letter: 'ほ', pronunciation: 'ho' },
-  { letter: 'ま', pronunciation: 'ma' },
-  { letter: 'み', pronunciation: 'mi' },
-  { letter: 'む', pronunciation: 'mu' },
-  { letter: 'め', pronunciation: 'me' },
-  { letter: 'も', pronunciation: 'mo' },
-  { letter: 'や', pronunciation: 'ya' },
-  { letter: 'ゆ', pronunciation: 'yu' },
-  { letter: 'よ', pronunciation: 'yo' },
-  { letter: 'ら', pronunciation: 'ra' },
-  { letter: 'り', pronunciation: 'ri' },
-  { letter: 'る', pronunciation: 'ru' },
-  { letter: 'れ', pronunciation: 're' },
-  { letter: 'ろ', pronunciation: 'ro' },
-  { letter: 'わ', pronunciation: 'wa' },
-  { letter: 'を', pronunciation: 'wo' },
-  { letter: 'ん', pronunciation: 'n' }
+  { letter: 'あ', pronunciation: 'a', romanji: 'a' },
+  { letter: 'い', pronunciation: 'i', romanji: 'i' },
+  { letter: 'う', pronunciation: 'u', romanji: 'u' },
+  { letter: 'え', pronunciation: 'e', romanji: 'e' },
+  { letter: 'お', pronunciation: 'o', romanji: 'o' },
+  { letter: 'か', pronunciation: 'ka', romanji: 'ka' },
+  { letter: 'き', pronunciation: 'ki', romanji: 'ki' },
+  { letter: 'く', pronunciation: 'ku', romanji: 'ku' },
+  { letter: 'け', pronunciation: 'ke', romanji: 'ke' },
+  { letter: 'こ', pronunciation: 'ko', romanji: 'ko' },
+  { letter: 'さ', pronunciation: 'sa', romanji: 'sa' },
+  { letter: 'し', pronunciation: 'shi', romanji: 'shi' },
+  { letter: 'す', pronunciation: 'su', romanji: 'su' },
+  { letter: 'せ', pronunciation: 'se', romanji: 'se' },
+  { letter: 'そ', pronunciation: 'so', romanji: 'so' },
+  { letter: 'た', pronunciation: 'ta', romanji: 'ta' },
+  { letter: 'ち', pronunciation: 'chi', romanji: 'chi' },
+  { letter: 'つ', pronunciation: 'tsu', romanji: 'tsu' },
+  { letter: 'て', pronunciation: 'te', romanji: 'te' },
+  { letter: 'と', pronunciation: 'to', romanji: 'to' },
+  { letter: 'な', pronunciation: 'na', romanji: 'na' },
+  { letter: 'に', pronunciation: 'ni', romanji: 'ni' },
+  { letter: 'ぬ', pronunciation: 'nu', romanji: 'nu' },
+  { letter: 'ね', pronunciation: 'ne', romanji: 'ne' },
+  { letter: 'の', pronunciation: 'no', romanji: 'no' },
+  { letter: 'は', pronunciation: 'ha', romanji: 'ha' },
+  { letter: 'ひ', pronunciation: 'hi', romanji: 'hi' },
+  { letter: 'ふ', pronunciation: 'hu', romanji: 'hu' },
+  { letter: 'へ', pronunciation: 'he', romanji: 'he' },
+  { letter: 'ほ', pronunciation: 'ho', romanji: 'ho' },
+  { letter: 'ま', pronunciation: 'ma', romanji: 'ma' },
+  { letter: 'み', pronunciation: 'mi', romanji: 'mi' },
+  { letter: 'む', pronunciation: 'mu', romanji: 'mu' },
+  { letter: 'め', pronunciation: 'me', romanji: 'me' },
+  { letter: 'も', pronunciation: 'mo', romanji: 'mo' },
+  { letter: 'や', pronunciation: 'ya', romanji: 'ya' },
+  { letter: 'ゆ', pronunciation: 'yu', romanji: 'yu' },
+  { letter: 'よ', pronunciation: 'yo', romanji: 'yo' },
+  { letter: 'ら', pronunciation: 'ra', romanji: 'ra' },
+  { letter: 'り', pronunciation: 'ri', romanji: 'ri' },
+  { letter: 'る', pronunciation: 'ru', romanji: 'ru' },
+  { letter: 'れ', pronunciation: 're', romanji: 're' },
+  { letter: 'ろ', pronunciation: 'ro', romanji: 'ro' },
+  { letter: 'わ', pronunciation: 'wa', romanji: 'wa' },
+  { letter: 'を', pronunciation: 'wo', romanji: 'wo' },
+  { letter: 'ん', pronunciation: 'n', romanji: 'n' }
 ];
 
 const specialHiraganaAlphabet = [
-  { letter: 'が', pronunciation: 'ga' },
-  { letter: 'ぎ', pronunciation: 'gi' },
-  { letter: 'ぐ', pronunciation: 'gu' },
-  { letter: 'げ', pronunciation: 'ge' },
-  { letter: 'ご', pronunciation: 'go' },
-  { letter: 'ざ', pronunciation: 'za' },
-  { letter: 'じ', pronunciation: 'zi' },
-  { letter: 'ず', pronunciation: 'zu' },
-  { letter: 'ぜ', pronunciation: 'ze' },
-  { letter: 'ぞ', pronunciation: 'zo' },
-  { letter: 'だ', pronunciation: 'da' },
-  { letter: 'ぢ', pronunciation: 'di' },
-  { letter: 'づ', pronunciation: 'du' },
-  { letter: 'で', pronunciation: 'de' },
-  { letter: 'ど', pronunciation: 'do' },
-  { letter: 'ば', pronunciation: 'ba' },
-  { letter: 'び', pronunciation: 'bi' },
-  { letter: 'ぶ', pronunciation: 'bu' },
-  { letter: 'べ', pronunciation: 'be' },
-  { letter: 'ぼ', pronunciation: 'bo' },
-  { letter: 'ぱ', pronunciation: 'pa' },
-  { letter: 'ぴ', pronunciation: 'pi' },
-  { letter: 'ぷ', pronunciation: 'pu' },
-  { letter: 'ぺ', pronunciation: 'pe' },
-  { letter: 'ぽ', pronunciation: 'po' }
+  { letter: 'が', pronunciation: 'ga', romanji: 'ga' },
+  { letter: 'ぎ', pronunciation: 'gi', romanji: 'gi' },
+  { letter: 'ぐ', pronunciation: 'gu', romanji: 'gu' },
+  { letter: 'げ', pronunciation: 'ge', romanji: 'ge' },
+  { letter: 'ご', pronunciation: 'go', romanji: 'go' },
+  { letter: 'ざ', pronunciation: 'za', romanji: 'za' },
+  { letter: 'じ', pronunciation: 'zi', romanji: 'zi' },
+  { letter: 'ず', pronunciation: 'zu', romanji: 'zu' },
+  { letter: 'ぜ', pronunciation: 'ze', romanji: 'ze' },
+  { letter: 'ぞ', pronunciation: 'zo', romanji: 'zo' },
+  { letter: 'だ', pronunciation: 'da', romanji: 'da' },
+  { letter: 'ぢ', pronunciation: 'di', romanji: 'di' },
+  { letter: 'づ', pronunciation: 'du', romanji: 'du' },
+  { letter: 'で', pronunciation: 'de', romanji: 'de' },
+  { letter: 'ど', pronunciation: 'do', romanji: 'do' },
+  { letter: 'ば', pronunciation: 'ba', romanji: 'ba' },
+  { letter: 'び', pronunciation: 'bi', romanji: 'bi' },
+  { letter: 'ぶ', pronunciation: 'bu', romanji: 'bu' },
+  { letter: 'べ', pronunciation: 'be', romanji: 'be' },
+  { letter: 'ぼ', pronunciation: 'bo', romanji: 'bo' },
+  { letter: 'ぱ', pronunciation: 'pa', romanji: 'pa' },
+  { letter: 'ぴ', pronunciation: 'pi', romanji: 'pi' },
+  { letter: 'ぷ', pronunciation: 'pu', romanji: 'pu' },
+  { letter: 'ぺ', pronunciation: 'pe', romanji: 'pe' },
+  { letter: 'ぽ', pronunciation: 'po', romanji: 'po' }
 ];
 
 function Alpha({ language }) {
@@ -186,12 +186,12 @@ function Alpha({ language }) {
               onClick={() => handleLetterClick(index)}
             >
               <div className="uppercase">{item.letter}</div>
-              <div className="lowercase">{item.pronunciation}</div>
+              <div className="lowercase">{item.romanji}</div>
             </div>
             {showPopups[index] && (
               <LetterPopup 
                 letter={item.letter} 
-                pronunciation={item.pronunciation} 
+                pronunciation={item.pronunciation}
                 onClose={handleClosePopup}
                 onMark={() => handleMarkLetter(index)}
               />
@@ -209,7 +209,7 @@ function Alpha({ language }) {
               onClick={() => handleLetterClick(index + fullRows.length)}
             >
               <div className="uppercase">{item.letter}</div>
-              <div className="lowercase">{item.pronunciation}</div>
+              <div className="lowercase">{item.romanji}</div>
             </div>
             {showPopups[index + fullRows.length] && (
               <LetterPopup 
@@ -234,7 +234,7 @@ function Alpha({ language }) {
               onClick={() => handleLetterClick(index + alphabet.length)}
             >
               <div className="uppercase">{item.letter}</div>
-              <div className="lowercase">{item.pronunciation}</div>
+              <div className="lowercase">{item.romanji}</div>
             </div>
             {showPopups[index + alphabet.length] && (
               <LetterPopup 
@@ -257,7 +257,7 @@ function Alpha({ language }) {
               onClick={() => handleLetterClick(index + alphabet.length + specialFullRows.length)}
             >
               <div className="uppercase">{item.letter}</div>
-              <div className="lowercase">{item.pronunciation}</div>
+              <div className="lowercase">{item.romanji}</div>
             </div>
             {showPopups[index + alphabet.length + specialFullRows.length] && (
               <LetterPopup 
