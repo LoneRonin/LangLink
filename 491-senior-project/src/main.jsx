@@ -37,21 +37,26 @@ const App = () => {
   };
   return (
   <Router>
-    <nav className="navbar">
-      <img src={BluLogo} alt="LangLink Logo" className="logo-icon"/>
-      <ul className="nav-list">
-        <li className="nav-item"><Link to="/">Log In</Link></li>
-        <li className="nav-item"><Link to="/homepage">Homepage</Link></li>
-        <li className="nav-item"><Link to="/signup">Sign Up</Link></li>
-        <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
-        <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
-        <li className="nav-item"><Link to="/profile">Profile</Link></li>
-      </ul>
-      {/* Language button on the far right */}
-      <button className="language-button" onClick={toggleLanguage}>
-          <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
-        </button>
-    </nav>
+<nav className="navbar">
+  {/* Wrap the logo in a Link component */}
+  <Link to="/homepage">
+    <img src={BluLogo} alt="LangLink Logo" className="logo-icon" />
+  </Link>
+  
+  <ul className="nav-list">
+    <li className="nav-item"><Link to="/">Log In</Link></li>
+    <li className="nav-item"><Link to="/homepage">Homepage</Link></li>
+    <li className="nav-item"><Link to="/signup">Sign Up</Link></li>
+    <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
+    <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
+    <li className="nav-item"><Link to="/profile">Profile</Link></li>
+  </ul>
+  
+  {/* Language button on the far right */}
+  <button className="language-button" onClick={toggleLanguage}>
+    <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
+  </button>
+</nav>
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/homepage" element={<Homepage />} />
