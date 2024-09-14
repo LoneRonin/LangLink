@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase'; // Ensure correct path to firebase.js
 import './Signup.css';
 
 const Signup = () => {
@@ -8,22 +12,44 @@ const Signup = () => {
     email: '',
     password: ''
   });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add logic for handling signup here
-    console.log('Form submitted:', formData);
+    const { firstName, lastName, email, password } = formData;
+
+    try {
+      // Create user with email and password in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Store user data in Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        firstName,
+        lastName,
+        email,
+        language: '', // Language will be selected later
+      });
+
+      // Redirect to language selection page
+      navigate('/language-selection');
+    } catch (error) {
+      console.error("Error signing up:", error);
+      setError('Failed to create account. Please try again.');
+    }
   };
 
   return (
     <section className="signup-container">
       <div className="signup-content">
         <h1>Sign Up</h1>
+        {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="firstName">First Name</label>
