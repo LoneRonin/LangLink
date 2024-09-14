@@ -6,10 +6,7 @@ import Homepage from './Homepage/Homepage.jsx';
 import Signup from './Signup/Signup.jsx';
 import LanguageSelection from './LanguageSelection/LanguageSelection.jsx';
 import Profile from './Profile/Profile.jsx'; // Import the Profile page
-import Login from './Login.jsx';
-import Alpha from './Alpha.jsx';
-import Homepage from './Homepage.jsx';
-import Signup from './Signup.jsx';
+import Alpha from './Alphabet/Alpha.jsx';
 import './index.css';
 
 // Import flag images (you can replace these with actual paths or URLs)
@@ -24,7 +21,7 @@ const App = () => {
   const toggleLanguage = () => {
     setLanguage((prevLang) => (prevLang === 'es' ? 'jp' : 'es'));
   };
-
+  
   // Get the flag based on the current language
   const getFlag = () => {
     switch (language) {
@@ -36,49 +33,32 @@ const App = () => {
         return esFlag;
     }
   };
-
   return (
-    <Router>
-      <nav className="navbar">
-        <ul className="nav-list">
-          <li className="nav-item"><Link to="/">Login</Link></li>
-          <li className="nav-item"><Link to="/homepage">Homepage</Link></li>
-          <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
-          <li className="nav-item"><Link to="/signup">Sign Up</Link></li>
-        </ul>
-        {/* Language button on the far right */}
-        <button className="language-button" onClick={toggleLanguage}>
-          <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
-        </button>
-      </nav>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/homepage" element={<Homepage />} />
-        <Route path="/alpha" element={<Alpha language={language} />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </Router>
-  );
-};
-const App = () => (
   <Router>
     <nav className="navbar">
       <ul className="nav-list">
         <li className="nav-item"><Link to="/">Log In</Link></li>
         <li className="nav-item"><Link to="/homepage">Homepage</Link></li>
         <li className="nav-item"><Link to="/signup">Sign Up</Link></li>
+        <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
         <li className="nav-item"><Link to="/profile">Profile</Link></li>
       </ul>
+      {/* Language button on the far right */}
+      <button className="language-button" onClick={toggleLanguage}>
+          <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
+        </button>
     </nav>
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/homepage" element={<Homepage />} />
+      <Route path="/alpha" element={<Alpha language={language} />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/language-selection" element={<LanguageSelection />} />
       <Route path="/profile" element={<Profile />} /> {/* Added route for Profile */}
     </Routes>
   </Router>
-);
+  );
+};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
