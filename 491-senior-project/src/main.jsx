@@ -7,6 +7,7 @@ import Signup from './Signup/Signup.jsx';
 import LanguageSelection from './LanguageSelection/LanguageSelection.jsx';
 import Profile from './Profile/Profile.jsx'; // Import the Profile page
 import Alpha from './Alphabet/Alpha.jsx';
+import Conjugate from './Conjugate/Conjugate.jsx';
 import './index.css';
 
 // Import flag images (you can replace these with actual paths or URLs)
@@ -41,6 +42,7 @@ const App = () => {
         <li className="nav-item"><Link to="/homepage">Homepage</Link></li>
         <li className="nav-item"><Link to="/signup">Sign Up</Link></li>
         <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
+        <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
         <li className="nav-item"><Link to="/profile">Profile</Link></li>
       </ul>
       {/* Language button on the far right */}
@@ -51,6 +53,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/homepage" element={<Homepage />} />
+      <Route path="/conjugate" element={<Conjugate />} />
       <Route path="/alpha" element={<Alpha language={language} />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/language-selection" element={<LanguageSelection />} />
