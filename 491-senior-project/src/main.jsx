@@ -13,6 +13,7 @@ import './index.css';
 // Import flag images (you can replace these with actual paths or URLs)
 import esFlag from './flags/es.png'; // Spanish flag
 import jpFlag from './flags/jp.png'; // Japanese flag
+import BluLogo from './Logo/LangLinkBlueTransparent.png';
 
 const App = () => {
   // State to store the current language
@@ -37,6 +38,7 @@ const App = () => {
   return (
   <Router>
     <nav className="navbar">
+      <img src={BluLogo} alt="LangLink Logo" className="logo-icon"/>
       <ul className="nav-list">
         <li className="nav-item"><Link to="/">Log In</Link></li>
         <li className="nav-item"><Link to="/homepage">Homepage</Link></li>

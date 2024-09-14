@@ -84,6 +84,12 @@ button:focus-visible {
   padding: 5px;
 }
 
+.logo-icon {
+  width: 100px;
+  height: auto;
+  margin-right: 10px;
+}
+
 .flag-icon {
   width: 30px;
   height: 20px;

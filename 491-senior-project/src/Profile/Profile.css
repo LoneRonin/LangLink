@@ -10,6 +10,7 @@
     padding: 2rem;
     background-color: #1e1e1e; /* Darker background for profile section */
     box-sizing: border-box;
+    margin-top: 80px;
   }
   
   /* Content area for the profile information */
