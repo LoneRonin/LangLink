@@ -49,6 +49,38 @@ const exercises = [
     pronoun: 'Ustedes: You all',
     correctAnswer: 'viajan',
     options: ['viajo', 'viajas', 'viaja', 'viajan']
+  },
+  {
+    word: 'leer',
+    definition: 'to read',
+    tense: 'Simple Present',
+    pronoun: 'Yo: I',
+    correctAnswer: 'leo',
+    options: ['leo', 'lees', 'lee', 'leemos']
+  },
+  {
+    word: 'escuchar',
+    definition: 'to listen',
+    tense: 'Simple Present',
+    pronoun: 'Vosotros: You all (Spain)',
+    correctAnswer: 'escucháis',
+    options: ['escucho', 'escuchas', 'escucha', 'escucháis']
+  },
+  {
+    word: 'cantar',
+    definition: 'to sing',
+    tense: 'Simple Present',
+    pronoun: 'Ellos: They',
+    correctAnswer: 'cantan',
+    options: ['canto', 'cantas', 'canta', 'cantan']
+  },
+  {
+    word: 'escribir',
+    definition: 'to write',
+    tense: 'Simple Present',
+    pronoun: 'Usted: You (formal)',
+    correctAnswer: 'escribe',
+    options: ['escribo', 'escribes', 'escribe', 'escribimos']
   }
 ];
 
