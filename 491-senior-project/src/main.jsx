@@ -8,6 +8,7 @@ import LanguageSelection from './LanguageSelection/LanguageSelection.jsx';
 import Profile from './Profile/Profile.jsx'; // Import the Profile page
 import Alpha from './Alphabet/Alpha.jsx';
 import Conjugate from './Conjugate/Conjugate.jsx';
+import Friends from './Friends/Friends.jsx';
 import './index.css';
 
 // Import flag images (you can replace these with actual paths or URLs)
@@ -46,6 +47,7 @@ const App = () => {
         <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
         <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
         <li className="nav-item"><Link to="/profile">Profile</Link></li>
+        <li className="nav-item"><Link to="/friends">Friends</Link></li>
       </ul>
       {/* Language button on the far right */}
       <button className="language-button" onClick={toggleLanguage}>
@@ -60,6 +62,7 @@ const App = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path="/language-selection" element={<LanguageSelection />} />
       <Route path="/profile" element={<Profile />} /> {/* Added route for Profile */}
+      <Route path="/friends" element={<Friends />} />
     </Routes>
   </Router>
   );
