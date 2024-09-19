@@ -8,23 +8,18 @@ import './Friends.css';
 
 
 const Friends = () => {
-    const [friendModel, setFriend] = useState({
-        email: "",
-        firstName: "",
-        lastName: ""
-    })
+    //const [friend, setFriend] = useState(null);
+    const [friends, setFriends] = useState([]);
 
     useEffect(() => {
         try{
             //friends = new Set([]);
-            console.log("initializing");
+            //console.log("initializing");
             const usersList = collection(db, "users");
-            const q = query(usersList, where("language", "==", "spanish"));
+            const q = query(usersList, where("language", "==", "Spanish"));
         
             getDocs(q).then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    console.log(doc.id, " => ", doc.data());
-                });
+                updateFriendList(querySnapshot);
             });
             
         }
@@ -33,13 +28,44 @@ const Friends = () => {
         }
     }, []);
 
-    //document.getElementById("friendDisplay").onload = function() {loadTest()};
+    function updateFriendList(docs){
+        const friendList = new Set();
+        docs.forEach((doc) => {
+            var friend = doc.data();
+            var friendArray = [friend.firstName, friend.lastName, friend.email];
+            friendList.add(friendArray);
+            //console.log(doc.email, doc.firstName, doc.lastName);
+            //console.log(doc.data());
+        });
+        setFriends(friendList);
+        //console.log(friendList);
+        printFriendsList();
+    }
+
+    function printFriendsList(){
+        clearFriendsList();
+        const friendList = friends;
+        var text = "";
+        for(const i of friendList){
+            console.log(i);
+            text += "<p>";
+            text += "First Name: " + i[0] + " Last Name: " + i[1] + "";
+            text += "</p>"
+        }
+        //console.log(text);
+        document.getElementById("friendDisplay").innerHTML = text;
+    }
+
+    function clearFriendsList(){
+        document.getElementById("friendDisplay").innerHTML = "";
+    }
 
     return(
-        <section className='friendsList' id="friendsList">
-            <div id='friendDisplay'>
+        <section className='friendsList'>
+            <div>
                 <h2>Fwiends</h2>
                 <p>Welcome to the friend zone</p>
+                <div id = 'friendDisplay'></div>
             </div>
         </section>
     );
