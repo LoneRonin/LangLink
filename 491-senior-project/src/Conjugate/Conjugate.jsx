@@ -26,7 +26,30 @@ const exercises = [
     correctAnswer: 'vivimos',
     options: ['vive', 'vivimos', 'vivo', 'viven']
   },
-  // Add more exercises as needed
+  {
+    word: 'estudiar',
+    definition: 'to study',
+    tense: 'Simple Present',
+    pronoun: 'Tú: You',
+    correctAnswer: 'estudias',
+    options: ['estudio', 'estudias', 'estudia', 'estudiamos']
+  },
+  {
+    word: 'trabajar',
+    definition: 'to work',
+    tense: 'Simple Present',
+    pronoun: 'Ellas: They',
+    correctAnswer: 'trabajan',
+    options: ['trabajo', 'trabajas', 'trabaja', 'trabajan']
+  },
+  {
+    word: 'viajar',
+    definition: 'to travel',
+    tense: 'Simple Present',
+    pronoun: 'Ustedes: You all',
+    correctAnswer: 'viajan',
+    options: ['viajo', 'viajas', 'viaja', 'viajan']
+  }
 ];
 
 const Conjugate = () => {

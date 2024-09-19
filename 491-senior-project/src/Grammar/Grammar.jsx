@@ -12,10 +12,10 @@ const Grammar = () => {
       <h1>Grammar Learning Page</h1>
       {/* change these buttons so that they are pictures */}
       <div className="button-container">
-        <button className="button" onClick={() => window.location.href = '/conjugate'}>
+        <button className="button" onClick={() => window.location.href = '/grammar/conjugate'}>
           Conjugate
         </button>
-        <button className="button" onClick={() => window.location.href = '/sentence'}>
+        <button className="button" onClick={() => window.location.href = '/grammar/sentence'}>
           Sentence
         </button>
       </div>
