@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Alpha.css';
 import LetterPopup from './LetterPopup';
+import { useNavigate } from 'react-router-dom';
 
 const spanishAlphabet = [
   { letter: 'A', pronunciation: 'ah' },
@@ -147,6 +148,13 @@ function Alpha({ language }) {
   const specialFullRows = specialCharacters.slice(0, Math.floor(specialCharacters.length / columns) * columns);
   const specialLeftovers = specialCharacters.slice(Math.floor(specialCharacters.length / columns) * columns);
 
+  // Handle Practice Mode 
+  const navigate = useNavigate();
+
+  const handleStartPractice = () => {
+    navigate('/matching');
+  };
+
   // Handle letter click to show popup
   const handleLetterClick = (index) => {
     setShowPopups(prev => prev.map((_, i) => i === index));
@@ -176,6 +184,15 @@ function Alpha({ language }) {
           {progressPercentage}%
         </div>
       </div>
+
+      {/* Toggle Practice Mode Button */}
+      {language === 'jp' && (
+        <div className="button-container">
+          <button onClick={handleStartPractice} className="start-button">
+            Start Practice
+          </button>
+        </div>
+      )}
 
       {/* Full Rows Grid for Main Alphabet */}
       <div className="letter-grid">

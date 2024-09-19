@@ -7,6 +7,7 @@ import Signup from './Signup/Signup.jsx';
 import LanguageSelection from './LanguageSelection/LanguageSelection.jsx';
 import Profile from './Profile/Profile.jsx'; // Import the Profile page
 import Alpha from './Alphabet/Alpha.jsx';
+import FillInTheBlank from './Alphabet/FillInTheBlank.jsx';
 import Conjugate from './Conjugate/Conjugate.jsx';
 import './index.css';
 
@@ -57,6 +58,7 @@ const App = () => {
       <Route path="/homepage" element={<Homepage />} />
       <Route path="/conjugate" element={<Conjugate />} />
       <Route path="/alpha" element={<Alpha language={language} />} />
+      <Route path="/matching" element={<FillInTheBlank language={language} />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/language-selection" element={<LanguageSelection />} />
       <Route path="/profile" element={<Profile />} /> {/* Added route for Profile */}
