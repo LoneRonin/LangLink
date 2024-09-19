@@ -47,7 +47,7 @@ const Friends = () => {
         const friendList = friends;
         var text = "";
         for(const i of friendList){
-            console.log(i);
+            //console.log(i);
             text += "<p>";
             text += "First Name: " + i[0] + " Last Name: " + i[1] + "";
             text += "</p>"
