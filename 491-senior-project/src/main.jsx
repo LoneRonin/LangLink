@@ -59,8 +59,8 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/homepage" element={<Homepage />} />
-      <Route path="/grammar/conjugate" element={<Conjugate />} />
-      <Route path="/grammar/sentence" element={<Sentence />} />
+      <Route path="/grammar/conjugate-es" element={<Conjugate />} />
+      <Route path="/grammar/sentence-es" element={<Sentence />} />
       <Route path="Grammar" element = {<Grammar />} />
       <Route path="/alpha" element={<Alpha language={language} />} />
       <Route path="/signup" element={<Signup />} />

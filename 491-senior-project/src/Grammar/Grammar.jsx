@@ -1,21 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Grammar.css'; 
- 
-// const languageOptions = [
-//     { key: "Japanese", text: "English", value: "en" },
-//     { key: "Spanish", text: "Spanish", value: "es" }
-//   ];
+import esFlag from './es.png'; // Spanish flag
+import jpFlag from './jp.png'; // Japanese flag
 
 const Grammar = () => {
+  const [flag, setFlag] = useState(esFlag);
+  const [language, setLanguage] = useState('es'); // Tracks the current language (default is 'es' for Spanish)
+
+  const toggleFlag = () => {
+    if (language === 'es') {
+      setFlag(jpFlag);
+      setLanguage('jp');
+    } else {
+      setFlag(esFlag);
+      setLanguage('es');
+    }
+  };
+
   return (
     <div className="page-container">
       <h1>Grammar Learning Page</h1>
-      {/* change these buttons so that they are pictures */}
       <div className="button-container">
-        <button className="button" onClick={() => window.location.href = '/grammar/conjugate'}>
+        {/* Conditionally route based on the selected language */}
+        <button
+          className="button"
+          onClick={() =>
+            window.location.href = language === 'es' 
+              ? '/grammar/conjugate-es' 
+              : '/grammar/conjugate-jp'
+          }
+        >
           Conjugate
         </button>
-        <button className="button" onClick={() => window.location.href = '/grammar/sentence'}>
+
+        {/* Toggle flag button */}
+        <button className="flag-button" onClick={toggleFlag}>
+          <img src={flag} alt="Language Flag" className="flag-image" />
+        </button>
+
+        <button
+          className="button"
+          onClick={() =>
+            window.location.href = language === 'es'
+              ? '/grammar/sentence-es'
+              : '/grammar/sentence-jp'
+          }
+        >
           Sentence
         </button>
       </div>
