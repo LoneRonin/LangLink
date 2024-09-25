@@ -1,3 +1,4 @@
+/*Zachary Hunt */
 body {
     display: flex;
     justify-content: center;
@@ -6,15 +7,17 @@ body {
     margin: 0;
   }
   
+    /* CSS for activity buttons */
   .button-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     width: 400px;
+    background-color: #135115;
   }
   
   button {
     padding: 15px 25px;
-    background-color: #4CAF50;
+    
     color: white;
     border: none;
     border-radius: 5px;
@@ -23,6 +26,7 @@ body {
     transition: background-color 0.3s ease;
   }
   
+  /* CSS for flag button */
   .button, .flag-button {
     padding: 10px 20px;
     font-size: 16px;

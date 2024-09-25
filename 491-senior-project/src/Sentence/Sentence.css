@@ -1,3 +1,4 @@
+/*Zachary Hunt */
 .container {
   max-width: 800px;
   margin: 40px auto;
@@ -5,7 +6,7 @@
   background-color: #160606;
   border-radius: 8px;
 }
-
+/* CSS for word bank */
 .button {
   margin-right: 10px;
   padding: 5px 10px;
@@ -16,6 +17,7 @@
   cursor: pointer;
 }
 
+/* CSS for reset button */
 .reset-button {
   margin-top: 20px;
   padding: 10px 20px;
