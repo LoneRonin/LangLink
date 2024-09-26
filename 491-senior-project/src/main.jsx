@@ -9,7 +9,8 @@ import Profile from './Profile/Profile.jsx'; // Import the Profile page
 import Alpha from './Alphabet/Alpha.jsx';
 import Conjugate from './Conjugate/Conjugate.jsx';
 import Grammar from './Grammar/Grammar.jsx';
-import Sentence from './Sentence/Sentence.jsx';
+import SentenceEs from './Sentence/Sentence.jsx';
+import SentenceJp from './Sentence/Sentencejp.jsx';
 import './index.css';
 
 // Import flag images (you can replace these with actual paths or URLs)
@@ -60,7 +61,8 @@ const App = () => {
       <Route path="/" element={<Login />} />
       <Route path="/homepage" element={<Homepage />} />
       <Route path="/grammar/conjugate-es" element={<Conjugate />} />
-      <Route path="/grammar/sentence-es" element={<Sentence />} />
+      <Route path="/grammar/sentence-es" element={<SentenceEs />} />
+      <Route path="/grammar/sentence-jp" element={<SentenceJp />} />
       <Route path="Grammar" element = {<Grammar />} />
       <Route path="/alpha" element={<Alpha language={language} />} />
       <Route path="/signup" element={<Signup />} />
