@@ -1,3 +1,27 @@
 .friendsList{
-    padding: 200px;
+    padding: 100px;
+    margin: auto;
+    text-align: center;
+}
+.friendDisplay{
+    background-color: lightgray;
+}
+
+.friendBar1{
+    color: black;
+    width: 200px;
+    text-align: center;
+    height: 30px;
+    margin: 3px;
+    background-color: lightgray;
+    border-radius: 4px 12px 12px 4px;
+}
+
+.friendBar2{
+    margin: 3px;
+    text-align: center;
+    height: 30px;
+    width: 200px;
+    background-color: gray;
+    border-radius: 4px 12px 12px 4px;
 }
