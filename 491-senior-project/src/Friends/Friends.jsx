@@ -10,7 +10,7 @@ import './Friends.css';
 
 const Friends = () => {
     const [friends, setFriends] = useState([]);
-    const [friendHTML, setFriendHTML] = useState(null);
+    const [friendHTML, setFriendHTML] = useState("temp");
     //uses a state of type set to store array of user data, not optimal but least complicated way of doing it
     //moreso that sets are hard to monitor updates on, allegedly
     const [loading, setLoading] = useState(true);
@@ -74,7 +74,7 @@ const Friends = () => {
 
     function updateList(){
         document.getElementById("friendDisplay").innerHTML = friendHTML
-        console.log(friendHTML)
+        //console.log(friendHTML)
     }
     useEffect(() => {
         if(loading == false){
@@ -89,17 +89,23 @@ const Friends = () => {
             try{
                 if(user){
                     //constructs a database query, this is a temp one that just pulls from the general userbase
-                    const usersList = collection(db, "users");
-                    const userFriendsList = query(usersList, where("language", "==", "Spanish"));
+                    //const usersList = collection(db, "users");
+                    //const userFriendsList = query(usersList, where("language", "==", "Spanish"));
     
-                    //const userDocRef = doc(db, 'users', user.uid);
-                    //const userFriendList = userDocRef.collection('friendlist');
-                    
-                    //executes the query, sends results to function
+                    //const userRef = doc(db, 'users', user.uid);
+                    const userRef = db.collection('users').doc('uid');
+                    const userFriendsList = userRef.collection('friendlist');
+                    userFriendsList.get()
+                        .then((querySnapshot) => {
+                            updateFriendList(querySnapshot);
+                        });
+
+
+                    /*//executes the query, sends results to function
                     const querySnapshot = await getDocs(userFriendsList).then((querySnapshot) => {
                         //setLoading(False);
                         updateFriendList(querySnapshot);
-                    });
+                    });*/
                 }
             }
             catch(err){//on query error, logs in console
