@@ -27,7 +27,7 @@ const Login = () => {
   };
 
   return (
-    <section className={`login-container ${loginSuccess ? 'login-success' : ''}`}> {/* Add success class on success */}
+    <section className={`login-container ${loginSuccess ? 'login-success' : ''}`}>
       <div className="login-box">
         <h1 className="logo">Welcome back to LangLink!</h1>
 
