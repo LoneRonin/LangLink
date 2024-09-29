@@ -26,7 +26,7 @@ const Friends = () => {
             var friendArray = [friend.firstName, friend.lastName, friend.email];
             friendList.add(friendArray);
             //console.log(doc.email, doc.firstName, doc.lastName);
-            //console.log(doc.data());
+            console.log(doc.data());
         });
         setFriends(friendList);
         //sets the set state with the finished list
@@ -73,52 +73,52 @@ const Friends = () => {
     }
 
     function updateList(){
-        document.getElementById("friendDisplay").innerHTML = friendHTML
+        document.getElementById("friendDisplay").innerHTML = friendHTML;
+        
         //console.log(friendHTML)
     }
+
+    const fetchFriendsList = async() => {
+        setError(null);
+        setLoading(true);
+        try{
+            if(user){
+                //constructs a database query, this is a temp one that just pulls from the general userbase
+                const usersList = collection(db, "users", user.uid, "friendlist");
+                const userFriendsList = query(usersList);
+
+                getDocs(userFriendsList)
+                    .then((querySnapshot) => {
+                        updateFriendList(querySnapshot);
+                    });
+
+
+                /*//executes the query, sends results to function
+                const querySnapshot = await getDocs(userFriendsList).then((querySnapshot) => {
+                    //setLoading(False);
+                    updateFriendList(querySnapshot);
+                });*/
+            }
+        }
+        catch(err){//on query error, logs in console
+            console.log(err);
+            setError("Error loading user list.");
+        }
+        finally{setLoading(false);}
+    }
+
     useEffect(() => {
-        if(loading == false){
+        if((loading == false) && (error == false)){
             updateList();
         }
     }, [loading])
 
     useEffect(() => {//when friends is called, runs this async react effect
-        const fetchFriendsList = async() => {
-            setError(null);
-            setLoading(true);
-            try{
-                if(user){
-                    //constructs a database query, this is a temp one that just pulls from the general userbase
-                    //const usersList = collection(db, "users");
-                    //const userFriendsList = query(usersList, where("language", "==", "Spanish"));
-    
-                    //const userRef = doc(db, 'users', user.uid);
-                    const userRef = db.collection('users').doc('uid');
-                    const userFriendsList = userRef.collection('friendlist');
-                    userFriendsList.get()
-                        .then((querySnapshot) => {
-                            updateFriendList(querySnapshot);
-                        });
-
-
-                    /*//executes the query, sends results to function
-                    const querySnapshot = await getDocs(userFriendsList).then((querySnapshot) => {
-                        //setLoading(False);
-                        updateFriendList(querySnapshot);
-                    });*/
-                }
-            }
-            catch(err){//on query error, logs in console
-                console.log(err);
-                setError("Error loading user list.");
-            }
-            finally{setLoading(false);}
-        }
         fetchFriendsList();
     }, [user]);
 
     if (error) {return <p>{error}</p>;}
-    if (loading) {return <p>Loading...</p>;}
+    //if (loading) {return <p>Loading...</p>;}
     //if (!userData) {return <p>No user data available</p>;}
 
     return(
@@ -126,7 +126,10 @@ const Friends = () => {
             <div>
                 <h2>Fwiends</h2>
                 <p>Welcome to the friend zone</p>
-                <div id = 'friendDisplay'>
+                {loading && "Loading..."}
+                <div id = 'friendDisplay'>{friends}</div>
+                <div id = 'friendsuggestion'>
+                    <p>Make a new friend</p>
                 </div>
             </div>
         </section>
