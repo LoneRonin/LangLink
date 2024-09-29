@@ -11,6 +11,7 @@ import Conjugate from './Conjugate/Conjugate.jsx';
 import Grammar from './Grammar/Grammar.jsx';
 import SentenceEs from './Sentence/Sentence.jsx';
 import SentenceJp from './Sentence/Sentencejp.jsx';
+import Forgotpass from './ForgotPassword/ForgotPass.jsx'
 import './index.css';
 
 // Import flag images (you can replace these with actual paths or URLs)
@@ -68,8 +69,10 @@ const App = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path="/language-selection" element={<LanguageSelection />} />
       <Route path="/profile" element={<Profile />} /> {/* Added route for Profile */}
+      <Route path="/forgotpassword" element={<Forgotpass />} />
     </Routes>
-  </Router>
+      
+    </Router>
   );
 };
 
