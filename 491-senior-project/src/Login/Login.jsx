@@ -61,7 +61,7 @@ const Login = () => {
         {loginSuccess && <p className="success-message">Login successful!</p>} {/* Success message */}
 
         <div className="login-links">
-          <a href="#" className="forgot-password">Forgot password?</a>
+          <a href="/forgotpassword" className="forgot-password">Forgot password?</a>
           <a href="/signup" className="signup-link">Create new account</a>
         </div>
       </div>

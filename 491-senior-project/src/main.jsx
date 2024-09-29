@@ -9,6 +9,10 @@ import Profile from './Profile/Profile.jsx'; // Import the Profile page
 import Alpha from './Alphabet/Alpha.jsx';
 import FillInTheBlank from './Alphabet/FillInTheBlank.jsx';
 import Conjugate from './Conjugate/Conjugate.jsx';
+import Grammar from './Grammar/Grammar.jsx';
+import SentenceEs from './Sentence/Sentence.jsx';
+import SentenceJp from './Sentence/Sentencejp.jsx';
+import Forgotpass from './ForgotPassword/ForgotPass.jsx'
 import './index.css';
 
 // Import flag images (you can replace these with actual paths or URLs)
@@ -45,8 +49,10 @@ const App = () => {
         <li className="nav-item"><Link to="/homepage">Homepage</Link></li>
         <li className="nav-item"><Link to="/signup">Sign Up</Link></li>
         <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
-        <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
+        {/* <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>*/}
+        <li className="nav-item"><Link to="/grammar">Grammar</Link></li> 
         <li className="nav-item"><Link to="/profile">Profile</Link></li>
+        {/* <li className="nav-item"><Link to="/sentence">Sentence</Link></li> */}
       </ul>
       {/* Language button on the far right */}
       <button className="language-button" onClick={toggleLanguage}>
@@ -56,14 +62,19 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/homepage" element={<Homepage />} />
-      <Route path="/conjugate" element={<Conjugate />} />
+      <Route path="/grammar/conjugate-es" element={<Conjugate />} />
+      <Route path="/grammar/sentence-es" element={<SentenceEs />} />
+      <Route path="/grammar/sentence-jp" element={<SentenceJp />} />
+      <Route path="Grammar" element = {<Grammar />} />
       <Route path="/alpha" element={<Alpha language={language} />} />
       <Route path="/matching" element={<FillInTheBlank language={language} />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/language-selection" element={<LanguageSelection />} />
       <Route path="/profile" element={<Profile />} /> {/* Added route for Profile */}
+      <Route path="/forgotpassword" element={<Forgotpass />} />
     </Routes>
-  </Router>
+      
+    </Router>
   );
 };
 
