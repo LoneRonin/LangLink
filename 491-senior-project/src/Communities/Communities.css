@@ -1,0 +1,23 @@
+/* Communities.css */
+
+.community-container {
+  text-align: center;
+  margin: 100px auto; /* Increase top margin to lower the banner */
+  padding: 20px;
+  border: 1px solid #002fff; /* Customize the color */
+  border-radius: 10px;
+  background-color: black; /* Set background to black */
+  color: white; /* Change text color to white for better contrast */
+  max-width: 600px; /* Optional: limit the width for better alignment */
+}
+
+.community-header {
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff; /* White text for the header */
+}
+
+.community-message {
+  font-size: 18px;
+  color: #ddd; /* Light gray for the message text */
+}
