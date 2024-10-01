@@ -1,4 +1,4 @@
-/* Base styles */
+/* Names: Victor, Tristan */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -44,7 +44,7 @@ body {
 .nav-item a {
   color: white;
   text-decoration: none;
-  font-size: 1rem; /* Smaller font size */
+  font-size: 1rem;
 }
 
 .nav-item a:hover {
@@ -54,67 +54,152 @@ body {
 /* Layout */
 .homepage-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   height: 100vh;
   width: 100vw;
   background-color: #1e1e1e;
   padding: 2rem;
   box-sizing: border-box;
-  flex-direction: column;
-  padding-top: 6rem; /* Adjust padding for navbar */
 }
 
+/* Left Sidebar */
+.left-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: fixed;
+  left: 2rem; /* Distance from the left edge */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Right Sidebar */
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: fixed;
+  right: 2rem; /* Distance from the right edge */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Main Content */
 .homepage-content {
   background-color: #2e2e2e;
-  padding: 1.5rem; /* Adjusted padding */
+  padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  max-width: 800px;
-  width: 100%;
-  text-align: center;
-  box-sizing: border-box;
+  max-width: 600px;
+  margin: 0 auto; /* Center align */
 }
 
 .welcome-text {
-  font-size: 1.4em; /* Smaller font size for welcome text */
+  font-size: 1.8em; /* Enlarged font size for welcome text */
   color: #ffffff;
   margin: 0;
 }
 
-/* Info Boxes */
-.info-boxes {
+/* Buttons */
+.button-container {
+  margin-top: 1.5rem;
   display: flex;
   justify-content: space-around;
-  margin-top: 1.5rem; /* Adjusted margin */
 }
 
-.info-box {
-  background-color: #333;
-  color: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  width: 30%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
-  font-size: 0.9rem; /* Smaller font size */
+.action-button {
+  background-color: #0062cc; /* Darker blue */
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.info-box:not(:last-child) {
-  margin-right: 1rem;
+.action-button:hover {
+  background-color: #004ea2; /* Darker blue on hover */
+  transform: scale(1.05);
+}
+
+.action-button.small {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
-  .info-boxes {
+  .button-container {
       flex-direction: column;
   }
 
-  .info-box {
+  .action-button {
       width: 100%;
       margin-bottom: 1rem;
   }
 
-  .info-box:last-child {
+  .action-button:last-child {
       margin-bottom: 0;
   }
+}
+
+/* Sidebar */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: 2rem; /* Distance from the right edge */
+  top: 50%; /* Center the buttons vertically */
+  transform: translateY(-50%);
+  gap: 1.5rem; /* Space between buttons */
+}
+
+/* Circle Buttons */
+.circle-button {
+  width: 150px; /* Larger than regular buttons */
+  height: 150px; /* Make the button a circle */
+  background-color: #005a9e; /* Darker blue color */
+  color: white;
+  border: none;
+  border-radius: 50%; /* Makes the button circular */
+  font-size: 1.2rem; /* Adjust text size */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.circle-button:hover {
+  background-color: #004080; /* Slightly darker on hover */
+  transform: scale(1.05); /* Enlarges on hover */
+}
+
+/* Friend Suggestions */
+.friend-suggestions {
+  background-color: #333;
+  padding: 1.5rem;
+  border-radius: 12px;
+  max-width: 400px; /* Increased width */
+  color: white;
+}
+
+.friend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-left: 3rem; /* Added space for future photo */
+}
+
+.friend-info {
+  display: flex;
+  align-items: center;
+}
+
+.friend-info p {
+  margin-left: 1rem; /* Space between the photo and name */
 }
