@@ -38,3 +38,42 @@
     background-color: #0056b3;
   }
   
+  .fade-out {
+    opacity: 0; /* opacity set to 0 to make it invisible */
+  }
+  .fade-in {
+    opacity: 1; /* Visible when message appears */
+  }
+  .correct-message, .incorrect-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out; /* Fade effect Animation */
+  }
+  .correct-message {
+    background-color: green; /*green text box appears for correct answer*/
+    color: white;
+  }
+  .incorrect-message {
+    background-color: red; /*red text box appears for incorrect answer*/
+    color: white;
+  }
+  
+
+  .login-links {
+    margin-top: 1.5rem;
+  }
+  
+  .login-links a {
+    display: block;
+    color: #4267B2;
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+  
+  .login-links a:hover {
+    text-decoration: underline;
+  }
