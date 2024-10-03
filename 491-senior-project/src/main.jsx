@@ -100,11 +100,11 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/grammar/conjugate-es" element={<Conjugate />} />
-      <Route path="/grammar/sentence-es" element={<SentenceEs />} />
-      <Route path="/grammar/sentence-jp" element={<SentenceJp />} />
-      <Route path="Grammar" element = {<Grammar />} />
+        <Route path="/grammar/sentence-es" element={<SentenceEs />} />
+        <Route path="/grammar/sentence-jp" element={<SentenceJp />} />
+        <Route path="Grammar" element = {<Grammar />} />
         <Route path="/alpha" element={<Alpha language={language} />} />
-      <Route path="/matching" element={<FillInTheBlank language={language} />} />
+        <Route path="/matching" element={<FillInTheBlank language={language} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/language-selection" element={<LanguageSelection />} />
         <Route path="/profile" element={<Profile />} />

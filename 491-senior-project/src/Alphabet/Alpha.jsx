@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Alpha.css';
 import LetterPopup from './LetterPopup';
 import { useNavigate } from 'react-router-dom';
+import { saveProgress, fetchProgress } from '../firebaseUtils';
+import { auth, db } from '../firebase'; // Import auth to get the current user
+import { doc, setDoc } from 'firebase/firestore';
 
 const spanishAlphabet = [
   { letter: 'A', pronunciation: 'ah' },
@@ -120,6 +123,9 @@ const specialHiraganaAlphabet = [
 ];
 
 function Alpha({ language }) {
+  // Handle Practice Mode 
+  const navigate = useNavigate();
+
   // Determine the alphabet and special characters based on the selected language
   const alphabet = language === 'es' ? spanishAlphabet : hiraganaAlphabet;
   const specialCharacters = language === 'es' ? specialSpanishCharacters : specialHiraganaAlphabet;
@@ -133,23 +139,55 @@ function Alpha({ language }) {
     jp: Array(hiraganaAlphabet.length + specialHiraganaAlphabet.length).fill(false),
   });
 
-  // Calculate progress based on the current language
-  const totalLetters = alphabet.length + specialCharacters.length;
-  const learnedLetters = markedLetters[language].filter(Boolean).length;
-  const progressPercentage = Math.round((learnedLetters / totalLetters) * 100);
+  // Define loading state
+  const [loading, setLoading] = useState(true);
 
-  const columns = 8;
+  useEffect(() => {
+    console.log('Current markedLetters:', markedLetters);
+    console.log('Current language:', language);
+    console.log('Current markedLetters[language]:', markedLetters[language]);
+  
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        const userId = user.uid;
+        const unsubscribeProgress = fetchProgress(userId, language, (progress) => {
+          console.log('Fetched progress:', progress);
+          setMarkedLetters((prev) => ({
+            ...prev,
+            [language]: progress || Array(alphabet.length + specialCharacters.length).fill(false),
+          }));
+          setLoading(false);
+        });
+  
+        return () => unsubscribeProgress();
+      } else {
+        setLoading(false);
+      }
+    });
+  
+    return () => unsubscribe();
+  }, [language]);
 
-  // Full rows and leftovers for the main alphabet
-  const fullRows = alphabet.slice(0, Math.floor(alphabet.length / columns) * columns);
-  const leftovers = alphabet.slice(Math.floor(alphabet.length / columns) * columns);
-
-  // Full rows and leftovers for the special characters
-  const specialFullRows = specialCharacters.slice(0, Math.floor(specialCharacters.length / columns) * columns);
-  const specialLeftovers = specialCharacters.slice(Math.floor(specialCharacters.length / columns) * columns);
-
-  // Handle Practice Mode 
-  const navigate = useNavigate();
+  const handleMarkLetter = async (index) => {
+    setMarkedLetters((prev) => {
+      const updatedLetters = [...prev[language]];
+      updatedLetters[index] = true; // Ensure this sets the correct index
+  
+      const user = auth.currentUser;
+      if (user) {
+        const userId = user.uid;
+        console.log('Saving progress:', updatedLetters);
+        saveProgress(userId, language, updatedLetters).catch((error) => {
+          console.error('Error saving progress:', error);
+        });
+      }
+  
+      return {
+        ...prev,
+        [language]: updatedLetters,
+      };
+    });
+  };
 
   const handleStartPractice = () => {
     navigate('/matching');
@@ -165,14 +203,24 @@ function Alpha({ language }) {
     setShowPopups(prev => prev.map(() => false));
   };
 
-  // Mark letter as learned for the current language
-  const handleMarkLetter = (index) => {
-    setMarkedLetters(prev => ({
-      ...prev,
-      [language]: [...prev[language].slice(0, index), true, ...prev[language].slice(index + 1)],
-    }));
-    handleClosePopup();
-  };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  // Calculate progress based on the current language
+  const totalLetters = alphabet.length + specialCharacters.length;
+  const learnedLetters = markedLetters[language].filter(Boolean).length;
+  const progressPercentage = Math.round((learnedLetters / totalLetters) * 100);
+
+  const columns = 8;
+
+  // Full rows and leftovers for the main alphabet
+  const fullRows = alphabet.slice(0, Math.floor(alphabet.length / columns) * columns);
+  const leftovers = alphabet.slice(Math.floor(alphabet.length / columns) * columns);
+
+  // Full rows and leftovers for the special characters
+  const specialFullRows = specialCharacters.slice(0, Math.floor(specialCharacters.length / columns) * columns);
+  const specialLeftovers = specialCharacters.slice(Math.floor(specialCharacters.length / columns) * columns);
 
   return (
     <div className="alpha-container">
