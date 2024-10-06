@@ -196,7 +196,8 @@ const Friends = () => {
                 <div id = 'friendDisplay'>
                     <p>Welcome to the friend zone</p>
                     {loading && "Loading..."}
-                    <ul>{friends?.map((doc) => (
+                    <ul>
+                        {friends?.map((doc) => (
                             <div key={Math.random()}>
                                 <li>{doc[0]} {doc[1]}</li>
                             </div>
@@ -206,9 +207,19 @@ const Friends = () => {
                 <div id = 'friendsuggestion'>
                     <p>Make a new friend!</p>
                     {loading2 && "Loading..."}
-                    <ul>{suggestions?.map((doc) => (
+                    <ul>
+                        {suggestions?.map((doc) => (
                             <div key={Math.random()}>
                                 <li>{doc[0]} {doc[1]}</li><button id='addFriendButton' onClick={(event) => sendFriendRequest(doc[0], doc[1], doc[2])}>+</button>
+                            </div>
+                        ))}
+                    </ul>
+                </div>
+                <div id = 'requests'>
+                    <ul>
+                        {requests?.map((doc) => (
+                            <div key={Math.random()}>
+                                <li>{doc[0]} {doc[1]}</li>
                             </div>
                         ))}
                     </ul>
