@@ -1,4 +1,4 @@
-/* Communities.css */
+/* Worked on by: Tristan Clayman */
 
 .community-container {
   text-align: center;
@@ -20,4 +20,15 @@
 .community-message {
   font-size: 18px;
   color: #ddd; /* Light gray for the message text */
+}
+/* Communities.css */
+.comments {
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.comment {
+  padding: 5px;
+  border-bottom: 1px solid #eee;
 }

@@ -1,8 +1,13 @@
+// Worked on by: Tristan Clayman
+
 import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
+import PostForm from './PostForm';
+import PostsList from './PostsList';
 import { db } from '../firebase';
 import './Communities.css';
+
 
 const Communities = () => {
   const [firstName, setFirstName] = useState('');
@@ -26,12 +31,21 @@ const Communities = () => {
     fetchUserData();
   }, [user]);
 
+  const handlePostAdded = () => {
+    // Any additional logic you want to run after a post is added
+  };
+
   return (
-    <section className="community-container">
-      <div className="community-header">
-        <h1>Welcome to the {language === 'Spanish' ? 'Spanish' : 'Japanese'} Community, {firstName}!</h1>
-      </div>
-    </section>
+    <div className="community-container">
+      <h1 className="community-header">Welcome to the {language === 'Spanish' ? 'Spanish' : 'Japanese'} Community, {firstName}!</h1>
+      <p className="community-message">Feel free to share your thoughts and upvote!</p>
+
+      {/* Post submission form */}
+      <PostForm onPostAdded={handlePostAdded} />
+
+      {/* List of posts */}
+      <PostsList />
+    </div>
   );
 };
 
