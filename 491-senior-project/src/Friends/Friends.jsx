@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { Link } from 'react-router-dom';
-import { collection, query, where, doc, getDocs, addDoc, limit } from "firebase/firestore";
+import { collection, query, where, doc, getDocs, addDoc, limit, deleteDoc } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase';
 import './Friends.css';
@@ -23,13 +23,14 @@ const Friends = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     
-    function updateFriendList(docs){//function to take query results and set state
+    //this function takes the query results and updates the state that stores the friend list
+    function updateFriendList(docs){
         //setLoading(false)
         const friendList = [];
         const emailList = [];
         docs.forEach((doc) => {//loop that takes the relevant information from each doc, makes an array, then adds it to the set
             var friend = doc.data();
-            var friendArray = [friend.firstName, friend.lastName, friend.email];
+            var friendArray = [friend.firstName, friend.lastName, friend.email, friend.id];
             friendList.push(friendArray);
             //console.log(doc.id);
             emailList.push(friend.email);
@@ -40,6 +41,7 @@ const Friends = () => {
         //sets the set state with the finished list
     }
 
+    //this function is similar to above but updates the suggestions list (WIP)
     function updateSuggestions(docs){
         const suggestionsList = [];
         //console.log(friends);
@@ -72,11 +74,12 @@ const Friends = () => {
         //console.log(suggestionsList);
     }
 
+    //this function is similar to above but handles incoming requests
     function updateRequests(docs){
         const requestsList = [];
         docs.forEach((doc) =>{
             var request = doc.data();
-            var requestArray = [request.firstName, request.lastName, request.email];
+            var requestArray = [request.firstName, request.lastName, request.email, doc.id];
             requestsList.push(requestArray);
         });
 
@@ -88,22 +91,72 @@ const Friends = () => {
         }
     }
 
+    //this disgusting block of code is supposed to help handle creating a doc for other users
+    const getUserId = async(mail) => {
+        try{
+            if(user){
+                let userID;
+                const reqRef = collection(db, "users");
+                const idQuery = query(reqRef, where("email","==",mail));
+                getDocs(idQuery)
+                .then((querySnapshot) => {
+                    let p;
+                    querySnapshot.forEach((doc) => {
+                        return doc.id;
+                    });
+                });
+                //console.log(userID);
+            }
+        }
+        catch(err){console.log(err);}
+    }
+
+    //creates a "friend request" document in another users subcollection
     const sendFriendRequest = async(fN, lN, mail) => {
         try{
             if(user){
+                getUserId(mail);
                 const reqRef = collection(db, "users", user.uid, "friendrequests");
                 const userDoc = {
                     firstName: fN,
                     lastName: lN,
                     email: mail
                 };
-                console.log(userDoc);
+                //console.log(userDoc);
                 addDoc(reqRef, userDoc);//unsure if this is correct rn lol aha
             }
         }
         catch(err){
             console.log(err);
         }
+    }
+
+    //moves a users details from the requests subcollection to the friends one
+    const acceptFriendRequest = async(fN, lN, mail) => {
+        try{
+            if(user){
+                const friendRef = collection(db, "users", user.uid, "friendlist");
+                const userDoc = {
+                    firstName: fN,
+                    lastName: lN,
+                    email: mail
+                };
+                addDoc(reqRef, userDoc);
+            }
+        }
+        catch(err){console.log(err);}
+        finally{clearFriendRequest(mail);}
+    }
+
+    //removes a request from a users incoming requests subcollection
+    const clearFriendRequest = async(docID) => {
+        try{
+            if(user){
+                const reqRef = doc(db, "users", user.uid, "friendrequests", docID)
+                await deleteDoc(reqRef);
+            }
+        }
+        catch(err){console.log(err);}
     }
 
     const fetchFriendsList = async() => {
@@ -166,7 +219,7 @@ const Friends = () => {
     const fetchIncomingRequests = async() => {
         try{
             if(user){
-                const requestsRef = collection(db, "users", user.uid, "friendlist");
+                const requestsRef = collection(db, "users", user.uid, "friendrequests");
                 const incomingReuqestsQuery = query(requestsRef);
 
                 getDocs(incomingReuqestsQuery)
@@ -210,16 +263,17 @@ const Friends = () => {
                     <ul>
                         {suggestions?.map((doc) => (
                             <div key={Math.random()}>
-                                <li>{doc[0]} {doc[1]}</li><button id='addFriendButton' onClick={(event) => sendFriendRequest(doc[0], doc[1], doc[2])}>+</button>
+                                <li>{doc[0]} {doc[1]} <button id='addFriendButton' onClick={(event) => sendFriendRequest(doc[0], doc[1], doc[2])}>+</button></li>
                             </div>
                         ))}
                     </ul>
                 </div>
                 <div id = 'requests'>
+                    <p>incoming friend requests</p>
                     <ul>
                         {requests?.map((doc) => (
                             <div key={Math.random()}>
-                                <li>{doc[0]} {doc[1]}</li>
+                                <li>{doc[0]} {doc[1]} <button id='denyReqButton' onClick={(event) => clearFriendRequest(doc[3])}>x</button></li>
                             </div>
                         ))}
                     </ul>
