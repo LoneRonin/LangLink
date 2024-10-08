@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { db } from '../firebase'; // import Firestore database
+import { sendPasswordResetEmail } from 'firebase/auth';  // Import for Firebase Auth
+import { auth, db } from '../firebase';  // import Firestore database and Firebase Auth
 import './ForgotPass.css'; 
 
 const Forgotpass = () => {
     const [email, setEmail] = useState("");
     const [error, setError] = useState(null); // state for handling errors
-    const [submitSuccess, setSubmitSuccess] = useState(false); // state for successfully submitting email
-    const navigate = useNavigate(); //Initialize useNavigate
+    const [successMessage, setSuccessMessage] = useState(null); // state for success messages
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         setError(null); // Reset error state
-        setSubmitSuccess(false); // Reset success state
+        setSuccessMessage(null); // Reset success state
 
         try {
             // Query Firestore to check if the email exists
@@ -26,13 +27,13 @@ const Forgotpass = () => {
                 setError("Email not found.");
                 clearMessageAfterDelay(); // Clear the message after 5 seconds
             } else {
-                // Email found, proceed with success actions (e.g., send reset link)
-                setSubmitSuccess(true);
+                // Email found, proceed to send reset password email
+                await sendPasswordResetEmail(auth, email);
+                setSuccessMessage("Password reset email sent successfully!");
                 clearMessageAfterDelay(); // Clear the message after 5 seconds
-                navigate('/forgotpassword'); // Redirect after successfully submitting email
             }
         } catch (err) {
-            setError("An error occurred while checking the email.");
+            setError("An error occurred while processing the request.");
             clearMessageAfterDelay(); // Clear the message after 5 seconds
             console.error(err);
         }
@@ -42,7 +43,7 @@ const Forgotpass = () => {
     const clearMessageAfterDelay = () => {
         setTimeout(() => {
             setError(null);
-            setSubmitSuccess(false);
+            setSuccessMessage(null);
         }, 5000); // Clear messages after 5 seconds
     };
 
@@ -59,16 +60,21 @@ const Forgotpass = () => {
                 />
                 <button type="submit">Send Reset Link</button>
             </form>
+
+            {/* Display error message */}
             {error && (
                 <div className="incorrect-message">
                     {error}
                 </div>
-            )} {/* Display error message */}
-            {submitSuccess && (
+            )}
+
+            {/* Display success message when reset email is sent */}
+            {successMessage && (
                 <div className="correct-message">
-                    Email found! Reset link sent.
+                    {successMessage}
                 </div>
-            )} {/* Optional success message */}
+            )}
+
             <div className="login-links">
                 <a href="/" >Go to Login Page</a>
             </div>
