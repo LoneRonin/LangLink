@@ -30,7 +30,7 @@ const Friends = () => {
         const emailList = [];
         docs.forEach((doc) => {//loop that takes the relevant information from each doc, makes an array, then adds it to the set
             var friend = doc.data();
-            var friendArray = [friend.firstName, friend.lastName, friend.email, friend.id];
+            var friendArray = [friend.firstName, friend.lastName, friend.email, doc.id];
             friendList.push(friendArray);
             //console.log(doc.id);
             emailList.push(friend.email);
@@ -54,7 +54,7 @@ const Friends = () => {
                 //console.log(docEntry.email);
     
                 if((docEntry.email != user.email)){
-                    var entryArray = [docEntry.firstName, docEntry.lastName, docEntry.email];
+                    var entryArray = [docEntry.firstName, docEntry.lastName, docEntry.email, doc.id];
                     suggestionsList.push(entryArray);
                 }
             });
@@ -65,7 +65,7 @@ const Friends = () => {
                 //console.log(docEntry.email);
     
                 if(!(emails.includes(docEntry.email)) && (docEntry.email != user.email)){
-                    var entryArray = [docEntry.firstName, docEntry.lastName, docEntry.email];
+                    var entryArray = [docEntry.firstName, docEntry.lastName, docEntry.email, doc.id];
                     suggestionsList.push(entryArray);
                 }
             });
@@ -112,15 +112,15 @@ const Friends = () => {
     }
 
     //creates a "friend request" document in another users subcollection
-    const sendFriendRequest = async(fN, lN, mail) => {
+    const sendFriendRequest = async(fid) => {
         try{
             if(user){
-                getUserId(mail);
-                const reqRef = collection(db, "users", user.uid, "friendrequests");
+
+                const reqRef = collection(db, "users", fid, "friendrequests");
                 const userDoc = {
-                    firstName: fN,
-                    lastName: lN,
-                    email: mail
+                    firstName: "test",
+                    lastName: "test",
+                    email: "test"
                 };
                 //console.log(userDoc);
                 addDoc(reqRef, userDoc);//unsure if this is correct rn lol aha
@@ -132,7 +132,7 @@ const Friends = () => {
     }
 
     //moves a users details from the requests subcollection to the friends one
-    const acceptFriendRequest = async(fN, lN, mail) => {
+    const acceptFriendRequest = async(fN, lN, mail, docID) => {
         try{
             if(user){
                 const friendRef = collection(db, "users", user.uid, "friendlist");
@@ -145,7 +145,7 @@ const Friends = () => {
             }
         }
         catch(err){console.log(err);}
-        finally{clearFriendRequest(mail);}
+        finally{clearFriendRequest(docID);}
     }
 
     //removes a request from a users incoming requests subcollection
@@ -263,7 +263,7 @@ const Friends = () => {
                     <ul>
                         {suggestions?.map((doc) => (
                             <div key={Math.random()}>
-                                <li>{doc[0]} {doc[1]} <button id='addFriendButton' onClick={(event) => sendFriendRequest(doc[0], doc[1], doc[2])}>+</button></li>
+                                <li>{doc[0]} {doc[1]} <button id='addFriendButton' onClick={(event) => sendFriendRequest(doc[3])}>+</button></li>
                             </div>
                         ))}
                     </ul>
