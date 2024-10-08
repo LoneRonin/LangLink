@@ -1,0 +1,64 @@
+/* Lessons.css */
+
+.circles-container {
+  position: relative;
+  width: 100%;
+  height: 300px; /* Adjust this value as needed */
+}
+
+.circle-button {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 200px;
+  background-color: #3498db;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.circle-button:hover {
+  transform: scale(1.05);
+}
+
+.dotted-path {
+  position: absolute;
+  width: 200px; /* Adjust this value based on your design */
+  height: 10px;
+  background-image: linear-gradient(to right, rgba(200, 255, 255, 0), rgba(255, 200, 255, 0));
+  animation: dash 5s infinite linear;
+}
+
+@keyframes dash {
+  0% { background-position: 0%; }
+  100% { background-position: 100%; }
+}
+
+.circle-button:nth-child(1) {
+    left: 225px;
+    top: 285px;
+  }
+  
+  .circle-button:nth-child(2) {
+    right: 150px;
+    top: 15px;
+  }
+  
+  .circle-button:nth-child(3) {
+    right: 225px;
+    top:385px;
+  }
+  
+  .dotted-path:nth-child(1) {
+    left: 50px;
+    top: 35px;
+  }
+  
+  .dotted-path:nth-child(2) {
+    left: 150px;
+    top: 35px;
+  }
+  
+  .dotted-path:nth-child(3) {
+    left: 250px;
+    top: 35px;
+  }
