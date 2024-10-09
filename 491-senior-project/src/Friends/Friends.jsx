@@ -132,7 +132,7 @@ const Friends = () => {
     }
 
     //moves a users details from the requests subcollection to the friends one
-    const acceptFriendRequest = async(fN, lN, mail, docID) => {
+    const acceptFriendRequest = async([fN, lN, mail, docID]) => {
         try{
             if(user){
                 const friendRef = collection(db, "users", user.uid, "friendlist");
@@ -145,15 +145,16 @@ const Friends = () => {
             }
         }
         catch(err){console.log(err);}
-        finally{clearFriendRequest(docID);}
+        finally{clearFriendRequest(mail, docID);}
     }
 
     //removes a request from a users incoming requests subcollection
-    const clearFriendRequest = async(docID) => {
+    const clearFriendRequest = async(elementID, docID) => {
         try{
             if(user){
                 const reqRef = doc(db, "users", user.uid, "friendrequests", docID)
                 await deleteDoc(reqRef);
+                document.getElementById(elementID).style='none';
             }
         }
         catch(err){console.log(err);}
@@ -263,7 +264,7 @@ const Friends = () => {
                     <ul>
                         {suggestions?.map((doc) => (
                             <div key={Math.random()}>
-                                <li>{doc[0]} {doc[1]} <button id='addFriendButton' onClick={(event) => sendFriendRequest(doc[3])}>+</button></li>
+                                <li>{doc[0]} {doc[1]} <button id='addFriendButton' onClick={(event) => sendFriendRequest(this, doc[3])}>+</button></li>
                             </div>
                         ))}
                     </ul>
@@ -273,7 +274,10 @@ const Friends = () => {
                     <ul>
                         {requests?.map((doc) => (
                             <div key={Math.random()}>
-                                <li>{doc[0]} {doc[1]} <button id='denyReqButton' onClick={(event) => clearFriendRequest(doc[3])}>x</button></li>
+                                <li id={`${doc[2]}`}>{doc[0]} {doc[1]}
+                                    <button id='denyReqButton' onClick={(event) => clearFriendRequest(doc[2], doc[3])}>x</button>
+                                    <button id='acceptReqButton' onclick={(event) => acceptFriendRequest(doc)}>+</button>
+                                </li>
                             </div>
                         ))}
                     </ul>
