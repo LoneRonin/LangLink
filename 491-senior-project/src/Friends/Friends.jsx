@@ -2,22 +2,25 @@ import React, { useEffect } from 'react';
 import { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { Link } from 'react-router-dom';
-import { collection, query, where, doc, getDocs, addDoc, limit, deleteDoc } from "firebase/firestore";
+import { collection, query, where, doc, getDocs, getDoc, limit, deleteDoc, setDoc } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase';
 import './Friends.css';
 
 
 const Friends = () => {
-    const [friends, setFriends] = useState([]);
+    const [friends, setFriends] = useState(null);
     const [emails, setEmails] = useState([]);
-    const [suggestions, setSuggestions] = useState([]);
-    const [requests, setRequests] = useState([]);
+    const [suggestions, setSuggestions] = useState(null);
+    const [requests, setRequests] = useState(null);
+    const [userData, setUserData] = useState(null);
     //uses a state of type set to store array of user data, not optimal but least complicated way of doing it
     //moreso that sets are hard to monitor updates on, allegedly
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true);
     const [error, setError] = useState(null);
+    const [noFriends, setNoFriends] = useState(false);
+    const [noRequests, setNoRequests] = useState(false);
     const [pageNum, setPageNum] = useState(0);
     const loadLimit = 5;
     const auth = getAuth();
@@ -42,6 +45,8 @@ const Friends = () => {
     }
 
     //this function is similar to above but updates the suggestions list (WIP)
+    //need to add a check to make sure users that are already friends aren't recommended, at least
+
     function updateSuggestions(docs){
         const suggestionsList = [];
         //console.log(friends);
@@ -51,7 +56,6 @@ const Friends = () => {
             docs.forEach((doc) => {
                 //console.log(doc.data());
                 var docEntry = doc.data();
-                //console.log(docEntry.email);
     
                 if((docEntry.email != user.email)){
                     var entryArray = [docEntry.firstName, docEntry.lastName, docEntry.email, doc.id];
@@ -112,18 +116,18 @@ const Friends = () => {
     }
 
     //creates a "friend request" document in another users subcollection
-    const sendFriendRequest = async(fid) => {
+    const sendFriendRequest = async(mail, fid) => {
         try{
             if(user){
-
-                const reqRef = collection(db, "users", fid, "friendrequests");
+                if(userData == null){fetchUserData();}
+                const reqRef = doc(db, "users", fid, "friendrequests", user.uid);
                 const userDoc = {
-                    firstName: "test",
-                    lastName: "test",
-                    email: "test"
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    email: userData.email
                 };
                 //console.log(userDoc);
-                addDoc(reqRef, userDoc);//unsure if this is correct rn lol aha
+                setDoc(reqRef, userDoc);
             }
         }
         catch(err){
@@ -135,13 +139,23 @@ const Friends = () => {
     const acceptFriendRequest = async([fN, lN, mail, docID]) => {
         try{
             if(user){
-                const friendRef = collection(db, "users", user.uid, "friendlist");
+                if(userData == null){fetchUserData();}
+                const friendRef = doc(db, "users", user.uid, "friendlist", docID);
                 const userDoc = {
                     firstName: fN,
                     lastName: lN,
                     email: mail
                 };
-                addDoc(reqRef, userDoc);
+                setDoc(friendRef, userDoc);
+                //this constructs an object with the other users information and stores them in the friends list subcollection
+
+                const userRef = doc(db, "users", docID, "friendlist", user.uid);
+                const friendDoc = {
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    email: userData.email
+                }
+                setDoc(userRef, friendDoc);
             }
         }
         catch(err){console.log(err);}
@@ -154,7 +168,7 @@ const Friends = () => {
             if(user){
                 const reqRef = doc(db, "users", user.uid, "friendrequests", docID)
                 await deleteDoc(reqRef);
-                document.getElementById(elementID).style='none';
+                document.getElementById(elementID).style.display='none';
             }
         }
         catch(err){console.log(err);}
@@ -233,6 +247,19 @@ const Friends = () => {
 
     }
 
+    const fetchUserData = async() => {
+        try{
+            if(user){
+                const userDocRef = doc(db, 'users', user.uid);
+                const userDoc = await getDoc(userDocRef);
+                if (userDoc.exists()) {
+                    setUserData(userDoc.data());
+                }
+            }
+        }
+        catch(err){console.log(err);}
+    }
+
     useEffect(() => {//when friends is called, runs this async react effect
         fetchFriendsList();
         fetchIncomingRequests();
@@ -264,7 +291,9 @@ const Friends = () => {
                     <ul>
                         {suggestions?.map((doc) => (
                             <div key={Math.random()}>
-                                <li>{doc[0]} {doc[1]} <button id='addFriendButton' onClick={(event) => sendFriendRequest(this, doc[3])}>+</button></li>
+                                <li id={`${doc[2]}`}>{doc[0]} {doc[1]} 
+                                    <button id='addFriendButton' onClick={(event) => sendFriendRequest(doc[3])}>+</button>
+                                </li>
                             </div>
                         ))}
                     </ul>
@@ -276,7 +305,7 @@ const Friends = () => {
                             <div key={Math.random()}>
                                 <li id={`${doc[2]}`}>{doc[0]} {doc[1]}
                                     <button id='denyReqButton' onClick={(event) => clearFriendRequest(doc[2], doc[3])}>x</button>
-                                    <button id='acceptReqButton' onclick={(event) => acceptFriendRequest(doc)}>+</button>
+                                    <button id='acceptReqButton' onClick={(event) => acceptFriendRequest(doc)}>+</button>
                                 </li>
                             </div>
                         ))}
