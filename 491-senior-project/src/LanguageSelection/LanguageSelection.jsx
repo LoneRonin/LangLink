@@ -1,3 +1,4 @@
+// Worked on by: Tristan Clayman, Victor Perez
 import React, { useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
@@ -6,27 +7,31 @@ import { useNavigate } from 'react-router-dom';
 import './LanguageSelection.css';
 
 const LanguageSelection = () => {
+  // State to store form data for language, difficulty, country, and about me section
   const [formData, setFormData] = useState({
     language: '',
     difficulty: '',
     country: '',
     aboutMe: ''
   });
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const auth = getAuth(); // Get the current authenticated user
+  const user = auth.currentUser; // Reference to the current authenticated user
   const navigate = useNavigate();
 
+   // Handle form input changes and update the state dynamically
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value } = e.target; // Destructure the name and value from the event target
+    setFormData({ ...formData, [name]: value }); // Update the formData state with new input
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (user) {
       try {
         // Update Firestore with the language selection data
         const userDocRef = doc(db, 'users', user.uid);
+        // Update the user's document with the selected language, difficulty, country, and about me info
         await updateDoc(userDocRef, {
           language: formData.language,
           difficulty: formData.difficulty,

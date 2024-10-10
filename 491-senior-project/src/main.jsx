@@ -20,10 +20,11 @@ import Communities from './Communities/Communities';
 
 
 const App = () => {
-  const [language, setLanguage] = useState('es');
+  
+  const [language, setLanguage] = useState('es'); // State for the currently selected language ('es' for Spanish, 'jp' for Japanese)
   const [showMenu, setShowMenu] = useState(false); // For toggling the sign-out menu
   
-
+  // Toggle the current language between Spanish ('es') and Japanese ('jp')
   const toggleLanguage = () => {
     setLanguage((prevLang) => (prevLang === 'es' ? 'jp' : 'es'));
   };
@@ -39,15 +40,16 @@ const App = () => {
     }
   };
 
+  // Handle the user sign-out process
   const handleSignOut = () => {
-    const auth = getAuth();
+    const auth = getAuth(); // Get the current Firebase authentication instance
     signOut(auth)
       .then(() => {
-        console.log('User signed out');
-        window.location.href = '/'; // Redirect to login page
+        console.log('User signed out'); // Log success message on sign-out
+        window.location.href = '/'; // Redirect to login page after sign-out
       })
       .catch((error) => {
-        console.error('Error signing out: ', error);
+        console.error('Error signing out: ', error); // Log any errors during sign-out
       });
   };
 

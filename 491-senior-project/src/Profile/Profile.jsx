@@ -9,6 +9,7 @@ import DefaultProf from '../ProfilePics/defaultprofile.png';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+  // State to store user data and form data, error handling, and loading state
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,10 +24,11 @@ const Profile = () => {
     aboutMe: '',
   });
   const [profilePicture, setProfilePicture] = useState(DefaultProf); // Store the uploaded profile picture
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const auth = getAuth(); // Firebase authentication instance
+  const user = auth.currentUser; // Get the current authenticated user
   const navigate = useNavigate();  // For navigation after edit
 
+  // useEffect to fetch user data from Firestore
   useEffect(() => {
     if (user) {
       const userDocRef = doc(db, 'users', user.uid);
@@ -34,8 +36,9 @@ const Profile = () => {
       // Subscribe to real-time updates using onSnapshot
       const unsubscribe = onSnapshot(userDocRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
-          const data = docSnapshot.data();
-          setUserData(data);
+          const data = docSnapshot.data(); // Retrieve user data
+          setUserData(data); // Set user data
+          // Populate the form with the fetched data
           setFormData({
             firstName: data.firstName || '',
             lastName: data.lastName || '',
@@ -52,18 +55,19 @@ const Profile = () => {
         }
         setLoading(false);
       }, (error) => {
-        setError('Error fetching user data');
+        setError('Error fetching user data'); // Handle data fetching errors
         setLoading(false);
       });
 
       // Clean up subscription on unmount
       return () => unsubscribe();
     } else {
-      setError('No user logged in');
+      setError('No user logged in');  // Handle case where no user is logged in
       setLoading(false);
     }
   }, [user]);
 
+  // Update form data as user types in input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -72,8 +76,9 @@ const Profile = () => {
     }));
   };
 
+  // Handle profile picture upload
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0]; // Get the uploaded file
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -83,13 +88,14 @@ const Profile = () => {
     }
   };
 
+  // Handle form submission to update user profile
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (user) {
       try {
         const userDocRef = doc(db, 'users', user.uid);
 
-        // Update Firestore
+        // Update Firestore with new form data and profile picture
         await updateDoc(userDocRef, {
           firstName: formData.firstName,
           lastName: formData.lastName,

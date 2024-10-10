@@ -1,3 +1,5 @@
+// Worked on by: Tristan Clayman, Victor Perez
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -6,35 +8,39 @@ import { auth, db } from '../firebase'; // Ensure correct path to firebase.js
 import './Signup.css';
 
 const Signup = () => {
+  // State to store form data (first name, last name, email, password)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: ''
   });
+
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Handles changes in form input fields and updates formData state
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handles form submission, creating user account and storing data in Firestore
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form from refreshing the page
     const { firstName, lastName, email, password } = formData;
 
     try {
       // Create user with email and password in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+      const user = userCredential.user; // Retrieve the user object
 
       // Store user data in Firestore
       await setDoc(doc(db, 'users', user.uid), {
         firstName,
         lastName,
         email,
-        language: '', // Language will be selected later
+        language: '', // Default empty language to be selected later
       });
 
       // Redirect to language selection page
