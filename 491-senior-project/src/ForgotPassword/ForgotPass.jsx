@@ -13,11 +13,10 @@ const Forgotpass = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        setError(null); // Reset error state
-        setSuccessMessage(null); // Reset success state
-
+        setError(null); 
+        setSuccessMessage(null); 
+    
         try {
-            // Query Firestore to check if the email exists
             const usersRef = collection(db, "users");
             const q = query(usersRef, where("email", "==", email));
             const querySnapshot = await getDocs(q);
@@ -32,10 +31,13 @@ const Forgotpass = () => {
                 setSuccessMessage("Password reset email sent successfully!");
                 clearMessageAfterDelay(); // Clear the message after 5 seconds
             }
-        } catch (err) {
-            setError("An error occurred while processing the request.");
-            clearMessageAfterDelay(); // Clear the message after 5 seconds
-            console.error(err);
+        //     await sendPasswordResetEmail(auth, email);
+        //     setSuccessMessage("Password reset link has been sent. Please check your email.");
+        //     clearMessageAfterDelay();
+        } 
+            catch (error) {
+            setError("An error occurred while sending the reset email.");
+            clearMessageAfterDelay();
         }
     };
 
