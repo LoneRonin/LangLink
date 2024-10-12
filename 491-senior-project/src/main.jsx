@@ -9,6 +9,7 @@ import Homepage from './Homepage/Homepage.jsx';
 import Signup from './Signup/Signup.jsx';
 import LanguageSelection from './LanguageSelection/LanguageSelection.jsx';
 import Profile from './Profile/Profile.jsx';
+import Lessons from './Lessons/Lessons.jsx'; 
 import Alpha from './Alphabet/Alpha.jsx';
 import FillInTheBlank from './Alphabet/FillInTheBlank.jsx';
 import Conjugate from './Conjugate/Conjugate.jsx';
@@ -66,6 +67,7 @@ const App = () => {
   <li className="nav-item"><Link to="/">Log In</Link></li>
   <li className="nav-item"><Link to="/homepage">Homepage</Link></li>
   <li className="nav-item"><Link to="/signup">Sign Up</Link></li>
+  <li className="nav-item"><Link to="/lessons">Lessons</Link></li>
   <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
   {/* <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>*/}
         <li className="nav-item"><Link to="/grammar">Grammar</Link></li> 
@@ -99,6 +101,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/homepage" element={<Homepage />} />
+        <Route path="/lessons" element= {<Lessons />} />
         <Route path="/grammar/conjugate-es" element={<Conjugate />} />
         <Route path="/grammar/sentence-es" element={<SentenceEs />} />
         <Route path="/grammar/sentence-jp" element={<SentenceJp />} />
@@ -109,7 +112,7 @@ const App = () => {
         <Route path="/language-selection" element={<LanguageSelection />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/communities" element={<Communities />} /> 
-      <Route path="/forgotpassword" element={<Forgotpass />} />
+        <Route path="/forgotpassword" element={<Forgotpass />} />
       </Routes>
       
       </Router>
