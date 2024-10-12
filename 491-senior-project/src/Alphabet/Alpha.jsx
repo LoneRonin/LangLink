@@ -242,6 +242,11 @@ function Alpha({ language }) {
         </div>
       )}
 
+      {/* Back to Lessons Button */}
+      <button className="back-button" onClick={() => navigate('/lessons')}>
+        Back to Lessons
+      </button>
+
       {/* Full Rows Grid for Main Alphabet */}
       <div className="letter-grid">
         {fullRows.map((item, index) => (

@@ -1,37 +1,27 @@
-/*Zachary Hunt */
-import React, { useState } from 'react';
-import './Grammar.css'; 
+import React from 'react';
+import './Grammar.css';
+import { useNavigate } from 'react-router-dom';
 
 import esFlag from './es.png'; // Spanish flag
 import jpFlag from './jp.png'; // Japanese flag
 
-const Grammar = () => {
-  //Use States for language switching
-  const [flag, setFlag] = useState(esFlag);
-  const [language, setLanguage] = useState('es'); // Tracks the current language (default is 'es' for Spanish)
-  const toggleFlag = () => {
-    if (language === 'es') { // change flag and language by clicking on image
-      setFlag(jpFlag);
-      setLanguage('jp');
-    } else {
-      setFlag(esFlag);
-      setLanguage('es');
-    }};
+const Grammar = ({ language }) => {
+  const navigate = useNavigate();
+  const flag = language === 'es' ? esFlag : jpFlag;
 
-  // buttons and title for grammar homepage
   return (
     <div className="page-container">
       <h1>Grammar Learning Page</h1>
+      {/* Back to Lessons Button */}
+      <button className="back-button" onClick={() => navigate('/lessons')}>
+        Back to Lessons
+      </button>
       <div className="button-container">
         {/* Conditionally route based on the selected language */}
         <button className="button" onClick={() =>
             window.location.href = language === 'es' 
               ? '/grammar/conjugate-es' 
               : '/grammar/conjugate-jp'}>Conjugate</button>
-        {/* Toggle flag button */}
-        <button className="flag-button" onClick={toggleFlag}>
-          <img src={flag} alt="Language Flag" className="flag-image" />
-        </button>
         {/* Conditionally route based on the selected language */}
         <button className="button" onClick={() =>
             window.location.href = language === 'es'
@@ -41,4 +31,5 @@ const Grammar = () => {
     </div>
   );
 };
+
 export default Grammar;

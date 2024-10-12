@@ -1,6 +1,7 @@
 /*Zachary Hunt */
 import React, { useState } from 'react';
 import './Conjugate.css';
+import { useNavigate } from 'react-router-dom'
 // dictionary of spanish verb exercises
 const exercises = [
   // hablar
@@ -96,6 +97,7 @@ const exercises = [
 ]; // end of dictionary
 
 const Conjugate = () => {
+  const navigate = useNavigate();
   // setting up states for conjugate activity
   const [isCorrect, setIsCorrect] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
@@ -118,19 +120,34 @@ const Conjugate = () => {
       }, 500); // Red flash will disappear after 500ms
     }};
 // return buttons, correct/incorrect message, word info for conjugate exercise
-return ( 
-  <div className="grammar-container">
-    <h1>Conjugate Practice</h1>
-    {/* display based on currect index of exercise list */}
-    <h2>{currentExercise.word}: {currentExercise.definition}</h2> 
-    <h2>Tense: {currentExercise.tense}</h2>
-    <h2>{currentExercise.pronoun}</h2>
-    {/* Handles answer being choosen */}
-    <div className="grammar-buttons">
-      {currentExercise.options.map((option) => ( <button key={option} onClick={() => handleButtonClick(option)}> {option} </button>))}
+return (
+  <div>
+    {/* Back to Grammar Button */}
+    <div className="back-button-container">
+      <button className="back-button" onClick={() => navigate('/grammar')}>
+        Back to Grammar
+      </button>
     </div>
-    {/* display correct/incorrect when button is clicked */}
-    {isCorrect && (<div className="correct-message">Correct!</div>)} {isWrong && (<div className="incorrect-message">Incorrect!</div>)}</div>); 
-    
+
+    <div className="grammar-container">
+      <h1>Conjugate Practice</h1>
+      {/* display based on current index of exercise list */}
+      <h2>{currentExercise.word}: {currentExercise.definition}</h2> 
+      <h2>Tense: {currentExercise.tense}</h2>
+      <h2>{currentExercise.pronoun}</h2>
+      {/* Handles answer being chosen */}
+      <div className="grammar-buttons">
+        {currentExercise.options.map((option) => (
+          <button key={option} onClick={() => handleButtonClick(option)}> 
+            {option} 
+          </button>
+        ))}
+      </div>
+      {/* display correct/incorrect when button is clicked */}
+      {isCorrect && (<div className="correct-message">Correct!</div>)} 
+      {isWrong && (<div className="incorrect-message">Incorrect!</div>)}
+    </div>
+  </div>
+); 
 };
 export default Conjugate;
