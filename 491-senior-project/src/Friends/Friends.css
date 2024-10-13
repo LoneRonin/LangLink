@@ -8,27 +8,30 @@
 }
 
 .list{
-    
-}
-.button{
-    color:aliceblue;
+    list-style-type:none;
+    text-align: right;
 }
 
-.friendBar1{
+.listElement {
+    border-radius: 16px;
+    padding: 2px 12px;
+}
+
+.listElement:hover {
+    background-color: azure;
     color: black;
-    width: 200px;
-    text-align: center;
-    height: 30px;
-    margin: 3px;
-    background-color: lightgray;
-    border-radius: 4px 12px 12px 4px;
+    transition-duration: 0.5s;
 }
 
-.friendBar2{
-    margin: 3px;
-    text-align: center;
-    height: 30px;
-    width: 200px;
-    background-color: gray;
-    border-radius: 4px 12px 12px 4px;
+.button{
+    color:black;
+    background-color: skyblue;
+    border-radius: 16px;
+    margin: 2px 12px;
+}
+
+.button:hover{
+    color:aliceblue;
+    background-color: black;
+    transition-duration: 0.5s;
 }

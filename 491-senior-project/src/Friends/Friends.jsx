@@ -29,7 +29,9 @@ const Friends = () => {
         //setLoading(false)
         const friendList = [];
         const emailList = [];
-        docs.forEach((doc) => {//loop that takes the relevant information from each doc, makes an array, then adds it to the set
+        //loop that takes the relevant information from each doc, makes an array,
+        //then adds it to the set
+        docs.forEach((doc) => {
             var friend = doc.data();
             var friendArray = [friend.firstName, friend.lastName, friend.email, doc.id];
             friendList.push(friendArray);
@@ -96,9 +98,7 @@ const Friends = () => {
     const sendFriendRequest = async(fid) => {
         try{
             if(user){
-                //if no user dasta is present, runs a short query to grab users first & last name + email to send a request
-                //await fetchUserData()
-
+                //constrcuts document reference and a document to create
                 const reqRef = doc(db, "users", fid, "friendrequests", user.uid);
                 const userDoc = {
                     firstName: userData.firstName,
@@ -157,6 +157,7 @@ const Friends = () => {
         catch(err){console.log(err);}
     }
 
+    //basic function to clear database of info in friendslist collection (WIP)
     const removeFriend = async(fid) => {
         try{
             if(user){
@@ -265,7 +266,7 @@ const Friends = () => {
         fetchUserData();
         fetchFriendsList();
         fetchIncomingRequests();
-        fetchFriendSuggestions(6);
+        fetchFriendSuggestions(15);
     }, []);
 
     if (error) {return <p>{error}</p>;}
@@ -282,8 +283,8 @@ const Friends = () => {
                     <ul className='list'>
                         {friends?.map((doc) => (
                             <div key={Math.random()}>
-                                <li id={`${doc[2]}`}>{doc[0]} {doc[1]} 
-                                    <button id='removeFriendButton' onClick={(event) => removeFriend(doc[3])}>Remove</button>
+                                <li className='listElement' id={`${doc[2]}`}>{doc[0]} {doc[1]} 
+                                    <button className='button' id='removeFriendButton' onClick={(event) => removeFriend(doc[3])}>-</button>
                                 </li>
                             </div>
                         ))}
@@ -295,8 +296,8 @@ const Friends = () => {
                     <ul className='list'>
                         {suggestions?.map((doc) => (
                             <div key={Math.random()}>
-                                <li id={`${doc[2]}`}>{doc[0]} {doc[1]} 
-                                    <button id='addFriendButton' onClick={(event) => sendFriendRequest(doc[3])}>+</button>
+                                <li className='listElement' id={`${doc[2]}`}>{doc[0]} {doc[1]} 
+                                    <button className='button' id='addFriendButton' onClick={(event) => sendFriendRequest(doc[3])}>+</button>
                                 </li>
                             </div>
                         ))}
@@ -307,9 +308,9 @@ const Friends = () => {
                     <ul className='list'>
                         {requests?.map((doc) => (
                             <div key={Math.random()}>
-                                <li id={`${doc[2]}`}>{doc[0]} {doc[1]}
-                                    <button id='denyReqButton' onClick={(event) => clearFriendRequest(doc[2], doc[3])}>x</button>
-                                    <button id='acceptReqButton' onClick={(event) => acceptFriendRequest(doc)}>+</button>
+                                <li className='listElement' id={`${doc[2]}`}>{doc[0]} {doc[1]}
+                                    <button className='button' id='denyReqButton' onClick={(event) => clearFriendRequest(doc[2], doc[3])}>x</button>
+                                    <button className='button' id='acceptReqButton' onClick={(event) => acceptFriendRequest(doc)}>+</button>
                                 </li>
                             </div>
                         ))}
