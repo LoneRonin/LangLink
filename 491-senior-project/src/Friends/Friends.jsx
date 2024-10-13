@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import ReactDOM from "react-dom/client";
 import { Link } from 'react-router-dom';
 import { collection, query, where, doc, getDocs, getDoc, limit, deleteDoc, setDoc } from "firebase/firestore";
@@ -22,7 +21,6 @@ const Friends = () => {
     const [noFriends, setNoFriends] = useState(false);
     const [noRequests, setNoRequests] = useState(false);
     const [pageNum, setPageNum] = useState(0);
-    const loadLimit = 5;
     const auth = getAuth();
     const user = auth.currentUser;
     
@@ -37,16 +35,14 @@ const Friends = () => {
             friendList.push(friendArray);
             //console.log(doc.id);
             emailList.push(friend.email);
-            //console.log(friend.email);
         });
         setFriends(friendList);
         setEmails(emailList);
-        //sets the set state with the finished list
+        //sets the set state with the finished lists
     }
 
     //this function is similar to above but updates the suggestions list (WIP)
     //need to add a check to make sure users that are already friends aren't recommended, at least
-
     function updateSuggestions(docs){
         const suggestionsList = [];
         //console.log(friends);
@@ -81,6 +77,7 @@ const Friends = () => {
     //this function is similar to above but handles incoming requests
     function updateRequests(docs){
         const requestsList = [];
+        //makes blank array, then populates it w/ arrays of user info w/ incoming requests
         docs.forEach((doc) =>{
             var request = doc.data();
             var requestArray = [request.firstName, request.lastName, request.email, doc.id];
@@ -95,31 +92,13 @@ const Friends = () => {
         }
     }
 
-    //this disgusting block of code is supposed to help handle creating a doc for other users
-    const getUserId = async(mail) => {
-        try{
-            if(user){
-                let userID;
-                const reqRef = collection(db, "users");
-                const idQuery = query(reqRef, where("email","==",mail));
-                getDocs(idQuery)
-                .then((querySnapshot) => {
-                    let p;
-                    querySnapshot.forEach((doc) => {
-                        return doc.id;
-                    });
-                });
-                //console.log(userID);
-            }
-        }
-        catch(err){console.log(err);}
-    }
-
     //creates a "friend request" document in another users subcollection
-    const sendFriendRequest = async(mail, fid) => {
+    const sendFriendRequest = async(fid) => {
         try{
             if(user){
-                if(userData == null){fetchUserData();}
+                //if no user dasta is present, runs a short query to grab users first & last name + email to send a request
+                //await fetchUserData()
+
                 const reqRef = doc(db, "users", fid, "friendrequests", user.uid);
                 const userDoc = {
                     firstName: userData.firstName,
@@ -127,6 +106,7 @@ const Friends = () => {
                     email: userData.email
                 };
                 //console.log(userDoc);
+                //uses setDoc to prevent duplicate requests from being made
                 setDoc(reqRef, userDoc);
             }
         }
@@ -156,9 +136,11 @@ const Friends = () => {
                     email: userData.email
                 }
                 setDoc(userRef, friendDoc);
+                //makes a mirrored write to make sure the other user has this user put in their friends list
             }
         }
         catch(err){console.log(err);}
+        //after accepting the request, removes it from the database & page
         finally{clearFriendRequest(mail, docID);}
     }
 
@@ -166,14 +148,29 @@ const Friends = () => {
     const clearFriendRequest = async(elementID, docID) => {
         try{
             if(user){
-                const reqRef = doc(db, "users", user.uid, "friendrequests", docID)
+                const reqRef = doc(db, "users", user.uid, "friendrequests", docID);
                 await deleteDoc(reqRef);
+                //this is supposed to remove the element from the html
                 document.getElementById(elementID).style.display='none';
             }
         }
         catch(err){console.log(err);}
     }
 
+    const removeFriend = async(fid) => {
+        try{
+            if(user){
+                const friendRef = doc(db, "users", user.uid, "friendlist", fid);
+                await deleteDoc(friendRef);
+
+                const userRef = doc(db, "users", fid, "friendlist", user.uid);
+                await deleteDoc(userRef);
+            }
+        }
+        catch(err){console.log(err);}
+    }
+
+    //async function to retrieve a users friend list, then passes it into a constructor
     const fetchFriendsList = async() => {
         setError(null);
         setLoading(true);
@@ -203,7 +200,8 @@ const Friends = () => {
         finally{setLoading(false);}
     }
 
-    const fetchFriendSuggestions = async() => {
+    //async function to retrieve a list of recommended users to send friend requests too (WIP) but functions
+    const fetchFriendSuggestions = async(loadLimit) => {
         setLoading2(true);
 
         try{
@@ -231,6 +229,7 @@ const Friends = () => {
         finally{setLoading2(false);}
     }
 
+    //async func to retrieve list of incoming friend requests
     const fetchIncomingRequests = async() => {
         try{
             if(user){
@@ -246,14 +245,16 @@ const Friends = () => {
         catch(err){console.log(err);}
 
     }
-
+    //async function to retrieve users information, mostly used to send friend requests with accurate information
     const fetchUserData = async() => {
         try{
             if(user){
                 const userDocRef = doc(db, 'users', user.uid);
-                const userDoc = await getDoc(userDocRef);
+                var userDoc = await getDoc(userDocRef);
                 if (userDoc.exists()) {
                     setUserData(userDoc.data());
+                    //console.log(userDoc.data());
+                    //console.log(userData)
                 }
             }
         }
@@ -261,10 +262,11 @@ const Friends = () => {
     }
 
     useEffect(() => {//when friends is called, runs this async react effect
+        fetchUserData();
         fetchFriendsList();
         fetchIncomingRequests();
-        fetchFriendSuggestions();
-    }, [user]);
+        fetchFriendSuggestions(6);
+    }, []);
 
     if (error) {return <p>{error}</p>;}
     //if (loading) {return <p>Loading...</p>;}
@@ -277,10 +279,12 @@ const Friends = () => {
                 <div id = 'friendDisplay'>
                     <p>Welcome to the friend zone</p>
                     {loading && "Loading..."}
-                    <ul>
+                    <ul className='list'>
                         {friends?.map((doc) => (
                             <div key={Math.random()}>
-                                <li>{doc[0]} {doc[1]}</li>
+                                <li id={`${doc[2]}`}>{doc[0]} {doc[1]} 
+                                    <button id='removeFriendButton' onClick={(event) => removeFriend(doc[3])}>Remove</button>
+                                </li>
                             </div>
                         ))}
                     </ul>
@@ -288,7 +292,7 @@ const Friends = () => {
                 <div id = 'friendsuggestion'>
                     <p>Make a new friend!</p>
                     {loading2 && "Loading..."}
-                    <ul>
+                    <ul className='list'>
                         {suggestions?.map((doc) => (
                             <div key={Math.random()}>
                                 <li id={`${doc[2]}`}>{doc[0]} {doc[1]} 
@@ -300,7 +304,7 @@ const Friends = () => {
                 </div>
                 <div id = 'requests'>
                     <p>incoming friend requests</p>
-                    <ul>
+                    <ul className='list'>
                         {requests?.map((doc) => (
                             <div key={Math.random()}>
                                 <li id={`${doc[2]}`}>{doc[0]} {doc[1]}
