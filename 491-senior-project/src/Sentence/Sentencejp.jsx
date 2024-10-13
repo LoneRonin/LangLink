@@ -24,7 +24,7 @@ const Sentence = () => {
   return (
     <div className="container">
       <h1>Japanese Sentence Builder</h1>
-      <p>Phrase actual: {sentence}</p>
+      <p>Actual Phrase: {sentence}</p>
       <div>
         {/* displays word bank as a grid of buttons you can click to add to sentence */}
         {words.map((word, index) => (
