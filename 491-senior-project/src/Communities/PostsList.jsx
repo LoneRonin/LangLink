@@ -47,21 +47,36 @@ const PostsList = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="posts-list">
+    <div className="forum-posts-list">
       {posts.length > 0 ? (
         posts.map((post) => (
-          <div key={post.id} className="post">
-            <div className="post-content">
-              <p>{post.content}</p>
-              <div className="post-meta">
-                <small>Posted by {post.author || 'Anonymous'} on {post.timestamp?.toDate().toLocaleString()}</small>
-                <div className="post-actions">
-                  <button className="upvote-btn" onClick={() => handleUpvote(post.id)}>↑ {post.upvotes || 0}</button>
-                  <button className="comment-btn" onClick={() => toggleComments(post.id)}>💬 View Comments</button>
-                </div>
-              </div>
+          <div key={post.id} className="forum-post">
+            {/* Upvote Section */}
+            <div className="vote-section">
+              <button className="upvote-btn" onClick={() => handleUpvote(post.id)}>
+                ↑ {post.upvotes || 0}
+              </button>
             </div>
-            {commentsVisible[post.id] && <Comments postId={post.id} />} {/* Render Comments component */}
+
+            {/* Post Content Section */}
+            <div className="post-content-section">
+              <div className="post-header">
+                <span className="post-author">Posted by {post.author || 'Anonymous'}</span>
+                <span className="post-date">{post.timestamp?.toDate().toLocaleString()}</span>
+              </div>
+
+              <div className="post-body">
+                <p>{post.content}</p>
+              </div>
+
+              <div className="post-footer">
+                <button className="comment-btn" onClick={() => toggleComments(post.id)}>
+                  💬 {commentsVisible[post.id] ? "Hide Comments" : "View Comments"}
+                </button>
+              </div>
+
+              {commentsVisible[post.id] && <Comments postId={post.id} />} {/* Render Comments component */}
+            </div>
           </div>
         ))
       ) : (

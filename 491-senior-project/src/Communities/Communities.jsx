@@ -34,9 +34,13 @@ const Communities = () => {
     fetchUserData();
   }, [user]);
 
+  const handlePostAdded = () => {
+    // Any additional logic you want to run after a post is added
+  };
+
   return (
     <div className="community-container">
-      <h1 className="community-header">Welcome to the {language === 'Spanish' ? 'Spanish' : 'Japanese'} Community, {firstName}!</h1>
+      <h1 className="community-header">Welcome to the {language === 'Spanish' ? 'Spanish' : 'Japanese'} Community, {firstName}.</h1>
       <p className="community-message">Feel free to share your thoughts and upvote!</p>
 
       {/* Post submission form */}
