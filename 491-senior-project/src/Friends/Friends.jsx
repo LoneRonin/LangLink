@@ -50,6 +50,15 @@ const Friends = () => {
         //console.log(friends);
         //console.log(emails);
 
+        docs.forEach((doc) => {
+            var docEntry = doc.data();
+            var element = document.getElementById(docEntry.email);
+            if(element == null){
+                var entryArray = [docEntry.firstName, docEntry.lastName, docEntry.email, doc.id];
+                suggestionsList.push(entryArray);
+            }
+        });
+        /*
         if(emails.length <= 0){
             docs.forEach((doc) => {
                 //console.log(doc.data());
@@ -71,7 +80,7 @@ const Friends = () => {
                     suggestionsList.push(entryArray);
                 }
             });
-        }
+        }*/
         setSuggestions(suggestionsList);
         //console.log(suggestionsList);
     }
@@ -157,8 +166,22 @@ const Friends = () => {
         catch(err){console.log(err);}
     }
 
+    function removeFriendPopup([fName, lName, email, fid]){
+        console.log('removing popup')
+        var popupID = "popup_"+email;
+        var popup = document.getElementById(popupID);
+        popup.style.display = ("none");
+    }
+
+    function appearFriendPopup([fName, lName, email, fid]){
+        console.log('creating popup')
+        var popupID = "popup_"+email;
+        var popup = document.getElementById(popupID);
+        popup.style.display = ("block");
+    }
+
     //basic function to clear database of info in friendslist collection (WIP)
-    const removeFriend = async(fid) => {
+    const removeFriend = async([fName, lName, email, fid]) => {
         try{
             if(user){
                 const friendRef = doc(db, "users", user.uid, "friendlist", fid);
@@ -169,6 +192,7 @@ const Friends = () => {
             }
         }
         catch(err){console.log(err);}
+        finally{removeFriendPopup([fName, lName, email, fid]);}
     }
 
     //async function to retrieve a users friend list, then passes it into a constructor
@@ -266,7 +290,7 @@ const Friends = () => {
         fetchUserData();
         fetchFriendsList();
         fetchIncomingRequests();
-        fetchFriendSuggestions(15);
+        fetchFriendSuggestions(6);
     }, []);
 
     if (error) {return <p>{error}</p>;}
@@ -284,7 +308,17 @@ const Friends = () => {
                         {friends?.map((doc) => (
                             <div key={Math.random()}>
                                 <li className='listElement' id={`${doc[2]}`}>{doc[0]} {doc[1]} 
-                                    <button className='button' id='removeFriendButton' onClick={(event) => removeFriend(doc[3])}>-</button>
+                                    <button className='button' id='removeFriendButton' onClick={(event) => appearFriendPopup(doc)}>-</button>
+                                    <div id={`popup_${doc[2]}`} className='modal'>
+                                        <div className='modal-content'>
+                                            <span className='close' onClick={(event) => removeFriendPopup(doc)}>&times;</span>
+                                            <p>Are you sure you want to remove this user?</p>
+                                            <p>
+                                                <button className = 'yesbutton' onClick={(event) => removeFriend(doc)}>Yes</button>
+                                                <button className = 'nobutton' onClick={(event) => removeFriendPopup(doc)}>No</button>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </li>
                             </div>
                         ))}
