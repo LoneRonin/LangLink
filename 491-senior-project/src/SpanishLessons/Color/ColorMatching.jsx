@@ -1,0 +1,1 @@
+// Match colors with their name in spanish
