@@ -150,7 +150,10 @@ const Friends = () => {
         }
         catch(err){console.log(err);}
         //after accepting the request, removes it from the database & page
-        finally{clearFriendRequest(mail, docID);}
+        finally{
+            clearFriendRequest(mail, docID);
+            fetchFriendsList(user.uid);
+        }
     }
 
     //removes a request from a users incoming requests subcollection
@@ -192,17 +195,40 @@ const Friends = () => {
             }
         }
         catch(err){console.log(err);}
-        finally{removeFriendPopup([fName, lName, email, fid]);}
+        finally{
+            removeFriendPopup([fName, lName, email, fid]);
+            fetchFriendsList(user.uid);
+        }
+    }
+
+    const constructSuggestionsList = async() => {
+        try{
+            if(user){
+                //query user's friend list
+                //query each individual friend for their friend list
+                //find users that are friends of friends but not the user's friend
+                //ideally we can pick out users from posts a user has recently interacted with, would require keeping track
+                const usersList = collection(db, "users", id, "friendlist");
+                const userFriendsList = query(usersList);
+                const friendList = await getDocs(userFriendsList);
+                if((!friendList.exists())){console.log("no data found.");}
+                else{
+                    console.log(friendList.data());
+                }
+
+            }
+        }
+        catch(err){console.log(err);}
     }
 
     //async function to retrieve a users friend list, then passes it into a constructor
-    const fetchFriendsList = async() => {
+    const fetchFriendsList = async(id) => {
         setError(null);
         setLoading(true);
         try{
             if(user){
                 //constructs a database query, pulls the friends list tied to users uid
-                const usersList = collection(db, "users", user.uid, "friendlist");
+                const usersList = collection(db, "users", id, "friendlist");
                 const userFriendsList = query(usersList);
 
                 getDocs(userFriendsList)
@@ -287,10 +313,13 @@ const Friends = () => {
     }
 
     useEffect(() => {//when friends is called, runs this async react effect
-        fetchUserData();
-        fetchFriendsList();
-        fetchIncomingRequests();
-        fetchFriendSuggestions(6);
+        if(user){
+            fetchUserData();
+            fetchFriendsList(user.uid);
+            fetchIncomingRequests();
+            fetchFriendSuggestions(6);
+        }
+        
     }, []);
 
     if (error) {return <p>{error}</p>;}
