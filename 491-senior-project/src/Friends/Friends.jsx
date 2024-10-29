@@ -211,10 +211,8 @@ const Friends = () => {
                 const usersList = collection(db, "users", id, "friendlist");
                 const userFriendsList = query(usersList);
                 const friendList = await getDocs(userFriendsList);
-                if((!friendList.exists())){console.log("no data found.");}
-                else{
-                    console.log(friendList.data());
-                }
+                if((!friendList.exists())){throw("no data found");}
+                console.log(friendList.data());
 
             }
         }
