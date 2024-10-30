@@ -5,6 +5,7 @@ import { db } from '../firebase'; // Ensure correct path to firebase.js
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Homepage.css'; // Import the updated CSS for styling
 
+
 const Homepage = () => {
   const [firstName, setFirstName] = useState('');
   const [loading, setLoading] = useState(true);
@@ -54,8 +55,8 @@ const Homepage = () => {
 
   const dummyFriends = [
     { name: 'John Doe', flag: '🇺🇸' },
-    { name: 'Jane Smith', flag: '🇬🇧' },
-    { name: 'Carlos Diaz', flag: '🇲🇽' }
+    { name: 'Jane Smith', flag: '🇯🇵' },
+    { name: 'Ricardo Martinez', flag: '🇲🇽' }
   ];
 
   return (
@@ -95,7 +96,7 @@ const Homepage = () => {
             <div className="friend" key={index}>
               <div className="friend-info">
                 <p>{friend.name}</p>
-                <span>{friend.flag}</span>
+                <p className="friend-flag">{friend.flag}</p> {/* Moved flag to a new paragraph */}
               </div>
               <div className="friend-actions">
                 <button className="action-button small">Add</button>

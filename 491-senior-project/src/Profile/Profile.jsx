@@ -1,3 +1,4 @@
+//Names: Victor,Tristan
 import React, { useEffect, useState } from 'react';
 import { getAuth, updateEmail } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';

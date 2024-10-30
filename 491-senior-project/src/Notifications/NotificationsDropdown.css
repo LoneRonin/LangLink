@@ -1,0 +1,42 @@
+/* Worked on by: Victor */
+.notifications-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+
+
+.notification-bell:hover {
+  color: #f1c40f; /* Change to a gold color on hover */
+}
+
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  z-index: 1;
+}
+
+.notification-item {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.notification-item {
+  font-size: 0.9rem;
+  color: #333;
+}

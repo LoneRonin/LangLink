@@ -1,0 +1,30 @@
+/* darkmode.css */
+
+/* Root Variables for Dark Mode */
+:root {
+  --bg-color-dark: #242424;
+  --text-color-dark: rgba(255, 255, 255, 0.87);
+  --navbar-bg-dark: #333;
+  --link-color-dark: #646cff;
+  --link-hover-color-dark: #535bf2;
+}
+
+/* Apply Dark Mode Styles */
+body.dark-mode {
+  background-color: var(--bg-color-dark);
+  color: var(--text-color-dark);
+}
+
+/* Navbar in Dark Mode */
+.navbar.dark-mode {
+  background-color: var(--navbar-bg-dark);
+}
+
+/* Links in Dark Mode */
+.nav-item a.dark-mode {
+  color: var(--link-color-dark);
+}
+
+.nav-item a.dark-mode:hover {
+  color: var(--link-hover-color-dark);
+}

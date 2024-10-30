@@ -183,23 +183,27 @@ body {
   background-color: #333;
   padding: 1.5rem;
   border-radius: 12px;
-  max-width: 400px; /* Increased width */
-  color: white;
+  max-width: 300px; /* Adjust max width as needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .friend {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Space between name and actions */
   align-items: center;
-  margin-top: 1rem;
-  padding-left: 3rem; /* Added space for future photo */
+  margin-bottom: 1rem; /* Space between friends */
 }
 
 .friend-info {
   display: flex;
-  align-items: center;
+  align-items: center; /* Align items vertically */
 }
 
-.friend-info p {
-  margin-left: 1rem; /* Space between the photo and name */
+.friend-flag {
+  margin-left: 0.5rem; /* Space between name and flag */
+}
+
+.friend-actions {
+  display: flex;
+  gap: 0.5rem; /* Space between buttons */
 }

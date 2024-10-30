@@ -1,0 +1,25 @@
+
+.community-container {
+    text-align: left;
+    margin: 50px auto; /* Less top margin */
+    padding: 20px;
+    background-color: #1a1a1b;
+    color: white;
+    width: 100%; /* Use full width */
+    max-width: 1200px; /* Max width for large screens */
+    border: none;
+    border-radius: 0; /* Remove rounded edges */
+  }
+  
+  .community-header {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    padding: 10px 0;
+  }
+  
+  .community-message {
+    font-size: 20px;
+    color: #ddd;
+    padding: 5px 0;
+  }

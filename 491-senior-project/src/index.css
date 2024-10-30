@@ -1,23 +1,14 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  --bg-color: #242424; /* Background color for dark mode */
+  --text-color: rgba(255, 255, 255, 0.87); /* Text color for dark mode */
+  --link-color: #646cff; /* Link color for dark mode */
+  --link-hover-color: #535bf2; /* Link hover color for dark mode */
+  --button-bg: #1a1a1a; /* Button background for dark mode */
+  --button-border-color: transparent; /* Button border color for dark mode */
+  --navbar-bg: #333; /* Navbar background for dark mode */
+  --homepage-bg: #1e1e1e; /* Homepage background for dark mode */
+  --homepage-content-bg: #2e2e2e; /* Homepage content background for dark mode */
+  --button-hover-border-color: #646cff; /* Button hover border color */
 }
 
 body {
@@ -27,8 +18,8 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #242424;
-  background-color: #242424;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 h1 {
@@ -38,17 +29,17 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid var(--button-border-color);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--button-bg);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--button-hover-border-color);
 }
 button:focus,
 button:focus-visible {
@@ -61,7 +52,7 @@ button:focus-visible {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #333;
+  background-color: var(--navbar-bg);
 }
 
 .nav-list {
@@ -73,8 +64,11 @@ button:focus-visible {
 }
 
 .nav-item a {
-  color: white;
+  color: var(--text-color);
   text-decoration: none;
+}
+.nav-item a:hover {
+  color: var(--link-hover-color);
 }
 
 .language-button {
@@ -104,11 +98,11 @@ button:focus-visible {
   align-items: center;
   min-height: 100vh;
   padding: 2rem;
-  background-color: #1e1e1e;
+  background-color: var(--homepage-bg);
 }
 
 .homepage-content {
-  background-color: #2e2e2e;
+  background-color: var(--homepage-content-bg);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);

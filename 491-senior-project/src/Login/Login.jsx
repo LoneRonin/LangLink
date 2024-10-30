@@ -1,3 +1,4 @@
+//Names: Victor, Tristan
 import React, { useState } from 'react';
 import { auth } from '../firebase'; // Import auth
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Firebase sign-in

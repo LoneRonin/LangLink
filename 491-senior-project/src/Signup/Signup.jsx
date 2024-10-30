@@ -1,3 +1,4 @@
+//Names: Victor, Tristan
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
