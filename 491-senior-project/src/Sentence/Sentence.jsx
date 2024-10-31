@@ -1,30 +1,38 @@
-/*Zachary Hunt */
 import React, { useState } from 'react';
 import './Sentence.css';
 import { useNavigate } from 'react-router-dom';
 
-const Sentence = () => {
+const Sentence = ({ language }) => {
   const navigate = useNavigate();
   const [sentence, setSentence] = useState('');
 
-  //Word Bank
-  const [words, setWords] = useState([ // Add Words below to be used for word bank
+  // Word Banks for Spanish and Japanese
+  const spanishWords = [
     'Hola', 'soy', 'un', 'programador', 'que', 'ama', 'React',
     'Me', 'gusta', 'aprender', 'nuevas', 'tecnologías',
     'Estoy', 'creando', 'una', 'actividad', 'interesante',
-  ]);
+  ];
 
-  // function for adding words to a sentence
+  const japaneseWords = [
+    'こんにちは', '私は', 'プログラマー', 'です', 'React', 'が', '好きです',
+    '新しい', '技術', 'を', '学ぶ', 'のが', '好きです',
+    '面白い', '活動', 'を', '作っています',
+  ];
+
+  // Determine the current word bank based on the language
+  const words = language === 'es' ? spanishWords : japaneseWords;
+
+  // Function for adding words to a sentence
   const addWord = (word) => {
     setSentence(prevSentence => `${prevSentence} ${word}`);
   };
 
-  // function for removing all words from sentence created
+  // Function for removing all words from the sentence
   const resetSentence = () => {
     setSentence('');
   };
-  
-  // return buttons, and text for sentence builder
+
+  // Return buttons and text for sentence builder
   return (
     <div>
       {/* Back to Grammar Button */}
@@ -35,8 +43,8 @@ const Sentence = () => {
       </div>
 
       <div className="container">
-        <h1>Spanish Sentence Builder</h1>
-        <p>Phrase actual: {sentence}</p>
+        <h1>{language === 'es' ? 'Spanish Sentence Builder' : 'Japanese Sentence Builder'}</h1>
+        <p>Current Sentence: {sentence}</p>
         <div>
           {/* Displays word bank as a grid of buttons you can click to add to sentence */}
           {words.map((word, index) => (

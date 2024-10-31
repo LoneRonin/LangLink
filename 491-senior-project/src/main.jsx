@@ -14,8 +14,7 @@ import Alpha from './Alphabet/Alpha.jsx';
 import FillInTheBlank from './Alphabet/FillInTheBlank.jsx';
 import Conjugate from './Conjugate/Conjugate.jsx';
 import Grammar from './Grammar/Grammar.jsx';
-import SentenceEs from './Sentence/Sentence.jsx';
-import SentenceJp from './Sentence/Sentencejp.jsx';
+import Sentence from './Sentence/Sentence.jsx';
 import Forgotpass from './ForgotPassword/ForgotPass.jsx';
 import Color from './Color/Color.jsx';
 import Number from './Number/Number.jsx';
@@ -99,9 +98,8 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/lessons" element={<Lessons language={language} />} />
-        <Route path="/grammar/conjugate-es" element={<Conjugate />} />
-        <Route path="/grammar/sentence-es" element={<SentenceEs />} />
-        <Route path="/grammar/sentence-jp" element={<SentenceJp />} />
+        <Route path="/grammar/conjugate" element={<Conjugate language={language} />} />
+        <Route path="/grammar/sentence" element={<Sentence language={language} />} />
         <Route path="/grammar" element={<Grammar language={language} />} />
         <Route path="/color" element={<Color language={language} />} />
         <Route path="/number" element={<Number language={language} />} />
