@@ -262,6 +262,7 @@ function Alpha({ language }) {
               <LetterPopup 
                 letter={item.letter} 
                 pronunciation={item.pronunciation}
+                audioSrc={`/audio/${language}/${item.letter}.mp3`}
                 onClose={handleClosePopup}
                 onMark={() => handleMarkLetter(index)}
               />
@@ -285,6 +286,7 @@ function Alpha({ language }) {
               <LetterPopup 
                 letter={item.letter} 
                 pronunciation={item.pronunciation} 
+                audioSrc={`/audio/${language}/${item.letter}.mp3`}
                 onClose={handleClosePopup}
                 onMark={() => handleMarkLetter(index + fullRows.length)}
               />
@@ -310,6 +312,7 @@ function Alpha({ language }) {
               <LetterPopup 
                 letter={item.letter} 
                 pronunciation={item.pronunciation} 
+                audioSrc={`/audio/${language}/${item.letter}.mp3`}
                 onClose={handleClosePopup}
                 onMark={() => handleMarkLetter(index + alphabet.length)}
               />
@@ -333,6 +336,7 @@ function Alpha({ language }) {
               <LetterPopup 
                 letter={item.letter} 
                 pronunciation={item.pronunciation} 
+                audioSrc={`/audio/${language}/${item.letter}.mp3`}
                 onClose={handleClosePopup}
                 onMark={() => handleMarkLetter(index + alphabet.length + specialFullRows.length)}
               />
