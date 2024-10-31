@@ -19,6 +19,7 @@ import SentenceJp from './Sentence/Sentencejp.jsx';
 import Forgotpass from './ForgotPassword/ForgotPass.jsx';
 import Color from './Color/Color.jsx';
 import Number from './Number/Number.jsx';
+import Date from './Date/Date.jsx';
 import './index.css';
 import esFlag from './flags/es.png';
 import jpFlag from './flags/jp.png';
@@ -104,6 +105,7 @@ const App = () => {
         <Route path="/grammar" element={<Grammar language={language} />} />
         <Route path="/color" element={<Color language={language} />} />
         <Route path="/number" element={<Number language={language} />} />
+        <Route path="/date" element={<Date language={language} />} />
         <Route path="/alpha" element={<Alpha language={language} />} />
         <Route path="/matching" element={<FillInTheBlank language={language} />} />
         <Route path="/signup" element={<Signup />} />

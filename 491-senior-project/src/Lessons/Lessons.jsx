@@ -26,7 +26,7 @@ const Lesson = ({ language }) => {
       <button className="circle-button" style={{ top: '120px', left: '450px' }} onClick={() => handleNavigation('/grammar')}>Grammar</button>
       <button className="circle-button" style={{ top: '280px', left: '250px' }} onClick={() => handleNavigation('/color')}>Colors</button>
       <button className="circle-button" style={{ top: '370px', left: '-75px' }} onClick={() => handleNavigation('/number')}>Numbers</button>
-      <button className="circle-button" style={{ top: '390px', left: '500px' }} onClick={() => handleNavigation('/grammar/conjugate-es')}>Date</button>
+      <button className="circle-button" style={{ top: '390px', left: '500px' }} onClick={() => handleNavigation('/date')}>Dates</button>
     </div>
   );
 };
