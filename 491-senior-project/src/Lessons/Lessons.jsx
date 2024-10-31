@@ -24,7 +24,7 @@ const Lesson = ({ language }) => {
       <h1>Start Learning {languageMap[language] || 'Language'}!</h1>
       <button className="circle-button" style={{ top: '120px', left: '-50px' }} onClick={() => handleNavigation('/alpha')}>Alphabet</button>
       <button className="circle-button" style={{ top: '120px', left: '450px' }} onClick={() => handleNavigation('/grammar')}>Grammar</button>
-      <button className="circle-button" style={{ top: '280px', left: '250px' }} onClick={() => handleNavigation('/grammar/conjugate-es')}>Colors</button>
+      <button className="circle-button" style={{ top: '280px', left: '250px' }} onClick={() => handleNavigation('/color')}>Colors</button>
       <button className="circle-button" style={{ top: '370px', left: '-75px' }} onClick={() => handleNavigation('/grammar/conjugate-es')}>Numbers</button>
       <button className="circle-button" style={{ top: '390px', left: '500px' }} onClick={() => handleNavigation('/grammar/conjugate-es')}>Date</button>
     </div>
