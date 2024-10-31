@@ -96,7 +96,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/homepage" element={<Homepage />} />
+        <Route path="/homepage" element={<Homepage language={language} />} />
         <Route path="/lessons" element={<Lessons language={language} />} />
         <Route path="/grammar/conjugate" element={<Conjugate language={language} />} />
         <Route path="/grammar/sentence" element={<Sentence language={language} />} />

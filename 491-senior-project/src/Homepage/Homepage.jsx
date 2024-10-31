@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase'; // Ensure correct path to firebase.js
+import { db } from '../firebase'; 
+import Popup from '../Popup/Popup.jsx'; 
+import { hasShownPopupToday, setPopupShownToday } from '../firebaseUtils'; 
+import { spanishWords, japaneseWords } from '../wordBank'; 
 import './Homepage.css'; // Optional for styling
 
-const Homepage = () => {
+const Homepage = ({ language }) => {
   const [firstName, setFirstName] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -35,7 +39,26 @@ const Homepage = () => {
     };
 
     fetchUserData();
+
+    // Show the popup if it hasn't been shown today
+    if (!hasShownPopupToday()) {
+      setShowPopup(true);
+      setPopupShownToday();
+    }
   }, []);
+
+  const getRandomWord = () => {
+    const words = language === 'es' ? spanishWords : japaneseWords;
+    return words[Math.floor(Math.random() * words.length)];
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+  };
+
+  const handleShowPopup = () => {
+    setShowPopup(true);
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -45,11 +68,15 @@ const Homepage = () => {
     return <p>{error}</p>;
   }
 
+  const { word, definition } = getRandomWord();
+
   return (
     <section className="homepage-container">
       <div className="homepage-content">
         <h1 className="welcome-text">Welcome back to Language Link, {firstName}!</h1>
         <p>Here’s what’s new:</p>
+        <button onClick={handleShowPopup}>Show Word of the Day</button>
+        {showPopup && <Popup word={word} definition={definition} onClose={handlePopupClose} />}
         {/* Add more content or components here */}
       </div>
     </section>
