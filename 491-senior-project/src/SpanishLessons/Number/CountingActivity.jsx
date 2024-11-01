@@ -1,1 +1,0 @@
-// Number line with interactive elements
