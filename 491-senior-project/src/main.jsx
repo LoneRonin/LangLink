@@ -12,6 +12,18 @@ import Grammar from './Grammar/Grammar.jsx';
 import SentenceEs from './Sentence/Sentence.jsx';
 import SentenceJp from './Sentence/Sentencejp.jsx';
 import Forgotpass from './ForgotPassword/ForgotPass.jsx'
+
+import ColorDialouge from './SpanishLessons/Color/ColorDialouge.jsx'
+import ColorMatch from './SpanishLessons/Color/ColorMatching.jsx'
+
+import CalendarActivity from './SpanishLessons/Dates/CalendarActivity.jsx'
+import DateDialouge from './SpanishLessons/Dates/DateDialouge.jsx'
+
+import ShoppingList from './SpanishLessons/Number/ShoppingList.jsx'
+import NumberDialouge from './SpanishLessons/Number/NumberDialouge.jsx'
+
+import LessonPage from './SpanishLessons/lessonpagetemp.jsx'
+
 import './index.css';
 
 // Import flag images (you can replace these with actual paths or URLs)
@@ -50,6 +62,7 @@ const App = () => {
         <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
         {/* <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>*/}
         <li className="nav-item"><Link to="/grammar">Grammar</Link></li> 
+        <li className="nav-item"><Link to="/lesson">Lesson</Link></li> 
         <li className="nav-item"><Link to="/profile">Profile</Link></li>
         {/* <li className="nav-item"><Link to="/sentence">Sentence</Link></li> */}
       </ul>
@@ -65,6 +78,15 @@ const App = () => {
       <Route path="/grammar/sentence-es" element={<SentenceEs />} />
       <Route path="/grammar/sentence-jp" element={<SentenceJp />} />
       <Route path="Grammar" element = {<Grammar />} />
+
+      <Route path="/lesson/colormatching" element={<ColorMatch />} />
+      <Route path="/lesson/colordialouge" element={<ColorDialouge />} />
+      <Route path="/lesson/calendar" element={<CalendarActivity />} />
+      <Route path="/lesson/datedialouge" element={<DateDialouge />} />
+      <Route path="/lesson/shoppinglist" element={<ShoppingList />} />
+      <Route path="/lesson/numberdialouge" element={<NumberDialouge />} />
+      <Route path="Lesson" element = {<LessonPage />} />
+
       <Route path="/alpha" element={<Alpha language={language} />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/language-selection" element={<LanguageSelection />} />

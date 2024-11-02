@@ -1,5 +1,6 @@
 import React from 'react';
-import './NumberDialogue.css';
+import { Link } from 'react-router-dom'; // Import Link for navigation
+import './NumDialouge.css';
 
 const NumberDialogue = () => {
   return (
@@ -38,6 +39,11 @@ const NumberDialogue = () => {
           <tr><td>Receta</td><td>Recipe</td></tr>
         </tbody>
       </table>
+
+      {/* Button to navigate to Shopping List */}
+      <Link to="/lesson/shoppinglist" className="button">
+        Do Shopping List Activity
+      </Link>
     </div>
   );
 };

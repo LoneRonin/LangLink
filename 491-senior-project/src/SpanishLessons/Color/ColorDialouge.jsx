@@ -1,5 +1,6 @@
 import React from 'react';
-import './ColorDialogue.css';
+import { Link } from 'react-router-dom'; // Import Link for navigation
+import './Colors.css';
 
 const ColorDialogue = () => {
   return (
@@ -38,6 +39,11 @@ const ColorDialogue = () => {
           <tr><td>Encanto</td><td>Charm</td></tr>
         </tbody>
       </table>
+
+      {/* Button to navigate to Color Matching */}
+      <Link to="/lesson/colormatching" className="button">
+        Go to Color Matching
+      </Link>
     </div>
   );
 };

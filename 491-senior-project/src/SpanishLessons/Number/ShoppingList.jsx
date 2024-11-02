@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "./ShoppingList.css";
 
 // Spanish shopping list with items, correct quantity, and price in euros
@@ -73,6 +74,9 @@ const ShoppingList = () => {
         </div>
       )}
       <button onClick={nextItem}>Siguiente Artículo</button>
+
+      {/* Add a Link button to navigate back to Number Dialogue */}
+      <Link to="/lesson/numberdialouge" className="back-button">Back to number dialouge</Link>
     </div>
   );
 };
