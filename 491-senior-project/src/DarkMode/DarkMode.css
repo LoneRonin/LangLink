@@ -1,30 +1,131 @@
 /* darkmode.css */
 
-/* Root Variables for Dark Mode */
+/* Root Variables for Light and Dark Modes */
 :root {
+  /* Light Mode Variables */
+  --bg-color-light: #f4f4f9;
+  --text-color-light: #333; /* Darker text for light mode */
+  --container-bg-color-light: #ffffff;
+  --input-bg-color-light: #f0f0f0;
+  --button-color-light: #4267B2;
+  --button-hover-color-light: #365899;
+  --navbar-bg-light: #f0f0f0;
+  --link-color-light: #0073e6;
+  --link-hover-color-light: #005bb5;
+
+  /* Dark Mode Variables */
   --bg-color-dark: #242424;
-  --text-color-dark: rgba(255, 255, 255, 0.87);
+  --text-color-dark: rgba(255, 255, 255, 0.87); /* Lighter text for dark mode */
+  --container-bg-color-dark: #1e1e1e;
+  --input-bg-color-dark: #333;
+  --button-color-dark: #555;
+  --button-hover-color-dark: #444;
   --navbar-bg-dark: #333;
   --link-color-dark: #646cff;
   --link-hover-color-dark: #535bf2;
 }
 
-/* Apply Dark Mode Styles */
+/* Default Light Mode Styles */
+body.light-mode {
+  background-color: var(--bg-color-light);
+  color: var(--text-color-light);
+}
+
+/* Ensure specific text elements are black in light mode */
+body.light-mode h1,
+body.light-mode label,
+body.light-mode p,
+body.light-mode input {
+  color: var(--text-color-light);
+}
+
+/* Dark Mode Styles */
 body.dark-mode {
   background-color: var(--bg-color-dark);
   color: var(--text-color-dark);
 }
 
-/* Navbar in Dark Mode */
-.navbar.dark-mode {
-  background-color: var(--navbar-bg-dark);
+/* Ensure specific text elements are white in dark mode */
+body.dark-mode h1,
+body.dark-mode label,
+body.dark-mode p,
+body.dark-mode input {
+  color: var(--text-color-dark);
 }
 
-/* Links in Dark Mode */
-.nav-item a.dark-mode {
+/* Container Backgrounds */
+body.light-mode .app-container,
+body.light-mode .login-box,
+body.light-mode .profile-box {
+  background-color: var(--container-bg-color-light);
+  color: var(--text-color-light); /* Text color for light mode */
+}
+
+body.dark-mode .app-container,
+body.dark-mode .login-box,
+body.dark-mode .profile-box {
+  background-color: var(--container-bg-color-dark);
+  color: var(--text-color-dark); /* Text color for dark mode */
+}
+
+/* Navbar Background and Text Color */
+body.light-mode .navbar {
+  background-color: var(--navbar-bg-light);
+  color: var(--text-color-light);
+}
+
+body.dark-mode .navbar {
+  background-color: var(--navbar-bg-dark);
+  color: var(--text-color-dark);
+}
+
+/* Input Fields */
+body.light-mode input {
+  background-color: var(--input-bg-color-light);
+  color: var(--text-color-light); /* Text color for input in light mode */
+}
+
+body.dark-mode input {
+  background-color: var(--input-bg-color-dark);
+  color: var(--text-color-dark); /* Text color for input in dark mode */
+}
+
+/* Buttons */
+body.light-mode .btn {
+  background-color: var(--button-color-light);
+  color: var(--text-color-light); /* Button text color for light mode */
+}
+
+body.dark-mode .btn {
+  background-color: var(--button-color-dark);
+  color: var(--text-color-dark); /* Button text color for dark mode */
+}
+
+body.light-mode .btn:hover {
+  background-color: var(--button-hover-color-light);
+}
+
+body.dark-mode .btn:hover {
+  background-color: var(--button-hover-color-dark);
+}
+
+/* Link Colors */
+body.light-mode .nav-item a,
+body.light-mode .login-links a {
+  color: var(--link-color-light);
+}
+
+body.dark-mode .nav-item a,
+body.dark-mode .login-links a {
   color: var(--link-color-dark);
 }
 
-.nav-item a.dark-mode:hover {
+body.light-mode .nav-item a:hover,
+body.light-mode .login-links a:hover {
+  color: var(--link-hover-color-light);
+}
+
+body.dark-mode .nav-item a:hover,
+body.dark-mode .login-links a:hover {
   color: var(--link-hover-color-dark);
 }

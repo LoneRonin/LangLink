@@ -1,38 +1,49 @@
- // DarkModeToggle.jsx
- import React, { useState, useEffect } from 'react';
- import './darkmode.css'; // Import dark mode styles
- 
- const DarkModeToggle = () => {
-   const [isDarkMode, setIsDarkMode] = useState(false);
- 
-   // Handle dark mode toggle
-   const toggleDarkMode = () => {
-     setIsDarkMode(!isDarkMode);
-     if (!isDarkMode) {
-       document.body.classList.add('dark-mode');
-     } else {
-       document.body.classList.remove('dark-mode');
-     }
-   };
- 
-   // Optionally, save user's preference for dark mode in local storage
-   useEffect(() => {
-     const savedTheme = localStorage.getItem('theme');
-     if (savedTheme === 'dark') {
-       setIsDarkMode(true);
-       document.body.classList.add('dark-mode');
-     }
-   }, []);
- 
-   useEffect(() => {
-     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-   }, [isDarkMode]);
- 
-   return (
-     <button onClick={toggleDarkMode} className="toggle-dark-mode">
-       {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-     </button>
-   );
- };
- 
- export default DarkModeToggle;
+import React, { useState, useEffect } from 'react';
+import './darkmode.css';
+
+const DarkModeToggle = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  };
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setIsDarkMode(true);
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.add('light-mode');
+    }
+  }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle('dark-mode', isDarkMode);
+    document.body.classList.toggle('light-mode', !isDarkMode);
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+
+    // Select all containers to toggle their classes accordingly
+    const containers = [
+      document.querySelector('.login-container'),
+      document.querySelector('.signup-container'),
+      document.querySelector('.signup-content'),
+      document.querySelector('.homepage-container'),
+      document.querySelector('.homepage-content')
+    ];
+
+    containers.forEach(container => {
+      if (container) {
+        container.classList.toggle('dark-mode', isDarkMode);
+      }
+    });
+  }, [isDarkMode]);
+
+  return (
+    <button onClick={toggleDarkMode} className="toggle-dark-mode">
+      {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+    </button>
+  );
+};
+
+export default DarkModeToggle;

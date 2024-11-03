@@ -14,6 +14,7 @@ import NotificationsDropdown from './Notifications/NotificationsDropdown.jsx'; /
 import DarkModeToggle from './DarkMode/DarkMode.jsx';  // Import dark mode toggle from DarkMode.jsx
 import './index.css';
 import Communities from './Communities/Communities';
+import Friends from './Friends/Friends.jsx';
 
 // Import flag images
 import esFlag from './flags/es.png'; // Spanish flag
@@ -37,6 +38,7 @@ const App = () => {
         return esFlag;
     }
   };
+  
 
   return (
     <Router>
@@ -53,6 +55,7 @@ const App = () => {
           <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
           <li className="nav-item"><Link to="/profile">Profile</Link></li>
           <li className="nav-item"><Link to="/communities">Communities</Link></li>
+          <li className="nav-item"><Link to="/friends">Friends</Link></li>
 
 
           {/* Add Notifications Dropdown */}
@@ -78,6 +81,7 @@ const App = () => {
         <Route path="/language-selection" element={<LanguageSelection />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/communities" element={<Communities />} />
+        <Route path="/friends" element={<Friends />} />
       </Routes>
     </Router>
   );

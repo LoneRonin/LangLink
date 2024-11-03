@@ -1,15 +1,23 @@
-/* Names: Victor, Tristan */
+/* Updated Homepage CSS Example */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #242424; /* Default background for dark mode */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Light Mode Styles */
+.light-mode {
+  --background-color: #f9f9f9; /* Light background */
+  --text-color: rgba(0, 0, 0, 0.87); /* Dark text */
+  --container-background: #ffffff; /* White background for main content */
+  --friend-background: #f1f1f1; /* Light background for friends container */
 }
 
 body {
@@ -18,8 +26,19 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: #242424;
-  color: rgba(255, 255, 255, 0.87);
+  background-color: var(--background-color); /* Use variable for background */
+  color: var(--text-color); /* Use variable for text color */
+}
+
+/* Light Mode Specific Styles */
+.light-mode body {
+  background-color: #f9f9f9; /* White background in light mode */
+  color: rgba(0, 0, 0, 0.87); /* Black text in light mode */
+}
+
+.light-mode .homepage-content {
+  background-color: var(--container-background); /* White background for main content */
+  color: var(--text-color); /* Ensure text color matches light mode */
 }
 
 /* Navbar */
@@ -58,7 +77,7 @@ body {
   align-items: flex-start;
   height: 100vh;
   width: 100vw;
-  background-color: #1e1e1e;
+  background-color: var(--background-color); /* Use variable for background */
   padding: 2rem;
   box-sizing: border-box;
 }
@@ -87,14 +106,16 @@ body {
 
 /* Main Content */
 .homepage-content {
-  background-color: #2e2e2e;
+  background-color: var(--container-background); /* Use variable for background */
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   max-width: 600px;
   margin: 0 auto; /* Center align */
+  color: var(--text-color); /* Ensure text color matches light mode */
 }
 
+/* Welcome Text */
 .welcome-text {
   font-size: 1.8em; /* Enlarged font size for welcome text */
   color: #ffffff;
@@ -128,21 +149,6 @@ body {
 .action-button.small {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
-}
-
-@media (max-width: 768px) {
-  .button-container {
-      flex-direction: column;
-  }
-
-  .action-button {
-      width: 100%;
-      margin-bottom: 1rem;
-  }
-
-  .action-button:last-child {
-      margin-bottom: 0;
-  }
 }
 
 /* Sidebar */
@@ -180,11 +186,12 @@ body {
 
 /* Friend Suggestions */
 .friend-suggestions {
-  background-color: #333;
+  background-color: #333; /* Dark background for friends container in dark mode */
   padding: 1.5rem;
   border-radius: 12px;
   max-width: 300px; /* Adjust max width as needed */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: white; /* Default text color in dark mode */
 }
 
 .friend {
@@ -206,4 +213,40 @@ body {
 .friend-actions {
   display: flex;
   gap: 0.5rem; /* Space between buttons */
+}
+
+/* Light Mode Styles for Friend Suggestions */
+.light-mode .friend-suggestions {
+  background-color: var(--friend-background); /* Light mode background for friends container */
+  color: black; /* Ensure text is black in light mode */
+}
+
+.light-mode .friend {
+  color: black; /* Ensure friend names are black in light mode */
+}
+
+.light-mode .homepage-content {
+  background-color: var(--container-background); /* Match light mode background */
+  color: var(--text-color); /* Ensure text color in main content is dark */
+}
+
+.light-mode .homepage-container,
+.light-mode .left-sidebar,
+.light-mode .right-sidebar {
+  background-color: var(--background-color); /* Light mode background for containers */
+}
+
+@media (max-width: 768px) {
+  .button-container {
+      flex-direction: column;
+  }
+
+  .action-button {
+      width: 100%;
+      margin-bottom: 1rem;
+  }
+
+  .action-button:last-child {
+      margin-bottom: 0;
+  }
 }

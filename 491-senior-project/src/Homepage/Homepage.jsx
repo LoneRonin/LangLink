@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase'; // Ensure correct path to firebase.js
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import './Homepage.css'; // Import the updated CSS for styling
-
+import { useNavigate } from 'react-router-dom';
+import './Homepage.css';
+import Friends from '../Friends/Friends.jsx'; // Import Friends component
 
 const Homepage = () => {
   const [firstName, setFirstName] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -49,15 +49,8 @@ const Homepage = () => {
   }
 
   const handleRedirect = (page) => {
-    // Use navigate to programmatically change routes
     navigate(page);
   };
-
-  const dummyFriends = [
-    { name: 'John Doe', flag: '🇺🇸' },
-    { name: 'Jane Smith', flag: '🇯🇵' },
-    { name: 'Ricardo Martinez', flag: '🇲🇽' }
-  ];
 
   return (
     <section className="homepage-container">
@@ -92,18 +85,7 @@ const Homepage = () => {
       <div className="right-sidebar">
         <div className="friend-suggestions">
           <h2>Friend Suggestions</h2>
-          {dummyFriends.map((friend, index) => (
-            <div className="friend" key={index}>
-              <div className="friend-info">
-                <p>{friend.name}</p>
-                <p className="friend-flag">{friend.flag}</p> {/* Moved flag to a new paragraph */}
-              </div>
-              <div className="friend-actions">
-                <button className="action-button small">Add</button>
-                <button className="action-button small">Deny</button>
-              </div>
-            </div>
-          ))}
+          <Friends /> {/* Use the Friends component to display friend suggestions */}
         </div>
       </div>
     </section>
