@@ -13,6 +13,7 @@ import SentenceEs from './Sentence/Sentence.jsx';
 import SentenceJp from './Sentence/Sentencejp.jsx';
 import Forgotpass from './ForgotPassword/ForgotPass.jsx'
 
+// Imports for Spanish Lessons
 import ColorDialouge from './SpanishLessons/Color/ColorDialouge.jsx'
 import ColorMatch from './SpanishLessons/Color/ColorMatching.jsx'
 
@@ -24,6 +25,10 @@ import NumberDialouge from './SpanishLessons/Number/NumberDialouge.jsx'
 
 import LessonPage from './SpanishLessons/lessonpagetemp.jsx'
 
+//Imports for Spanish Tests
+import ColorTest from './SpanishTest/ColorTest.jsx'
+import NumberTest from './SpanishTest/NumberTest.jsx';
+import DateTest from './SpanishTest/DateTest.jsx';
 import './index.css';
 
 // Import flag images (you can replace these with actual paths or URLs)
@@ -78,14 +83,21 @@ const App = () => {
       <Route path="/grammar/sentence-es" element={<SentenceEs />} />
       <Route path="/grammar/sentence-jp" element={<SentenceJp />} />
       <Route path="Grammar" element = {<Grammar />} />
-
+      
+      {/* Routes for Spanish Lessons */}
       <Route path="/lesson/colormatching" element={<ColorMatch />} />
       <Route path="/lesson/colordialouge" element={<ColorDialouge />} />
       <Route path="/lesson/calendar" element={<CalendarActivity />} />
       <Route path="/lesson/datedialouge" element={<DateDialouge />} />
       <Route path="/lesson/shoppinglist" element={<ShoppingList />} />
       <Route path="/lesson/numberdialouge" element={<NumberDialouge />} />
+      
       <Route path="Lesson" element = {<LessonPage />} />
+
+      {/* Routes for Spanish Tests */}
+      <Route path="/lesson/colortest" element={<ColorTest />} />
+      <Route path="/lesson/numbertest" element={<NumberTest />} />
+      <Route path="/lesson/datetest" element={<DateTest />} />
 
       <Route path="/alpha" element={<Alpha language={language} />} />
       <Route path="/signup" element={<Signup />} />

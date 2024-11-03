@@ -13,7 +13,7 @@ const items = [
 
 // Function to convert Spanish quantity words to numbers for comparison
 const quantityWords = {
-  cero: 0,    // Added for zero
+  cero: 0, 
   uno: 1,
   dos: 2,
   tres: 3,
@@ -95,7 +95,7 @@ const ShoppingList = () => {
         </div>
       )}
       {/* Link to navigate back */}
-      <Link to="/lesson/numberdialogue" className="back-button">Back to number dialogue</Link>
+      <Link to="/lesson/numberdialouge" className="back-button">Back to number dialogue</Link>
     </div>
   );
 };

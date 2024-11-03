@@ -44,6 +44,10 @@ const ColorDialogue = () => {
       <Link to="/lesson/colormatching" className="button">
         Go to Color Matching
       </Link>
+      {/* Button to navigate to Color Test */}
+      <Link to="/lesson/colortest" className="button">
+        Take Test
+      </Link>
     </div>
   );
 };

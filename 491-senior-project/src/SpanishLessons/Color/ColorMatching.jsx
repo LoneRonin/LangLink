@@ -42,11 +42,9 @@ const ColorMatch = () => {
     const randomIndex = Math.floor(Math.random() * shuffled.length);
     setSelectedColor(shuffled[randomIndex]);
   };
-
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
-
   const handleSubmit = () => {
     if (selectedOption === selectedColor.spanish) {
       setIsCorrect(true);
@@ -54,13 +52,11 @@ const ColorMatch = () => {
       setIsCorrect(false);
     }
   };
-
   const nextColor = () => {
     setIsCorrect(null);
     setSelectedOption("");
     setNewColor(shuffledColors); // Set a new color to guess
   };
-
   return (
     <div className="color-match-container">
       <h2>Guess the Spanish Name of the Color</h2>
@@ -94,5 +90,4 @@ const ColorMatch = () => {
     </div>
   );
 };
-
 export default ColorMatch;

@@ -44,7 +44,6 @@ const CalendarActivity = () => {
     }
     setSelectedDate(null); // Reset selected date on month change
   };
-
   const nextMonth = () => {
     if (currentMonth === 11) {
       setCurrentMonth(0);
@@ -69,11 +68,7 @@ const CalendarActivity = () => {
         >
           {day}
         </div>
-      );
-    }
-    return days;
-  };
-
+      ); } return days; };
   return (
     <div className="calendar-container">
       <h2>Interactive Calendar</h2>

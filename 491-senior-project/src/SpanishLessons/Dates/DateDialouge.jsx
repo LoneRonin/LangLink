@@ -46,13 +46,15 @@ const DateDialogue = () => {
           <tr><td>Próxima semana</td><td>Next week</td></tr>
         </tbody>
       </table>
-
       {/* Button to navigate to Calendar */} 
       <Link to="/lesson/calendar" className="button">
         Do Calendar Activity
       </Link>
+      {/* Button to navigate to Test */} 
+      <Link to="/lesson/datetest" className="button">
+        Take Test
+      </Link>
     </div>
   );
 };
-
 export default DateDialogue;

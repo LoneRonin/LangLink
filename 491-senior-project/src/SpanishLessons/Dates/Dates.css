@@ -6,7 +6,6 @@
     font-family: Arial, sans-serif;
     color: #333;
   }
-  
   /* Dialogue Styling */
   .dialogue {
     background-color: #f0f8ff;
@@ -15,48 +14,40 @@
     border-radius: 8px;
     margin-bottom: 20px;
   }
-  
   .dialogue p {
     margin: 5px 0;
   }
-  
   /* Heading Styling */
   h2, h3 {
     color: #4a90e2;
   }
-  
  /* Table Styling */
 .vocab-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
-
 /* Table header and data cells styling */
 .vocab-table th, .vocab-table td {
   border: 1px solid #555; /* Darker border color for better visibility in dark mode */
   padding: 10px; /* Slightly increased padding for better spacing */
   text-align: center;
 }
-
 /* Table header styling */
 .vocab-table th {
   background-color: #3a5e9e; /* Darker blue for the header */
   color: #ffffff; /* White text for contrast */
 }
-
 /* Even row styling */
 .vocab-table tr:nth-child(even) {
   background-color: #2c2c2c; /* Darker background for even rows */
   color: #ffffff; /* Ensure text is white for readability */
 }
-
 /* Odd row styling */
 .vocab-table tr:nth-child(odd) {
   background-color: #1e1e1e; /* Slightly lighter dark background for odd rows */
   color: #ffffff; /* Ensure text is white for readability */
 }
-
 /* Hover effect for table rows */
 .vocab-table tr:hover {
   background-color: #4a90e2; /* Highlight color on hover */
