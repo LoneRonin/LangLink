@@ -58,29 +58,7 @@ const Friends = () => {
                 suggestionsList.push(entryArray);
             }
         });
-        /*
-        if(emails.length <= 0){
-            docs.forEach((doc) => {
-                //console.log(doc.data());
-                var docEntry = doc.data();
-    
-                if((docEntry.email != user.email)){
-                    var entryArray = [docEntry.firstName, docEntry.lastName, docEntry.email, doc.id];
-                    suggestionsList.push(entryArray);
-                }
-            });
-        }else{
-            docs.forEach((doc) => {
-                //console.log(doc.data());
-                var docEntry = doc.data();
-                //console.log(docEntry.email);
-    
-                if(!(emails.includes(docEntry.email)) && (docEntry.email != user.email)){
-                    var entryArray = [docEntry.firstName, docEntry.lastName, docEntry.email, doc.id];
-                    suggestionsList.push(entryArray);
-                }
-            });
-        }*/
+        
         setSuggestions(suggestionsList);
         //console.log(suggestionsList);
     }
@@ -204,19 +182,58 @@ const Friends = () => {
     const constructSuggestionsList = async() => {
         try{
             if(user){
+                console.log("fetching user suggestions...")
                 //query user's friend list
                 //query each individual friend for their friend list
                 //find users that are friends of friends but not the user's friend
-                //ideally we can pick out users from posts a user has recently interacted with, would require keeping track
-                const usersList = collection(db, "users", id, "friendlist");
-                const userFriendsList = query(usersList);
-                const friendList = await getDocs(userFriendsList);
-                if((!friendList.exists())){throw("no data found");}
-                console.log(friendList.data());
-
+                //ideally we can pick out users from posts a user has recently interacted with, would require keeping track w/ the community feature
+                const usersList = collection(db, "users", user.uid, "friendlist");
+                const querySnapshot = await getDocs(usersList);
+                const friends = [];
+                querySnapshot.forEach((doc) => {
+                    //console.log(doc.id, " => ", doc.data());
+                    var docEntry=doc.data();
+                    var friend = doc.id;
+                    friends.push(friend);
+                });
+                //takes each id for each friend and queries the system for their friends list
+                //each user that is not the current user, already a friend, or already logged as a nacquantaince is added
+                const acquaintances = [];
+                const usersEmailArray = ["test"];
+                friends.forEach(async(friendID) => {
+                    //console.log(friend);
+                    var friendsList = collection(db, "users", friendID, "friendlist");
+                    const querySnapshot = await getDocs(friendsList);
+                    querySnapshot.forEach((doc) => {
+                        var docEntry = doc.data();
+                        if((doc.id != user.uid) && !(friends.includes(doc.id)) && !(usersEmailArray.includes(docEntry.email))){
+                            var newUser = [docEntry.firstName, docEntry.lastName, docEntry.email, doc.id];
+                            acquaintances.push(newUser);
+                            usersEmailArray.push(docEntry.email);
+                        }
+                    });
+                });
+                //if the current acquantaince list is too short, pulls some users from the general userbase
+                if(acquaintances.length < 5){
+                    console.log(usersEmailArray);
+                    const usersref = collection(db, "users");
+                    const userQuery = query(usersref, where('email', 'not-in', usersEmailArray), limit(9));//maybe add in filter to match users language?
+                    const querySnapshot = await getDocs(userQuery);
+                    querySnapshot.forEach((doc) => {
+                        var docEntry = doc.data();
+                        if((doc.id != user.uid) && !(friends.includes(doc.id)) && !(usersEmailArray.includes(docEntry.email))){
+                            var newUser = [docEntry.firstName, docEntry.lastName, docEntry.email, doc.id];
+                            acquaintances.push(newUser);
+                            //usersEmailArray.push(docEntry.email);
+                        }
+                    });
+                }
+                //ideally this will update the users suggestion collection to minimize the amounts of reads that happens
+                setSuggestions(acquaintances);
             }
         }
         catch(err){console.log(err);}
+        finally{setLoading2(false);}
     }
 
     //async function to retrieve a users friend list, then passes it into a constructor
@@ -315,7 +332,7 @@ const Friends = () => {
             fetchUserData();
             fetchFriendsList(user.uid);
             fetchIncomingRequests();
-            fetchFriendSuggestions(6);
+            constructSuggestionsList();
         }
         
     }, []);
