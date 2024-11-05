@@ -31,6 +31,9 @@ import NumberTest from './SpanishTest/NumberTest.jsx';
 import DateTest from './SpanishTest/DateTest.jsx';
 import './index.css';
 
+//Import for Daily quiz
+import DailyQuiz from './DailyQuiz/quiz.jsx';
+
 // Import flag images (you can replace these with actual paths or URLs)
 import esFlag from './flags/es.png'; // Spanish flag
 import jpFlag from './flags/jp.png'; // Japanese flag
@@ -70,6 +73,7 @@ const App = () => {
         <li className="nav-item"><Link to="/lesson">Lesson</Link></li> 
         <li className="nav-item"><Link to="/profile">Profile</Link></li>
         {/* <li className="nav-item"><Link to="/sentence">Sentence</Link></li> */}
+        <li className="nav-item"><Link to="/dailyquiz">Daily Quiz</Link></li>
       </ul>
       {/* Language button on the far right */}
       <button className="language-button" onClick={toggleLanguage}>
@@ -98,6 +102,10 @@ const App = () => {
       <Route path="/lesson/colortest" element={<ColorTest />} />
       <Route path="/lesson/numbertest" element={<NumberTest />} />
       <Route path="/lesson/datetest" element={<DateTest />} />
+
+      {/* Routes for Daily Quiz */}
+      <Route path="/dailyquiz-es" element={<DailyQuizEs />} /> {/*Spanish Daily Quiz*/}
+      <Route path="/dailyquiz-jp" element={<DailyQuizJp />} /> {/*Japanese Daily Quiz*/}
 
       <Route path="/alpha" element={<Alpha language={language} />} />
       <Route path="/signup" element={<Signup />} />
