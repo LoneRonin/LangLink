@@ -448,4 +448,5 @@ export default Friends;
  * still need to add filters to other function, 
  * probably need to also make a "blockedby" collection. 
  * also have to update database rules
+ * buttons
 */
