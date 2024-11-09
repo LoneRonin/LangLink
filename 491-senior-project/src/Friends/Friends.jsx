@@ -43,8 +43,7 @@ const Friends = () => {
         //sets the set state with the finished lists
     }
 
-    //this function is similar to above but updates the suggestions list (WIP)
-    //need to add a check to make sure users that are already friends aren't recommended, at least
+    //this function is similar to above but updates the suggestions list
     function updateSuggestions(docs){
         const suggestionsList = [];
         //console.log(friends);
@@ -52,14 +51,14 @@ const Friends = () => {
 
         docs.forEach((doc) => {
             var docEntry = doc.data();
-            var element = document.getElementById(docEntry.email);
-            if(element == null){
-                var entryArray = [docEntry.firstName, docEntry.lastName, docEntry.email, doc.id];
-                suggestionsList.push(entryArray);
-            }
+            var entryArray = [docEntry.firstName, docEntry.lastName, docEntry.email, doc.id];
+            suggestionsList.push(entryArray);
         });
-        
-        setSuggestions(suggestionsList);
+
+        if(suggestionsList.length <5){
+            constructSuggestionsList();
+        }
+        else{setSuggestions(suggestionsList);}
         //console.log(suggestionsList);
     }
 
@@ -82,7 +81,7 @@ const Friends = () => {
     }
 
     //creates a "friend request" document in another users subcollection
-    const sendFriendRequest = async(fid) => {
+    const sendFriendRequest = async([fName, lName, email, fid]) => {
         try{
             if(user){
                 //constrcuts document reference and a document to create
@@ -94,12 +93,19 @@ const Friends = () => {
                 };
                 //console.log(userDoc);
                 //uses setDoc to prevent duplicate requests from being made
-                setDoc(reqRef, userDoc);
+                await setDoc(reqRef, userDoc);
+
+                const newRef = doc(deb, "users", user.uid, "outgoingrequests", fid);
+                const refDoc = {
+                    firstName: fName,
+                    lastName: lName,
+                    email: email
+                };
+                await setDoc(newRef, refDoc);
             }
         }
-        catch(err){
-            console.log(err);
-        }
+        catch(err){console.log(err);}
+        finally{}
     }
 
     //moves a users details from the requests subcollection to the friends one
@@ -113,7 +119,7 @@ const Friends = () => {
                     lastName: lN,
                     email: mail
                 };
-                setDoc(friendRef, userDoc);
+                await setDoc(friendRef, userDoc);
                 //this constructs an object with the other users information and stores them in the friends list subcollection
 
                 const userRef = doc(db, "users", docID, "friendlist", user.uid);
@@ -122,7 +128,7 @@ const Friends = () => {
                     lastName: userData.lastName,
                     email: userData.email
                 }
-                setDoc(userRef, friendDoc);
+                await setDoc(userRef, friendDoc);
                 //makes a mirrored write to make sure the other user has this user put in their friends list
             }
         }
@@ -140,11 +146,15 @@ const Friends = () => {
             if(user){
                 const reqRef = doc(db, "users", user.uid, "friendrequests", docID);
                 await deleteDoc(reqRef);
+
+                const userRef = doc(db, "users", docID, "friendrequests", user.uid);
+                await deleteDoc(userRef);
                 //this is supposed to remove the element from the html
                 document.getElementById(elementID).style.display='none';
             }
         }
         catch(err){console.log(err);}
+        finally{fetchIncomingRequests;}
     }
 
     function removeFriendPopup([fName, lName, email, fid]){
@@ -179,6 +189,33 @@ const Friends = () => {
         }
     }
 
+    const blockUser = async([fName, lName, email, uid]) => {
+        try{
+            if(user){
+                const blockedUserDoc = {
+                    firstName: fName,
+                    lastName: lName,
+                }; 
+                const blockedUserDocRef = doc(db, "users", user.uid, "blockedUsers", uid);
+                await setDoc(blockedUserDocRef, blockedUserDoc);
+            }
+        }
+        catch(err){console.log(err);}
+        finally{removeFriend([fName, lName, email, uid])}
+    }
+
+    const unBlockUser = async([fName, lName, email, uid]) => {
+        try{
+            if(user){
+                const blockedUserDocRef = doc(db, "users", user.uid, "blockedUsers", uid);
+                await deleteDoc(blockedUserDocRef);
+
+
+            }
+        }
+        catch(err){console.log(err);}
+    }
+
     const constructSuggestionsList = async() => {
         try{
             if(user){
@@ -192,7 +229,7 @@ const Friends = () => {
                 const friends = [];
                 querySnapshot.forEach((doc) => {
                     //console.log(doc.id, " => ", doc.data());
-                    var docEntry=doc.data();
+                    //var docEntry=doc.data();
                     var friend = doc.id;
                     friends.push(friend);
                 });
@@ -230,9 +267,44 @@ const Friends = () => {
                 }
                 //ideally this will update the users suggestion collection to minimize the amounts of reads that happens
                 setSuggestions(acquaintances);
+
+                for(n in acquaintances){
+                    var userTemp = acquaintances[n];
+                    var userTempDoc = {
+                        firstName: userTemp[0],
+                        lastName: userTemp[1],
+                        email: userTemp[2]
+                    };
+                    var userSuggestionDocRef = doc(db, "users", user.uid, "userSuggestions", userTemp[3]);
+                    await setDoc(userSuggestionDocRef, userTempDoc);
+                }
             }
         }
         catch(err){console.log(err);}
+        finally{setLoading2(false);}
+    }
+
+    //async function to retrieve a list of recommended users to send friend requests too (WIP) but functions
+    const fetchFriendSuggestions = async() => {
+        setLoading2(true);
+
+        try{
+            if(user){
+                
+
+                const userSuggestions = collection(db, "users", user.uid, "userSuggestions");
+                const suggestionQuery = query(userSuggestions);
+
+                getDocs(suggestionQuery)
+                .then((querySnapshot) => {
+                    updateSuggestions(querySnapshot);
+                });
+            }
+        }
+        catch(err){
+            console.log(err);
+            setError("Error loading suggestions.");
+        }
         finally{setLoading2(false);}
     }
 
@@ -264,35 +336,6 @@ const Friends = () => {
             setError("Error loading user list.");
         }
         finally{setLoading(false);}
-    }
-
-    //async function to retrieve a list of recommended users to send friend requests too (WIP) but functions
-    const fetchFriendSuggestions = async(loadLimit) => {
-        setLoading2(true);
-
-        try{
-            if(user){
-                //will only be able to query a NOT-IN for up to 10 nots(friends?)
-                //i.e. while querying, can only use 10 friend ids to make sure htey dont get in
-                //might be better to then perform a larger, generic query, then filter them on the
-                //frontend. since the query itself shouldnt take longer it could be fine
-                //could also keep track of highest id fetched and proceed that way, but that would take
-                //a lot of finagling to get working right
-
-                const usersList = collection(db, "users");
-                const suggestionQuery = query(usersList, limit(loadLimit));
-
-                getDocs(suggestionQuery)
-                .then((querySnapshot) => {
-                    updateSuggestions(querySnapshot);
-                });
-            }
-        }
-        catch(err){
-            console.log(err);
-            setError("Error loading suggestions.");
-        }
-        finally{setLoading2(false);}
     }
 
     //async func to retrieve list of incoming friend requests
@@ -332,7 +375,7 @@ const Friends = () => {
             fetchUserData();
             fetchFriendsList(user.uid);
             fetchIncomingRequests();
-            constructSuggestionsList();
+            fetchFriendSuggestions();
         }
         
     }, []);
@@ -400,3 +443,9 @@ const Friends = () => {
 };
 
 export default Friends;
+//TODO:
+/** 
+ * still need to add filters to other function, 
+ * probably need to also make a "blockedby" collection. 
+ * also have to update database rules
+*/
