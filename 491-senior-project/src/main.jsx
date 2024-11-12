@@ -104,8 +104,8 @@ const App = () => {
       <Route path="/lesson/datetest" element={<DateTest />} />
 
       {/* Routes for Daily Quiz */}
-      <Route path="/dailyquiz-es" element={<DailyQuizEs />} /> {/*Spanish Daily Quiz*/}
-      <Route path="/dailyquiz-jp" element={<DailyQuizJp />} /> {/*Japanese Daily Quiz*/}
+      <Route path="/dailyquiz" element={<DailyQuiz />} /> {/*Spanish Daily Quiz*/}
+      {/* <Route path="/dailyquiz-jp" element={<DailyQuizJp />} /> Japanese Daily Quiz */}
 
       <Route path="/alpha" element={<Alpha language={language} />} />
       <Route path="/signup" element={<Signup />} />

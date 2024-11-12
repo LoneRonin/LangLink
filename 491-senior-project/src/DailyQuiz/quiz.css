@@ -1,0 +1,79 @@
+/* Basic styling for the quiz container */
+.daily-quiz-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Heading styling */
+  .daily-quiz-container h2 {
+    color: #4CAF50;
+    text-align: center;
+    font-size: 1.5em;
+  }
+  
+  /* Question text styling */
+  .question {
+    font-size: 1.1em;
+    margin: 15px 0;
+  }
+  
+  /* Styling for options (buttons) */
+  .option-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 1em;
+    color: #333;
+    background-color: #e7e7e7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .option-button:hover {
+    background-color: #ddd;
+  }
+  
+  .option-button:active {
+    background-color: #ccc;
+  }
+  
+  /* Submit button styling */
+  .submit-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #45A049;
+  }
+  
+  /* Message styling for when quiz is not available */
+  .unavailable-message {
+    text-align: center;
+    color: #888;
+    font-size: 1em;
+    margin-top: 20px;
+  }
+  
+  .countdown-timer{
+    text-align: center;
+    color:#333
+    
+  }
