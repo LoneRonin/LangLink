@@ -13,6 +13,27 @@ const Profile = () => {
   const auth = getAuth();
   const user = auth.currentUser;
 
+  function deleteUserAccountPopup(){
+    var popupID = "";
+    var popup = document.getElementById(popupID);
+    popup.style.display=("block");
+  }
+
+  function removeDeletePopup(){
+    var popupID = "";
+    var popup = document.getElementById(popupID);
+    popup.style.display=("none");
+  }
+
+  const deleteUserAccount = async() => {
+    try{
+      if(user){
+        //
+      }
+    }
+    catch(err){console.log(err);}
+  }
+
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
@@ -89,6 +110,17 @@ const Profile = () => {
           </div>
         </div>
         <button className="edit-profile-button">Edit Profile</button>
+        <button className="delete-profile-button" onClick={(event) => deleteUserAccountPopup()}>Delete Profile</button>
+        <div id='delete-profile-popup' className='modal'>
+          <div className='modal-content'>
+            <span className='close' onClick={(event) => removeDeletePopup(doc)}>&times;</span>
+            <p>Are you sure you want to delete your account?</p>
+            <p>
+              <button className = 'yesbutton' onClick={(event) => deleteUserAccount()}>Yes</button>
+              <button className = 'nobutton' onClick={(event) => removeDeletePopup(doc)}>No</button>
+            </p>
+          </div>
+          </div>
       </div>
     </section>
   );

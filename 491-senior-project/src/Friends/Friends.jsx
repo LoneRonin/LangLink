@@ -171,6 +171,18 @@ const Friends = () => {
         popup.style.display = ("block");
     }
 
+    function blockUserPopup(){
+        var blockID = "";
+        var blockElement = document.getElementById(blockID);
+        blockElement.style.display = ("block");
+    }
+
+    function removeBlockPopup(){
+        var blockID = "";
+        var blockElement = document.getElementById(blockID);
+        blockElement.style.display = ("none");
+    }
+
     //basic function to clear database of info in friendslist collection (WIP)
     const removeFriend = async([fName, lName, email, fid]) => {
         try{
@@ -196,21 +208,30 @@ const Friends = () => {
                     firstName: fName,
                     lastName: lName,
                 }; 
-                const blockedUserDocRef = doc(db, "users", user.uid, "blockedUsers", uid);
+                const blockedUserDocRef = doc(db, "users", user.uid, "blockedusers", uid);
                 await setDoc(blockedUserDocRef, blockedUserDoc);
+
+                const blockedByDocRef = doc(db, "users", uid, "blockedby", user.uid);
+                const blockedByDoc = {uid: user.uid};
+                await setDoc(blockedByDocRef, blockedByDoc);
             }
         }
         catch(err){console.log(err);}
-        finally{removeFriend([fName, lName, email, uid])}
+        finally{
+            removeFriend([fName, lName, email, uid]);
+            removeSuggestion([fName, lName, email, uid]);
+            clearFriendRequest(email, uid);
+        }
     }
 
     const unBlockUser = async([fName, lName, email, uid]) => {
         try{
             if(user){
-                const blockedUserDocRef = doc(db, "users", user.uid, "blockedUsers", uid);
+                const blockedUserDocRef = doc(db, "users", user.uid, "blockedusers", uid);
                 await deleteDoc(blockedUserDocRef);
 
-
+                const blockedByDocRef = doc(db, "users", uid, "blockedby", user.uid);
+                await deleteDoc(blockedByDocRef);
             }
         }
         catch(err){console.log(err);}
@@ -394,7 +415,18 @@ const Friends = () => {
                     <ul className='list'>
                         {friends?.map((doc) => (
                             <div key={Math.random()}>
-                                <li className='listElement' id={`${doc[2]}`}>{doc[0]} {doc[1]} 
+                                <li className='listElement' id={`${doc[2]}`}>
+                                    <p> onClick={(event) => blockUserPopup(doc)}{doc[0]} {doc[1]}</p>
+                                    <div id={`block_${doc[2]}`} className='modal'>
+                                        <div id='modal-content'>
+                                            <span className='close' onClick={(event) => removeBlockPopup(doc)}>&times;</span>
+                                            <p>Are you sure you want to block this user?</p>
+                                            <p>
+                                                <button className = 'yesbutton' onClick={(event) => blockUser(doc)}>Yes</button>
+                                                <button className = 'nobutton' onClick={(event) => removeBlockPopup(doc)}>No</button>
+                                            </p>
+                                        </div>
+                                    </div>
                                     <button className='button' id='removeFriendButton' onClick={(event) => appearFriendPopup(doc)}>-</button>
                                     <div id={`popup_${doc[2]}`} className='modal'>
                                         <div className='modal-content'>
@@ -449,4 +481,5 @@ export default Friends;
  * probably need to also make a "blockedby" collection. 
  * also have to update database rules
  * buttons
+ * removesuggestion
 */
