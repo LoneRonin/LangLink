@@ -278,10 +278,12 @@ const Friends = () => {
                     console.log(usersEmailArray);
                     const usersref = collection(db, "users");
                     if(usersEmailArray.length <= 1){
-                        var userQuery = query(usersref, limit(9));
+                        var userQuery = query(usersref, where('isDeleted', '!=', true), limit(15));
                     }
                     else{
-                        var userQuery = query(usersref, where('email', 'not-in', usersEmailArray), limit(9));
+                        var userQuery = query(usersref, where('email', 'not-in', usersEmailArray), where('isDeleted', 'not-in', [true]), limit(15));
+                        //ideally here we would filter out disabled/hidden users, but its not possible to combine multiple instances of 'not-in' and/or '!='
+                        //unless this fix works
                     }
                     const querySnapshot = await getDocs(userQuery);
                     querySnapshot.forEach((doc) => {
@@ -344,7 +346,7 @@ const Friends = () => {
             if(user){
                 //constructs a database query, pulls the friends list tied to users uid
                 const usersList = collection(db, "users", id, "friendlist");
-                const userFriendsList = query(usersList);
+                const userFriendsList = query(usersList, where('isDeleted', '!=', true));
 
                 getDocs(userFriendsList)
                     .then((querySnapshot) => {

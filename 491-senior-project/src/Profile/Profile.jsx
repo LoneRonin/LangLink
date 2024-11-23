@@ -1,7 +1,7 @@
 // Profile.jsx
 import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
-import { doc, getDoc, collection, getDocs, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, getDocs, deleteDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../firebase'; // Ensure correct path to firebase.js
 import './Profile.css'; // Optional for styling
 import DefaultProf from '../ProfilePics/defaultprofile.png';
@@ -14,6 +14,7 @@ const Profile = () => {
   const user = auth.currentUser;
   const [blockedUsers, setBlockedUsers] = useState(null);
   const [noneBlocked, setNoneBlocked] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   function deleteUserAccountPopup(){
     var popupID = "delete-profile-popup";
@@ -45,7 +46,11 @@ const Profile = () => {
     try{
       if(user){
         const userRef = doc(db, "users", user.uid)
+        await updateDoc(userRef,{
+          isDeleted: arrayUnion(true)
+        });
         
+        setIsDisabled(true);
       }
     }
     catch(err){console.log(err);}
@@ -188,17 +193,33 @@ const Profile = () => {
             ))}
           </ul>
         </div>
-        <button className="delete-profile-button" onClick={(event) => deleteUserAccountPopup()}>Delete Profile</button>
-        <div id='delete-profile-popup' className='modal'>
-          <div className='modal-content'>
-            <span className='close' onClick={(event) => removeDeletePopup(doc)}>&times;</span>
-            <p>Are you sure you want to delete your account?</p>
-            <p>
-              <button className = 'yesbutton' onClick={(event) => deleteUserAccount()}>Yes</button>
-              <button className = 'nobutton' onClick={(event) => removeDeletePopup(doc)}>No</button>
-            </p>
+        {!isDisabled && (
+          <div id="delete-account">
+            <button className="delete-profile-button" onClick={(event) => deleteUserAccountPopup()}>Disable Account</button>
+            <div id='delete-profile-popup' className='modal'>
+              <div className='modal-content'>
+                <span className='close' onClick={(event) => removeDeletePopup(doc)}>&times;</span>
+                <p>Are you sure you want to disable your account?</p>
+                <p>You will be able to re-enable your account by logging in again.</p>
+                <p>Until then, your account will be hidden from other users, but posts and comments made will still be visible.</p>
+                <p>
+                  <button className = 'yesbutton' onClick={(event) => deleteUserAccount()}>Yes</button>
+                  <button className = 'nobutton' onClick={(event) => removeDeletePopup(doc)}>No</button>
+                </p>
+              </div>
+            </div>
           </div>
+        )}
+        {isDisabled && (
+          <div id='enable-account'>
+            <button className='enable-account-button'>Re-enable account</button>
+            <div id='enable-account-popup' className='modal'>
+              <div className='modal-content'>
+                <span className='close' onClick={(event) => removeDeletePopup(doc)}>&times;</span>
+              </div>
+            </div>
           </div>
+        )}
       </div>
     </section>
   );

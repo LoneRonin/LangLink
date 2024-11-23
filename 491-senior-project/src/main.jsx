@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { getAuth } from 'firebase/auth';
 import Login from './Login/Login.jsx';
 import Homepage from './Homepage/Homepage.jsx';
 import Signup from './Signup/Signup.jsx';
@@ -9,6 +10,8 @@ import Profile from './Profile/Profile.jsx'; // Import the Profile page
 import Alpha from './Alphabet/Alpha.jsx';
 import Conjugate from './Conjugate/Conjugate.jsx';
 import Friends from './Friends/Friends.jsx';
+import Chatbox from './ChatComponents/Chatbox/Chatbox.jsx';
+
 import './index.css';
 
 // Import flag images (you can replace these with actual paths or URLs)
@@ -19,6 +22,10 @@ import BluLogo from './Logo/LangLinkBlueTransparent.png';
 const App = () => {
   // State to store the current language
   const [language, setLanguage] = useState('es');
+  //state to store if chat is displayed
+  const [isChatting, setIsChatting] = useState(false);
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   // Function to toggle language (optional)
   const toggleLanguage = () => {
@@ -36,6 +43,18 @@ const App = () => {
         return esFlag;
     }
   };
+
+  const toggleChatbox = () => {
+    if(isChatting){
+      setIsChatting(false);
+      document.getElementById('chatbox').style.display=('none');
+    }
+    else{
+      setIsChatting(true);
+      document.getElementById('chatbox').style.display=('block');
+    }
+  }
+
   return (
   <Router>
     <nav className="navbar">
@@ -49,11 +68,15 @@ const App = () => {
         <li className="nav-item"><Link to="/profile">Profile</Link></li>
         <li className="nav-item"><Link to="/friends">Friends</Link></li>
       </ul>
+      {user && (<button className='chat-button' onClick={toggleChatbox}>Chat</button>)/*only displays chat button when logged in*/}
       {/* Language button on the far right */}
       <button className="language-button" onClick={toggleLanguage}>
           <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
-        </button>
+      </button>
     </nav>
+    <div id='chatbox' className='chatbox'>
+        <Chatbox/>
+    </div>
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/homepage" element={<Homepage />} />
