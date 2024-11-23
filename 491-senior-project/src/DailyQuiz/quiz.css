@@ -1,79 +1,156 @@
-/* Basic styling for the quiz container */
+/* General styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
 .daily-quiz-container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 2px solid #4CAF50;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Question styles */
+.question {
+  margin: 20px 0;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.option-button, .word-button {
+  display: inline-block;
+  margin: 5px 5px;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f9f9f9;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.option-button:hover, .word-button:hover {
+  background: #ffdd57;
+  color: #fff;
+}
+
+.option-button:active, .word-button:active {
+  background: #ffcc00;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* Submit button */
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: #ff5722;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.3s;
+}
+
+.submit-button:hover {
+  background: #e64a19;
+}
+
+.submit-button:active {
+  background: #d84315;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Timers and messages */
+.unavailable-message {
+  font-size: 18px;
+  text-align: center;
+  color: #ff5722;
+  margin: 20px 0;
+}
+
+.countdown-timer {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin: 10px 0;
+}
+
+.score-display, .time-display {
+  font-size: 20px;
+  text-align: center;
+  color: #388e3c;
+  margin: 10px 0;
+}
+
+.score-display {
+  font-weight: bold;
+  color: #00796b;
+}
+
+.time-display {
+  font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .daily-quiz-container {
+    padding: 15px;
   }
-  
-  /* Heading styling */
-  .daily-quiz-container h2 {
-    color: #4CAF50;
-    text-align: center;
-    font-size: 1.5em;
+
+  .option-button, .word-button {
+    padding: 8px 16px;
+    font-size: 14px;
   }
-  
-  /* Question text styling */
-  .question {
-    font-size: 1.1em;
-    margin: 15px 0;
-  }
-  
-  /* Styling for options (buttons) */
-  .option-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    font-size: 1em;
-    color: #333;
-    background-color: #e7e7e7;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .option-button:hover {
-    background-color: #ddd;
-  }
-  
-  .option-button:active {
-    background-color: #ccc;
-  }
-  
-  /* Submit button styling */
+
   .submit-button {
-    width: 100%;
     padding: 10px;
-    margin-top: 15px;
-    font-size: 1em;
-    color: #fff;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 14px;
   }
-  
-  .submit-button:hover {
-    background-color: #45A049;
+
+  .countdown-timer {
+    font-size: 20px;
   }
-  
-  /* Message styling for when quiz is not available */
-  .unavailable-message {
-    text-align: center;
-    color: #888;
-    font-size: 1em;
-    margin-top: 20px;
-  }
-  
-  .countdown-timer{
-    text-align: center;
-    color:#333
-    
-  }
+}
+.lesson-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.lesson-button:hover {
+  background-color: #45a049;
+}
+
