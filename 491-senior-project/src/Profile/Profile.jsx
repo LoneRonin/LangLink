@@ -152,8 +152,8 @@ const Profile = () => {
         <img src={profilePicture} alt="Profile" className="profile-picture" />
       )}
       {/* Display the user's name below the profile picture */}
-      <p className="user-name">
-      </p>
+      <p1 className="user-name">
+      </p1>
       <h1>{`${userData.firstName || 'User'} ${userData.lastName || ''}'s Profile`}</h1>
     </div>
 

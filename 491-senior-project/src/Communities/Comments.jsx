@@ -78,20 +78,20 @@ const Comments = ({ postId }) => {
       </form>
 
       {loading ? (
-        <p>Loading comments...</p>
+        <div>Loading comments...</div>
       ) : (
         <div className="comments-list">
           {comments.length > 0 ? (
             comments.map((comment) => (
               <div key={comment.id} className="comment">
-                <p>{comment.content}</p>
+                <div>{comment.content}</div>
                 <small>
                   From: {comment.author || 'Anonymous'} on {comment.timestamp?.toDate().toLocaleString()}
                 </small>
               </div>
             ))
           ) : (
-            <p>No comments yet.</p>
+            <div>No comments yet.</div>
           )}
         </div>
       )}

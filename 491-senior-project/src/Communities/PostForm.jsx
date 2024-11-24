@@ -4,9 +4,9 @@ import { getAuth } from 'firebase/auth';
 import { db } from '../firebase';
 import { addDoc, collection, serverTimestamp, doc, getDoc } from 'firebase/firestore';
 
-const PostForm = ({ onPostAdded }) => {
+const PostForm = ({ language, onPostAdded }) => {
   const [content, setContent] = useState('');
-  const [authorName, setAuthorName] = useState('Anonymous'); // Default author name
+  const [authorName, setAuthorName] = useState('Anonymous');
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -17,12 +17,10 @@ const PostForm = ({ onPostAdded }) => {
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           const data = userDoc.data();
-          // Set the author's name to the user's first and last name
           setAuthorName(`${data.firstName || ''} ${data.lastName || ''}`.trim() || 'Anonymous');
         }
       }
     };
-
     fetchUserName();
   }, [user]);
 
@@ -30,15 +28,16 @@ const PostForm = ({ onPostAdded }) => {
     e.preventDefault();
     if (content.trim() && user) {
       try {
+        const collectionName = language === 'Spanish' ? 'spanishPosts' : 'japanesePosts';
         const postData = {
           content,
           timestamp: serverTimestamp(),
           upvotes: 0,
           userId: user.uid,
-          author: authorName, // Use fetched author name
+          author: authorName,
         };
 
-        await addDoc(collection(db, 'posts'), postData);
+        await addDoc(collection(db, collectionName), postData);
         setContent('');
         onPostAdded();
       } catch (error) {

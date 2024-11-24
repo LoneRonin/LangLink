@@ -24,3 +24,18 @@
   color: #ddd;
   padding: 5px 0;
 }
+button {
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding for button */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners */
+  background-color: #000000; /* Primary color */
+  color: white; /* Text color */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+button:hover {
+  background-color: #000000; /* Darker shade on hover */
+}
