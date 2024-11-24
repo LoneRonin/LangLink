@@ -35,6 +35,10 @@ import './index.css';
 import SpanishQuiz from './DailyQuiz/quizEs.jsx';
 import JapaneseQuiz from './DailyQuiz/quizJp.jsx';
 import QuizPage from './DailyQuiz/dailytemp.jsx';
+
+//Import for Leaderboard
+import QuizLeaderboard from './DailyQuiz/board.jsx';
+
 // Import flag images (you can replace these with actual paths or URLs)
 import esFlag from './flags/es.png'; // Spanish flag
 import jpFlag from './flags/jp.png'; // Japanese flag
@@ -110,6 +114,7 @@ const App = () => {
 
       <Route path="/dailyquiz/es" element={<SpanishQuiz />} /> 
       <Route path="/dailyquiz/jp" element={<JapaneseQuiz />} /> 
+      <Route path="/leaderboard" element={<QuizLeaderboard />} /> 
       <Route path="dailyquiz" element = {<QuizPage />} />
 
       <Route path="/alpha" element={<Alpha language={language} />} />
