@@ -8,11 +8,10 @@ const Chatbox = () => {
     
 
     return(
-        <section>
-            <List/>
-            <Chat/>
-            <Detail/>
-        </section>
+        <div className='chat-container'>
+            <div><List/></div>
+            <div><Chat/></div>
+        </div>
     )
 }
 

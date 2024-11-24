@@ -346,7 +346,7 @@ const Friends = () => {
             if(user){
                 //constructs a database query, pulls the friends list tied to users uid
                 const usersList = collection(db, "users", id, "friendlist");
-                const userFriendsList = query(usersList, where('isDeleted', '!=', true));
+                const userFriendsList = query(usersList);
 
                 getDocs(userFriendsList)
                     .then((querySnapshot) => {

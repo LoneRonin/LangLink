@@ -51,7 +51,7 @@ const App = () => {
     }
     else{
       setIsChatting(true);
-      document.getElementById('chatbox').style.display=('block');
+      document.getElementById('chatbox').style.display=('flex');
     }
   }
 
@@ -68,7 +68,7 @@ const App = () => {
         <li className="nav-item"><Link to="/profile">Profile</Link></li>
         <li className="nav-item"><Link to="/friends">Friends</Link></li>
       </ul>
-      {user && (<button className='chat-button' onClick={toggleChatbox}>Chat</button>)/*only displays chat button when logged in*/}
+      {(<button className='chat-button' onClick={toggleChatbox}>Chat</button>)}
       {/* Language button on the far right */}
       <button className="language-button" onClick={toggleLanguage}>
           <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
