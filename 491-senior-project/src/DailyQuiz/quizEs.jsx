@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { setDoc, doc } from 'firebase/firestore';
 import { auth, db } from '../firebase'; // Ensure these imports are correct
 
-const DailyQuiz = () => {
+const SpanishQuiz = () => {
   const [quizAvailable, setQuizAvailable] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -100,9 +100,9 @@ const DailyQuiz = () => {
       if (user) {
         const userRef = doc(db, 'users', user.uid); // Reference to the user's document
         await setDoc(userRef, {
-          score: calculatedScore,
-          timeCompletedSeconds: totalSeconds, // Store time as total seconds
-          timeCompletedMinutes: minutes, // Store time in minutes
+          ESscore: calculatedScore,
+          EStimeCompletedSeconds: totalSeconds, // Store time as total seconds
+          EStimeCompletedMinutes: minutes, // Store time in minutes
         }, { merge: true }); // Merge data to preserve other fields
   
         console.log("Quiz data saved to Firestore");
@@ -154,7 +154,7 @@ const DailyQuiz = () => {
 
   // "Go Back" button functionality
   const handleGoBack = () => {
-    navigate('/Lesson'); // Navigate to the LessonPage route
+    navigate('/dailyquiz'); // Navigate to the LessonPage route
   };
 
   return (
@@ -203,11 +203,11 @@ const DailyQuiz = () => {
           <p>You can take the quiz again in {timer}.</p>
           <p>Score: {score}</p>
           <p>Time Elapsed: {quizTime}</p>
-          <button onClick={handleGoBack} className="go-back-button">Back to Lesson</button>
+          <button onClick={handleGoBack} className="go-back-button">Back to Daily Quiz</button>
         </div>
       )}
     </div>
   );
 };
 
-export default DailyQuiz;
+export default SpanishQuiz;

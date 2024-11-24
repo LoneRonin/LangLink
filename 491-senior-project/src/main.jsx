@@ -32,12 +32,14 @@ import DateTest from './SpanishTest/DateTest.jsx';
 import './index.css';
 
 //Import for Daily quiz
-import DailyQuiz from './DailyQuiz/quiz.jsx';
-
+import SpanishQuiz from './DailyQuiz/quizEs.jsx';
+import JapaneseQuiz from './DailyQuiz/quizJp.jsx';
+import QuizPage from './DailyQuiz/dailytemp.jsx';
 // Import flag images (you can replace these with actual paths or URLs)
 import esFlag from './flags/es.png'; // Spanish flag
 import jpFlag from './flags/jp.png'; // Japanese flag
 import BluLogo from './Logo/LangLinkBlueTransparent.png';
+
 
 const App = () => {
   // State to store the current language
@@ -73,7 +75,8 @@ const App = () => {
         <li className="nav-item"><Link to="/lesson">Lesson</Link></li> 
         <li className="nav-item"><Link to="/profile">Profile</Link></li>
         {/* <li className="nav-item"><Link to="/sentence">Sentence</Link></li> */}
-        <li className="nav-item"><Link to="/dailyquiz">Daily Quiz</Link></li>
+        <li className="nav-item"><Link to="/dailyquiz">DailyQuiz</Link></li>
+        
       </ul>
       {/* Language button on the far right */}
       <button className="language-button" onClick={toggleLanguage}>
@@ -104,8 +107,10 @@ const App = () => {
       <Route path="/lesson/datetest" element={<DateTest />} />
 
       {/* Routes for Daily Quiz */}
-      <Route path="/dailyquiz" element={<DailyQuiz />} /> {/*Spanish Daily Quiz*/}
-      {/* <Route path="/dailyquiz-jp" element={<DailyQuizJp />} /> Japanese Daily Quiz */}
+
+      <Route path="/dailyquiz/es" element={<SpanishQuiz />} /> 
+      <Route path="/dailyquiz/jp" element={<JapaneseQuiz />} /> 
+      <Route path="dailyquiz" element = {<QuizPage />} />
 
       <Route path="/alpha" element={<Alpha language={language} />} />
       <Route path="/signup" element={<Signup />} />
