@@ -1,4 +1,3 @@
-//Names: Victor, Tristan
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -36,6 +35,14 @@ const Signup = () => {
         lastName,
         email,
         language: '', // Language will be selected later
+      });
+
+      // Add a welcome notification in the 'notifications' subcollection
+      await setDoc(doc(db, 'users', user.uid, 'notifications', 'welcome'), {
+        type: 'welcome',
+        message: `Welcome to the app, ${firstName}! We're glad to have you here.`,
+        timestamp: new Date(),
+        read: false, // Notification is unread by default
       });
 
       // Redirect to language selection page

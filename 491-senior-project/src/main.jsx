@@ -15,6 +15,7 @@ import DarkModeToggle from './DarkMode/DarkMode.jsx';  // Import dark mode toggl
 import './index.css';
 import Communities from './Communities/Communities';
 import Friends from './Friends/Friends.jsx';
+import DailyQuiz from './DailyQuiz/Quiz.jsx';
 
 // Import flag images
 import esFlag from './flags/es.png'; // Spanish flag
@@ -56,6 +57,7 @@ const App = () => {
           <li className="nav-item"><Link to="/profile">Profile</Link></li>
           <li className="nav-item"><Link to="/communities">Communities</Link></li>
           <li className="nav-item"><Link to="/friends">Friends</Link></li>
+          <li className="nav-item"><Link to="/dailyquiz">DailyQuiz</Link></li>
 
 
           {/* Add Notifications Dropdown */}
@@ -82,6 +84,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/communities" element={<Communities />} />
         <Route path="/friends" element={<Friends />} />
+        <Route path="/dailyquiz" element={<DailyQuiz />} />
       </Routes>
     </Router>
   );

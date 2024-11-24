@@ -56,7 +56,7 @@ const Homepage = () => {
     <section className="homepage-container">
       {/* Left Sidebar for Daily Quiz and Lesson Themes */}
       <div className="left-sidebar">
-        <button className="circle-button" onClick={() => handleRedirect('/daily-quiz')}>
+        <button className="circle-button" onClick={() => handleRedirect('/dailyquiz')}>
           Daily Quiz
         </button>
         <button className="circle-button" onClick={() => handleRedirect('/lesson-themes')}>

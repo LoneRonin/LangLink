@@ -1,15 +1,17 @@
-/* Worked on by: Victor */
 .notifications-dropdown {
   position: relative;
   display: inline-block;
 }
 
-
-
-.notification-bell:hover {
-  color: #f1c40f; /* Change to a gold color on hover */
+.notification-bell {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
 }
 
+.notification-bell:hover {
+  color: #f1c40f; /* Gold color on hover */
+}
 
 .dropdown-content {
   display: block;

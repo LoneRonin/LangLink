@@ -1,4 +1,4 @@
-/* Updated Homepage CSS Example */
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -184,7 +184,6 @@ body {
   transform: scale(1.05); /* Enlarges on hover */
 }
 
-/* Friend Suggestions */
 .friend-suggestions {
   background-color: #333; /* Dark background for friends container in dark mode */
   padding: 1.5rem;
@@ -192,8 +191,13 @@ body {
   max-width: 300px; /* Adjust max width as needed */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   color: white; /* Default text color in dark mode */
+  max-height: 400px; /* Set a maximum height for the container */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
-
+/* Customize the scrollbar for a better look */
+.friend-suggestions::-webkit-scrollbar {
+  width: 10px;
+}
 .friend {
   display: flex;
   justify-content: space-between; /* Space between name and actions */
