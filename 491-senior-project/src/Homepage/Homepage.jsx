@@ -12,6 +12,7 @@ const Homepage = ({ language }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [wordOfTheDay, setWordOfTheDay] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -47,6 +48,21 @@ const Homepage = ({ language }) => {
     }
   }, []);
 
+  useEffect(() => {
+    // Check local storage for the word of the day for the current language
+    const today = new Date().toISOString().split('T')[0];
+    const storageKey = `wordOfTheDay_${language}`;
+    const storedWordData = JSON.parse(localStorage.getItem(storageKey));
+
+    if (storedWordData && storedWordData.date === today) {
+      setWordOfTheDay(storedWordData.word);
+    } else {
+      const newWord = getRandomWord();
+      setWordOfTheDay(newWord);
+      localStorage.setItem(storageKey, JSON.stringify({ date: today, word: newWord }));
+    }
+  }, [language]);
+
   const getRandomWord = () => {
     const words = language === 'es' ? spanishWords : japaneseWords;
     return words[Math.floor(Math.random() * words.length)];
@@ -68,7 +84,7 @@ const Homepage = ({ language }) => {
     return <p>{error}</p>;
   }
 
-  const { word, definition } = getRandomWord();
+  const { word, definition, audioSrc } = wordOfTheDay || {};
 
   return (
     <section className="homepage-container">
@@ -76,7 +92,7 @@ const Homepage = ({ language }) => {
         <h1 className="welcome-text">Welcome back to Language Link, {firstName}!</h1>
         <p>Here’s what’s new:</p>
         <button onClick={handleShowPopup}>Show Word of the Day</button>
-        {showPopup && <Popup word={word} definition={definition} onClose={handlePopupClose} />}
+        {showPopup && wordOfTheDay && <Popup word={word} definition={definition} audioSrc={audioSrc} onClose={handlePopupClose} />}
         {/* Add more content or components here */}
       </div>
     </section>
