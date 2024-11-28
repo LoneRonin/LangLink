@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { setDoc, doc } from 'firebase/firestore';
 import { auth, db } from '../firebase'; // Ensure these imports are correct
 
@@ -10,11 +10,10 @@ const SpanishQuiz = () => {
   const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(null);
   const [timer, setTimer] = useState("24:00:00");
-  const [quizTime, setQuizTime] = useState("00:00:00");
+  const [quizTime, setQuizTime] = useState("");
   const quizStartRef = useRef(null);
   const timerRef = useRef(null);
-  const [currentSentence, setCurrentSentence] = useState('');
-  const [sentenceBuilding, setSentenceBuilding] = useState([]); // For building the sentence
+  const [sentenceBuilding, setSentenceBuilding] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,17 +36,11 @@ const SpanishQuiz = () => {
       { id: 3, type: 'word-bank', question: "Translate: 'I like apples'", correctSentence: 'Me gustan las manzanas', wordBank: ['Me', 'gusta', 'gustan', 'las', 'manzanas'] },
       { id: 4, type: 'word-bank', question: "Translate: 'Today is a sunny day'", correctSentence: 'Hoy es un día soleado', wordBank: ['Hoy', 'es', 'un', 'día', 'soleado', 'mañana'] },
       { id: 5, type: 'multiple-choice', question: "What's the Spanish word for 'grocery store'?", options: ['Supermercado', 'Biblioteca', 'Escuela'], answer: 'Supermercado' },
-      { id: 6, type: 'multiple-choice', question: "What's the Spanish word for 'red'?", options: ['Rojo', 'Azul', 'Amarillo'], answer: 'Rojo' },
-      { id: 7, type: 'multiple-choice', question: "Translate 'twenty' into Spanish", options: ['Diez', 'Quince', 'Veinte'], answer: 'Veinte' },
-      { id: 8, type: 'word-bank', question: "Translate: 'I have a red apple'", correctSentence: 'Tengo una manzana roja', wordBank: ['Tengo', 'una', 'manzana', 'roja', 'amarilla'] },
-      { id: 9, type: 'word-bank', question: "Translate: 'We go to the store'", correctSentence: 'Nosotros vamos a la tienda', wordBank: ['Nosotros', 'vamos', 'a', 'la', 'tienda', 'parque'] },
-      { id: 10, type: 'multiple-choice', question: "What's the Spanish word for 'library'?", options: ['Biblioteca', 'Parque', 'Supermercado'], answer: 'Biblioteca' },
     ];
 
-    // Randomly select 5 questions
     const selectedQuestions = questionPool.sort(() => 0.5 - Math.random()).slice(0, 5);
     setQuestions(selectedQuestions);
-    quizStartRef.current = new Date(); // Start quiz timer
+    quizStartRef.current = new Date();
   };
 
   const handleAnswer = (questionId, answer) => {
@@ -57,54 +50,50 @@ const SpanishQuiz = () => {
   const handleNext = () => {
     const currentQuestion = questions[currentQuestionIndex];
     if (currentQuestion.type === 'word-bank') {
-      handleAnswer(currentQuestion.id, currentSentence.trim());
-      setSentenceBuilding([]); // Clear the sentence for next question
+      const builtSentence = sentenceBuilding.join(' ').trim();
+      handleAnswer(currentQuestion.id, builtSentence);
+      setSentenceBuilding([]);
     }
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
   const handleQuizSubmit = async () => {
     const endTime = new Date();
-    const quizDuration = new Date(endTime - quizStartRef.current);
-    
-    // Calculate time in minutes and seconds
-    const minutes = quizDuration.getUTCMinutes();
-    const seconds = quizDuration.getUTCSeconds();
-    
-    setQuizTime(
-      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
-    );
-  
-    // Store the total time in seconds and minutes
-    const totalSeconds = minutes * 60 + seconds;
-  
+    const quizDuration = endTime - quizStartRef.current;
+
+    const minutes = Math.floor((quizDuration / 1000 / 60) % 60);
+    const seconds = Math.floor((quizDuration / 1000) % 60);
+
+    setQuizTime(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+
+    const totalSeconds = Math.floor(quizDuration / 1000);
+
     let calculatedScore = 0;
     questions.forEach((q) => {
       const userAnswer = userAnswers[q.id];
       if (q.type === 'multiple-choice' && userAnswer === q.answer) {
         calculatedScore++;
       }
-      if (q.type === 'word-bank' && userAnswer === q.correctSentence) {
+      if (q.type === 'word-bank' && 
+          userAnswer?.trim().toLowerCase() === q.correctSentence.trim().toLowerCase()) {
         calculatedScore++;
       }
     });
-  
+
     setScore(calculatedScore);
     localStorage.setItem('lastQuizTime', Date.now());
     setQuizAvailable(false);
-    startCountdown(new Date(Date.now() + 86400000)); // Start 24-hour countdown
-  
-    // Save score and time to Firestore, merging data to keep other fields intact
+    startCountdown(new Date(Date.now() + 86400000));
+
     try {
-      const user = auth.currentUser; // Get the current user
+      const user = auth.currentUser;
       if (user) {
-        const userRef = doc(db, 'users', user.uid); // Reference to the user's document
+        const userRef = doc(db, 'users', user.uid);
         await setDoc(userRef, {
           ESscore: calculatedScore,
-          EStimeCompletedSeconds: totalSeconds, // Store time as total seconds
-          EStimeCompletedMinutes: minutes, // Store time in minutes
-        }, { merge: true }); // Merge data to preserve other fields
-  
+          EStimeCompletedSeconds: totalSeconds,
+        }, { merge: true });
+
         console.log("Quiz data saved to Firestore");
       }
     } catch (error) {
@@ -124,7 +113,7 @@ const SpanishQuiz = () => {
         setTimer(
           `${remainingTime.hours.toString().padStart(2, '0')}:${
             remainingTime.minutes.toString().padStart(2, '0')}:${
-            remainingTime.seconds.toString().padStart(2, '0')}` 
+            remainingTime.seconds.toString().padStart(2, '0')}`
         );
       }
     }, 1000);
@@ -138,7 +127,6 @@ const SpanishQuiz = () => {
     return { total, hours, minutes, seconds };
   };
 
-  // Sentence Builder Functions
   const handleWordClick = (word) => {
     setSentenceBuilding((prev) => [...prev, word]);
   };
@@ -148,13 +136,11 @@ const SpanishQuiz = () => {
   };
 
   const resetSentence = () => {
-    setSentenceBuilding([]); // Reset the sentence builder
-    setCurrentSentence(''); // Clear the current sentence
+    setSentenceBuilding([]);
   };
 
-  // "Go Back" button functionality
   const handleGoBack = () => {
-    navigate('/dailyquiz'); // Navigate to the LessonPage route
+    navigate('/dailyquiz');
   };
 
   return (
@@ -201,7 +187,7 @@ const SpanishQuiz = () => {
       ) : (
         <div>
           <p>You can take the quiz again in {timer}.</p>
-          <p>Score: {score}</p>
+          <p>Score: {score !== null ? score : "N/A"}</p>
           <p>Time Elapsed: {quizTime}</p>
           <button onClick={handleGoBack} className="go-back-button">Back to Daily Quiz</button>
         </div>
