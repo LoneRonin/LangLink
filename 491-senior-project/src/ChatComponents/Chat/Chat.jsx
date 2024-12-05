@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-//import DefaultProf from '../src/ProfilePics/defaultprofile.png';
+//import DefaultProf from '../ProfilePics/defaultprofile.png';
 import "./Chat.css"
 
 const Chat = () => {
@@ -26,20 +26,20 @@ const Chat = () => {
                 <div className="message">
                     <img src=".defaultprofile.png" alt=""/>
                     <div className="texts">
-                        <p>hey</p>
+                        <p>hey now, youre a rockstar, get your game on, go play ay ay</p>
                         <span>1 min ago</span>
                     </div>
                 </div>
                 <div className="message own">
                     <div className="texts">
-                        <p>hey</p>
+                        <p>hey somebody once told me that the world was gonna roll me</p>
                         <span>1 min ago</span>
                     </div>
                 </div>
                 <div className="message">
                     <img src="./491-senior-project\src\ProfilePics\defaultprofile.png" alt=""/>
                     <div className="texts">
-                        <p>hey</p>
+                        <p>i ain't the sharpest tool in the shed</p>
                         <span>1 min ago</span>
                     </div>
                 </div>
