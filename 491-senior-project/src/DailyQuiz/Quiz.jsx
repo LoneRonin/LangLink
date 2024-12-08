@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { setDoc, doc } from 'firebase/firestore';
 import { auth, db } from '../firebase'; // Ensure these imports are correct
-import './quiz.css'; 
+import './quiz.css'; // Adjust the path if necessary
 
 
 const DailyQuiz = () => {

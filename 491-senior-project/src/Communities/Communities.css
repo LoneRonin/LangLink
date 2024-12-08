@@ -1,25 +1,186 @@
+/* Worked on by: Tristan Clayman */
 
+/* Default styles for the community container (dark mode by default) */
 .community-container {
-    text-align: left;
-    margin: 50px auto; /* Less top margin */
-    padding: 20px;
-    background-color: #1a1a1b;
-    color: white;
-    width: 100%; /* Use full width */
-    max-width: 1200px; /* Max width for large screens */
-    border: none;
-    border-radius: 0; /* Remove rounded edges */
-  }
-  
-  .community-header {
-    font-size: 28px;
-    font-weight: bold;
-    color: #fff;
-    padding: 10px 0;
-  }
-  
-  .community-message {
-    font-size: 20px;
-    color: #ddd;
-    padding: 5px 0;
-  }
+  text-align: left;
+  margin: 50px auto; /* Less top margin */
+  padding: 20px;
+  background-color: #1a1a1b; /* Dark background */
+  color: white;
+  width: 100%; /* Use full width */
+  max-width: 1200px; /* Max width for large screens */
+  border: none;
+  border-radius: 0; /* Remove rounded edges */
+}
+
+/* Styles for community container in light mode */
+body.light-mode .community-container {
+  background-color: #ffffff; /* White background for light mode */
+  color: #000000; /* Dark text for light mode */
+}
+
+/* Community header styles */
+.community-header {
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff; /* Light text in dark mode */
+  padding: 10px 0;
+}
+
+/* Styles for community header in light mode */
+body.light-mode .community-header {
+  color: #000000; /* Dark text for light mode */
+}
+
+/* Community message styles */
+.community-message {
+  font-size: 20px;
+  color: #ddd; /* Light gray text in dark mode */
+  padding: 5px 0;
+}
+
+/* Styles for community message in light mode */
+body.light-mode .community-message {
+  color: #333333; /* Darker text for light mode */
+}
+
+/* Specific styling for buttons inside the community container */
+.community-container button {
+  width: 100%; /* Full width for buttons inside community posts */
+  padding: 10px; /* Padding for button */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners */
+  background-color: #0056b3; /* Default button color (dark red) */
+  color: white; /* Text color */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+/* Button hover effect */
+.community-container button:hover {
+  background-color: #333333; /* Darker shade on hover */
+}
+
+/* Specific styles for the post button */
+.community-container .post-btn {
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hover effect for the post button */
+.community-container .post-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Light mode styles for the post button */
+body.light-mode .community-container .post-btn {
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+}
+
+/* Light mode hover effect */
+body.light-mode .community-container .post-btn:hover {
+  background-color: #0056b3; /* Darker blue hover */
+}
+
+/* Light mode button styles */
+.light-mode-button {
+  width: auto; /* Reset width to auto */
+  display: inline-block; /* Fit to content */
+  padding: 8px 15px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background-color: #ffffff; /* Light background */
+  color: #000; /* Dark text */
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Light mode button hover effect */
+.light-mode-button:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* Specific styles for the notifications button */
+.notifications-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 50%; /* Circular button */
+  background-color: #ff4500; /* Bright notification color */
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Notifications button hover effect */
+.notifications-button:hover {
+  background-color: #e03e00;
+}
+
+/* Upvote button styles specific to the community container */
+.community-container .upvote-btn {
+  background-color: transparent; /* Transparent background */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 1.2em; /* Font size */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+/* Dark mode styles for upvote button */
+body.dark-mode .community-container .upvote-btn {
+  color: #b0b0b0; /* Light gray for dark mode */
+}
+
+/* Light mode styles for upvote button */
+body.light-mode .community-container .upvote-btn {
+  color: #555555; /* Darker gray for light mode */
+}
+
+/* Hover effect for upvote button */
+.community-container .upvote-btn:hover {
+  color: #d7dadc; /* Lighter gray on hover for consistency */
+}
+
+/* Styles for select dropdown */
+select {
+  background-color: #1a1a1b; /* Match dark mode background */
+  color: white; /* Text color */
+  border: 1px solid #343536; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  padding: 8px; /* Padding */
+  width: 100%; /* Full width */
+  font-size: 1em; /* Font size */
+}
+
+/* Styles for textarea */
+textarea {
+  background-color: #1a1a1b; /* Match dark mode background */
+  color: white; /* Text color */
+  border: 1px solid #343536; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px; /* Padding */
+  width: 100%; /* Full width */
+  font-size: 16px; /* Font size */
+  font-family: sans-serif; /* Font style */
+  line-height: 1.5; /* Adjust line height */
+}
+
+/* Light mode adjustments */
+body.light-mode select,
+body.light-mode textarea {
+  background-color: #ffffff; /* Light mode background */
+  color: black; /* Text color */
+  border: 1px solid #ddd; /* Lighter border */
+  font-size: 16px; /* Font size */
+  font-family: sans-serif; /* Font style */
+}

@@ -1,67 +1,221 @@
+/* Default styles for the forum posts list */
 .forum-posts-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%; /* Make the list take up the full width */
-    max-width: 1000px; /* Keep a max width for readability */
-    margin: 20px auto; /* Center the list and add some spacing */
-  }
-  
-  .forum-post {
-    display: flex;
-    background-color: #1a1a1b; /* Reddit-like dark post background */
-    border: 1px solid #343536;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 15px;
-    width: 100%; /* Full width of the list */
-    max-width: 1000px; /* Max width */
-  }
-  
-  .vote-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px; /* Space between vote section and post body */
-  }
-  
-  .upvote-btn, .comment-btn {
-    background-color: transparent; /* Transparent buttons for a Reddit-like feel */
-    border: none;
-    color: #818384;
-    cursor: pointer;
-    font-size: 1.2em;
-  }
-  
-  .upvote-btn:hover, .comment-btn:hover {
-    color: #d7dadc;
-  }
-  
-  .post-content-section {
-    flex-grow: 1;
-  }
-  
-  .post-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8em;
-    color: #818384;
-    margin-bottom: 10px;
-  }
-  
-  .post-author {
-    font-weight: bold;
-  }
-  
-  .post-body {
-    font-size: 1.1em;
-    color: #d7dadc;
-    line-height: 1.6;
-  }
-  
-  .post-footer {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  margin: 20px auto;
+}
+
+/* Default styles for each forum post */
+.forum-post {
+  display: flex;
+  background-color: #1a1a1b; /* Dark background in dark mode */
+  border: 1px solid #343536;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Dark mode styles for the post background */
+body.dark-mode .forum-post {
+  background-color: #1a1a1b;
+  color: white;
+  border: 1px solid #444; /* Darker border for dark mode */
+}
+
+/* Light mode styles for the post background */
+body.light-mode .forum-post {
+  background-color: #ffffff;
+  color: black;
+  border: 1px solid #ddd; /* Lighter border for light mode */
+}
+
+/* Vote section (upvote and comment buttons) */
+.vote-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+/* Button styles for upvote and comment */
+.upvote-btn, .comment-btn {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+/* Dark mode button color styles */
+body.dark-mode .upvote-btn, body.dark-mode .comment-btn {
+  color: #b0b0b0;
+}
+
+/* Light mode button color styles */
+body.light-mode .upvote-btn, body.light-mode .comment-btn {
+  color: #555555;
+}
+
+/* Button hover effects */
+.upvote-btn:hover, .comment-btn:hover {
+  color: #d7dadc;
+}
+
+/* Post content section */
+.post-content-section {
+  flex-grow: 1;
+}
+
+/* Post header styles */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8em;
+  margin-bottom: 10px;
+  color: #818384; /* Default light gray text */
+}
+
+/* Light mode adjustments */
+body.light-mode .post-header,
+body.light-mode .post-body {
+  color: #333333; /* Darker text for light mode */
+}
+
+/* Dark mode adjustments */
+body.dark-mode .post-header,
+body.dark-mode .post-body {
+  color: #e0e0e0; /* Lighter text for dark mode */
+}
+
+/* Post body text */
+.post-body {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #d7dadc; /* Light gray text for body in dark mode */
+}
+
+/* Post footer */
+.post-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Styling for the comments section */
+.comment-section {
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  margin-top: 10px;
+}
+
+/* Comment container style */
+.comment {
+  background-color: #1a1a1b; /* Dark background for comments in dark mode */
+  border: 1px solid #343536;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 900px;
+}
+
+/* Dark mode styles for comments */
+body.dark-mode .comment {
+  background-color: #2a2a2b; /* Darker background for comments */
+  color: white;
+  border: 1px solid #444; /* Darker border for comments */
+}
+
+/* Light mode styles for comments */
+body.light-mode .comment {
+  background-color: #ffffff; /* Light background for comments */
+  color: black;
+  border: 1px solid #ddd; /* Lighter border for comments */
+}
+
+/* Comment author styles */
+.comment-author {
+  font-weight: bold;
+  color: #818384; /* Light gray text for author name */
+}
+
+/* Comment body text */
+.comment-body {
+  font-size: 1em;
+  color: #d7dadc; /* Light gray text for body in dark mode */
+  line-height: 1.4;
+}
+
+/* Dark mode styles for comment body */
+body.dark-mode .comment-body {
+  color: #e0e0e0; /* Lighter text color for comment body in dark mode */
+}
+
+/* Light mode styles for comment body */
+body.light-mode .comment-body {
+  color: #333333; /* Darker text color for comment body in light mode */
+}
+
+/* Reply button inside comment */
+.reply-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+/* Hover effect for reply button */
+.reply-btn:hover {
+  color: #d7dadc;
+}
+
+/* Dark mode styles for reply button */
+body.dark-mode .reply-btn {
+  color: #b0b0b0;
+}
+
+/* Light mode styles for reply button */
+body.light-mode .reply-btn {
+  color: #555555;
+}
+
+/* Blue button styles for specific buttons (Post, Comment, View Comment, Hide Comment) */
+.post-btn, .comment-btn, .view-comment-btn, .hide-comment-btn {
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+/* Dark mode styles for blue buttons */
+body.dark-mode .post-btn, body.dark-mode .comment-btn, 
+body.dark-mode .view-comment-btn, body.dark-mode .hide-comment-btn {
+  background-color: #0056b3; /* Darker blue for dark mode */
+  color: white;
+}
+
+/* Light mode styles for blue buttons */
+body.light-mode .post-btn, body.light-mode .comment-btn, 
+body.light-mode .view-comment-btn, body.light-mode .hide-comment-btn {
+  background-color: #007bff; /* Regular blue for light mode */
+  color: white;
+}
+
+/* Hover effect for blue buttons */
+.post-btn:hover, .comment-btn:hover, 
+.view-comment-btn:hover, .hide-comment-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  color: #d7dadc; /* Lighter text on hover */
+}
