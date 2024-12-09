@@ -1,16 +1,29 @@
 import { useState, useEffect, useRef } from "react"
 //import DefaultProf from '../ProfilePics/defaultprofile.png';
 import "./Chat.css"
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const Chat = () => {
     const [open, setOpen] = useState(false);
     const [text, setText] = useState("");
+    const [chat, setChat] = useState();
 
     const endRef = useRef(null);
 
     useEffect(() => {
         endRef.current?.scrollIntoView({ behavior:"smooth" });
     });
+
+    useEffect(() => {
+        const fetchChat = onSnapshot(doc(db,"chats", ""), (res)=> {
+            setChat(res.data())
+        })
+
+        return () => {
+            fetchChat();
+        }
+    },[])
 
     return(
         <div className ='chat'>

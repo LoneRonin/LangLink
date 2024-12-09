@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Chatlist.css"
 import { getAuth } from 'firebase/auth';
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase";
 
 const Chatlist = () => {
@@ -11,8 +11,18 @@ const Chatlist = () => {
     const [addMode, setAddMode] = useState(false);
 
     useEffect(() => {
-        const updateChats = onSnapshot(doc(db, "userchats", user.uid), (doc) => {
-            setChats(doc.data());
+        const updateChats = onSnapshot(doc(db, "userchats", user.uid), async (response) => {
+            const items = response.data().chats;
+            //setChats(doc.data());
+            const promises = items.map(async (item) => {
+                const userDocRef = doc(db, "users", item.receiverId);
+                const userDocSnap = await getDoc(userDocRef);
+                const user = userDocSnap.data();
+
+                return {...item, user}
+            });
+            const chatData = await Promise.all(promises);
+            setChats(chatData.sort((a,b) => b.updatedAt - a.updatedAt));
         });
 
         return () => {
@@ -30,16 +40,15 @@ const Chatlist = () => {
             </div>
             {chats.map((chat) => (
                 <div className="item" key={chat.chatId}>
-                <img src="./defaultprofile.png" alt="" />
-                <div className="texts">
-                    <span>other user</span>
-                    <p>{chat.lastMessage}</p>
-                </div>
-            </div>
-            ))}
-            
+                    <img src={chat.user.profilePicture || "./defaultprofile.png"} alt="" />
+                    <div className="texts">
+                        <span>{chat.user.firstName} {chat.user.lastName}</span>
+                        <p>{chat.lastMessage}</p>
+                    </div>
+                </div>))}
+            {addMode && <AddUser/>}
         </div>
     )
 }
 
-export default Chatlist
+export default Chatlist;
