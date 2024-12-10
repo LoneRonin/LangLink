@@ -16,7 +16,7 @@ import Conjugate from './Conjugate/Conjugate.jsx';
 import NotificationsDropdown from './Notifications/NotificationsDropdown.jsx'; // Dropdown import
 import DarkModeToggle from './DarkMode/DarkMode.jsx';  // Import dark mode toggle from DarkMode.jsx
 import './index.css';
-import Communities from './Communities/Communities';
+import Communities from './Communities/Communities.jsx';
 import Friends from './Friends/Friends.jsx';
 import DailyQuiz from './DailyQuiz/Quiz.jsx';
 
@@ -24,7 +24,6 @@ import DailyQuiz from './DailyQuiz/Quiz.jsx';
 import esFlag from './flags/es.png'; // Spanish flag
 import jpFlag from './flags/jp.png'; // Japanese flag
 import BluLogo from './Logo/LangLinkBlueTransparent.png';
-import Communities from './Communities/Communities';
 import TranslateComponent from './TranslateComponent';
 
 
@@ -89,7 +88,7 @@ const App = () => {
         </ul>
 
         {/* Group gear icon and language button */}
-  <div className="navbar-right">
+    <div className="navbar-right">
     <div className="settings-dropdown">
       <FontAwesomeIcon 
         icon={faCog} 
@@ -102,6 +101,7 @@ const App = () => {
         </ul>
       )}
     </div>
+    
 
         <button className="language-button" onClick={toggleLanguage}>
           <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
@@ -109,6 +109,7 @@ const App = () => {
 
         {/* Dark Mode Toggle Button */}
         <DarkModeToggle />  {/* This will add the toggle button for dark mode */}
+        </div>
       </nav>
 
       <Routes>

@@ -4,14 +4,15 @@ import { collection, query, orderBy, onSnapshot, doc, updateDoc, increment } fro
 import Comments from './Comments'; // Import Comments component
 import './PostsList.css'; // Import CSS
 
-const PostsList = () => {
+const PostsList = ({ language }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [commentsVisible, setCommentsVisible] = useState({}); // Track visibility of comments
+  const [commentsVisible, setCommentsVisible] = useState({});
 
   useEffect(() => {
-    const postsCollection = collection(db, 'posts');
+    const collectionName = language === 'Spanish' ? 'spanishPosts' : 'japanesePosts';
+    const postsCollection = collection(db, collectionName);
     const q = query(postsCollection, orderBy('timestamp', 'desc'));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -25,11 +26,12 @@ const PostsList = () => {
     });
 
     return () => unsubscribe(); // Cleanup listener on component unmount
-  }, []);
+  }, [language]);
 
   const handleUpvote = async (postId) => {
     try {
-      const postDocRef = doc(db, 'posts', postId);
+      const collectionName = language === 'Spanish' ? 'spanishPosts' : 'japanesePosts';
+      const postDocRef = doc(db, collectionName, postId);
       await updateDoc(postDocRef, { upvotes: increment(1) });
     } catch (error) {
       console.error("Error upvoting post: ", error.message);
@@ -51,31 +53,25 @@ const PostsList = () => {
       {posts.length > 0 ? (
         posts.map((post) => (
           <div key={post.id} className="forum-post">
-            {/* Upvote Section */}
             <div className="vote-section">
               <button className="upvote-btn" onClick={() => handleUpvote(post.id)}>
                 ↑ {post.upvotes || 0}
               </button>
             </div>
-
-            {/* Post Content Section */}
             <div className="post-content-section">
               <div className="post-header">
                 <span className="post-author">Posted by {post.author || 'Anonymous'}</span>
                 <span className="post-date">{post.timestamp?.toDate().toLocaleString()}</span>
               </div>
-
               <div className="post-body">
-                <p>{post.content}</p>
+                <div>{post.content}</div>
               </div>
-
               <div className="post-footer">
                 <button className="comment-btn" onClick={() => toggleComments(post.id)}>
                   💬 {commentsVisible[post.id] ? "Hide Comments" : "View Comments"}
                 </button>
               </div>
-
-              {commentsVisible[post.id] && <Comments postId={post.id} />} {/* Render Comments component */}
+              {commentsVisible[post.id] && <Comments postId={post.id} />}
             </div>
           </div>
         ))

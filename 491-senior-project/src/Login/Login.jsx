@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { auth, db } from '../firebase'; // Import auth and db
 // Worked on by: Tristan Clayman, Victor Perez
 
-import React, { useState } from 'react';
-import { auth } from '../firebase'; // Import auth
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Firebase sign-in
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { doc, getDoc, setDoc, collection, addDoc, getDocs, deleteDoc } from 'firebase/firestore'; // Firestore functions
