@@ -94,7 +94,7 @@ button:focus-visible {
 }
 
 .logo-icon {
-  width: 100px;
+  width: 75px;
   height: auto;
   margin-right: 10px;
 }
@@ -214,4 +214,69 @@ body.light-mode {
   min-height: 100vh; /* Ensures the background color covers the whole viewport */
   display: flex;
   flex-direction: column;
+}
+
+/* Navbar container */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Spread items evenly */
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #333;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Align right items (gear and flag) together */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Add space between the gear and flag */
+}
+
+.gear-icon {
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.settings-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  background-color: #333;
+  border: none;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  color: white;
+  padding: 0.1rem 1rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background-color: #444;
+}
+
+/* Language button styles */
+.language-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.flag-icon {
+  width: 24px;
+  height: auto;
 }

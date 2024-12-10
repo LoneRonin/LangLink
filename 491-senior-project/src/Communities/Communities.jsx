@@ -1,3 +1,5 @@
+// Worked on by: Tristan Clayman
+
 import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -38,14 +40,14 @@ const Communities = () => {
 
   return (
     <div className="community-container">
-      <h1 className="community-header">Welcome to the {language === 'Spanish' ? 'Spanish' : 'Japanese'} Community, {firstName}.</h1>
-      <p className="community-message">Feel free to share your thoughts and upvote!</p>
-
-      {/* Post submission form */}
-      <PostForm onPostAdded={handlePostAdded} />
-
-      {/* List of posts */}
-      <PostsList />
+      <h1 className="community-header">
+        Welcome to the {language} Community, {firstName}.
+      </h1>
+      <div className="community-message">Feel free to share your thoughts and upvote!</div>
+  
+      {/* Pass the language as a prop */}
+      <PostForm language={language} onPostAdded={handlePostAdded} />
+      <PostsList language={language} />
     </div>
   );
 };

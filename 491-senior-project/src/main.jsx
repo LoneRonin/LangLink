@@ -1,8 +1,11 @@
+// Worked on by: Tristan Clayman, Ethan Watanabe, Zachary Hunt, Victor Perez, Diego Garcia
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons'; // Bell icon import
+import { getAuth, signOut } from 'firebase/auth'; // Import Firebase signOut
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Font Awesome icon
+import { faCog } from '@fortawesome/free-solid-svg-icons'; // Import the gear icon
 import Login from './Login/Login.jsx';
 import Homepage from './Homepage/Homepage.jsx';
 import Signup from './Signup/Signup.jsx';
@@ -21,10 +24,16 @@ import DailyQuiz from './DailyQuiz/Quiz.jsx';
 import esFlag from './flags/es.png'; // Spanish flag
 import jpFlag from './flags/jp.png'; // Japanese flag
 import BluLogo from './Logo/LangLinkBlueTransparent.png';
+import Communities from './Communities/Communities';
+import TranslateComponent from './TranslateComponent';
+
 
 const App = () => {
-  const [language, setLanguage] = useState('es');
-
+  
+  const [language, setLanguage] = useState('es'); // State for the currently selected language ('es' for Spanish, 'jp' for Japanese)
+  const [showMenu, setShowMenu] = useState(false); // For toggling the sign-out menu
+  
+  // Toggle the current language between Spanish ('es') and Japanese ('jp')
   const toggleLanguage = () => {
     setLanguage((prevLang) => (prevLang === 'es' ? 'jp' : 'es'));
   };
@@ -39,7 +48,19 @@ const App = () => {
         return esFlag;
     }
   };
-  
+
+  // Handle the user sign-out process
+  const handleSignOut = () => {
+    const auth = getAuth(); // Get the current Firebase authentication instance
+    signOut(auth)
+      .then(() => {
+        console.log('User signed out'); // Log success message on sign-out
+        window.location.href = '/'; // Redirect to login page after sign-out
+      })
+      .catch((error) => {
+        console.error('Error signing out: ', error); // Log any errors during sign-out
+      });
+  };
 
   return (
     <Router>
@@ -58,6 +79,7 @@ const App = () => {
           <li className="nav-item"><Link to="/communities">Communities</Link></li>
           <li className="nav-item"><Link to="/friends">Friends</Link></li>
           <li className="nav-item"><Link to="/dailyquiz">DailyQuiz</Link></li>
+          <li className="nav-item"><Link to="/translate">Translator</Link></li>
 
 
           {/* Add Notifications Dropdown */}
@@ -65,6 +87,21 @@ const App = () => {
             <NotificationsDropdown />
           </li>
         </ul>
+
+        {/* Group gear icon and language button */}
+  <div className="navbar-right">
+    <div className="settings-dropdown">
+      <FontAwesomeIcon 
+        icon={faCog} 
+        className="gear-icon" 
+        onClick={() => setShowMenu(!showMenu)} 
+      />
+      {showMenu && (
+        <ul className="dropdown-menu">
+          <li className="dropdown-item" onClick={handleSignOut}>Sign Out</li>
+        </ul>
+      )}
+    </div>
 
         <button className="language-button" onClick={toggleLanguage}>
           <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
@@ -85,6 +122,7 @@ const App = () => {
         <Route path="/communities" element={<Communities />} />
         <Route path="/friends" element={<Friends />} />
         <Route path="/dailyquiz" element={<DailyQuiz />} />
+        <Route path="/translate" element={<TranslateComponent />} /> 
       </Routes>
     </Router>
   );

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../firebase'; // Import auth and db
+// Worked on by: Tristan Clayman, Victor Perez
+
+import React, { useState } from 'react';
+import { auth } from '../firebase'; // Import auth
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Firebase sign-in
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { doc, getDoc, setDoc, collection, addDoc, getDocs, deleteDoc } from 'firebase/firestore'; // Firestore functions
 import './Login.css';
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(""); // State to store the user's email
+  const [password, setPassword] = useState(""); // State to store the user's password
   const [loginSuccess, setLoginSuccess] = useState(false); // State for login success
   const [error, setError] = useState(null); // State for login errors
   const navigate = useNavigate(); // Initialize useNavigate
@@ -44,6 +48,7 @@ const Login = () => {
     }
   }, [loginSuccess]); // This runs when loginSuccess is true
 
+  // Handle the login process when the form is submitted
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -60,7 +65,7 @@ const Login = () => {
   };
 
   return (
-    <section className={`login-container ${loginSuccess ? 'login-success' : ''}`}> {/* Add success class on success */}
+    <section className={`login-container ${loginSuccess ? 'login-success' : ''}`}>
       <div className="login-box">
         <h1 className="logo">Welcome back to LangLink!</h1>
 

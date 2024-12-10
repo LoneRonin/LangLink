@@ -12,6 +12,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@google-cloud/translate": "^8.5.0",
     "@popperjs/core": "^2.11.8",
     "firebase": "^10.11.1",
     "next": "^14.2.3",
