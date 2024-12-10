@@ -1,0 +1,51 @@
+.detail{
+    flex:1;
+
+    .user{
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        border-bottom: 1px solid gray;
+
+        img{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    .info{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .option{
+            .title{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            button{
+                width: 30px;
+                height: 30px;
+                padding: 10px;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+        }
+
+        button{
+            padding: 10px 20px;
+            background-color: rgba(248, 194, 32, 0.752);
+            color:black;
+            border:none;
+            cursor: pointer;
+            border-radius: 5px;
+            
+        }
+    }
+}

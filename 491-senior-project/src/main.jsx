@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { getAuth } from 'firebase/auth';
 import { faBell } from '@fortawesome/free-solid-svg-icons'; // Bell icon import
 import { getAuth, signOut } from 'firebase/auth'; // Import Firebase signOut
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Font Awesome icon
@@ -40,6 +41,8 @@ import LessonPage from './SpanishLessons/lessonpagetemp.jsx'
 import ColorTest from './SpanishTest/ColorTest.jsx'
 import NumberTest from './SpanishTest/NumberTest.jsx';
 import DateTest from './SpanishTest/DateTest.jsx';
+import Chatbox from './ChatComponents/Chatbox/Chatbox.jsx';
+
 import './index.css';
 import Communities from './Communities/Communities.jsx';
 import Friends from './Friends/Friends.jsx';
@@ -64,7 +67,11 @@ const App = () => {
   
   const [language, setLanguage] = useState('es'); // State for the currently selected language ('es' for Spanish, 'jp' for Japanese)
   const [showMenu, setShowMenu] = useState(false); // For toggling the sign-out menu
-  
+    //state to store if chat is displayed
+  const [isChatting, setIsChatting] = useState(false);
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   // Toggle the current language between Spanish ('es') and Japanese ('jp')
   const toggleLanguage = () => {
     setLanguage((prevLang) => (prevLang === 'es' ? 'jp' : 'es'));
@@ -94,6 +101,18 @@ const App = () => {
       });
   };
 
+
+  const toggleChatbox = () => {
+    if(isChatting){
+      setIsChatting(false);
+      document.getElementById('chatbox').style.display=('none');
+    }
+    else{
+      setIsChatting(true);
+      document.getElementById('chatbox').style.display=('flex');
+    }
+  }
+
   return (
     <Router>
       <nav className="navbar">
@@ -122,7 +141,7 @@ const App = () => {
             <NotificationsDropdown />
           </li>
         </ul>
-
+        {<button className='chat-button' onClick={toggleChatbox}>Chat</button>}
         {/* Group gear icon and language button */}
     <div className="navbar-right">
     <div className="settings-dropdown">
@@ -143,14 +162,17 @@ const App = () => {
 
         <button className="language-button" onClick={toggleLanguage}>
           <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
-        </button>
+      </button>
 
         {/* Dark Mode Toggle Button */}
         <DarkModeToggle />  {/* This will add the toggle button for dark mode */}
         </div>
       </nav>
 
-      <Routes>
+      <div id='chatbox' className='chatbox'>
+        <Chatbox/>
+    </div>
+    <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/homepage" element={<Homepage language={language} />} />
         <Route path="/lessons" element={<Lessons language={language} />} />
@@ -193,7 +215,8 @@ const App = () => {
         <Route path="/dailyquiz" element={<DailyQuiz />} />
         <Route path="/translate" element={<TranslateComponent />} /> 
         <Route path="/forgotpassword" element={<Forgotpass />} />
-      </Routes>
+        <Route path="/friends" element={<Friends />} />
+    </Routes>
     </Router>
   );
 };

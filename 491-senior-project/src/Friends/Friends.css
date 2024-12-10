@@ -50,6 +50,13 @@
     margin: 2px 12px;
 }
 
+.blockbutton{
+  background-color: rgba(248, 194, 32, 0.752);
+    color: black;
+    border-radius: 16px;
+    margin: 2px 12px;
+}
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
