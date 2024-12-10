@@ -11,10 +11,18 @@ import Homepage from './Homepage/Homepage.jsx';
 import Signup from './Signup/Signup.jsx';
 import LanguageSelection from './LanguageSelection/LanguageSelection.jsx';
 import Profile from './Profile/Profile.jsx';
+import Lessons from './Lessons/Lessons.jsx'; 
 import Alpha from './Alphabet/Alpha.jsx';
+import FillInTheBlank from './Alphabet/FillInTheBlank.jsx';
 import Conjugate from './Conjugate/Conjugate.jsx';
 import NotificationsDropdown from './Notifications/NotificationsDropdown.jsx'; // Dropdown import
 import DarkModeToggle from './DarkMode/DarkMode.jsx';  // Import dark mode toggle from DarkMode.jsx
+import Grammar from './Grammar/Grammar.jsx';
+import Sentence from './Sentence/Sentence.jsx';
+import Forgotpass from './ForgotPassword/ForgotPass.jsx';
+import Color from './Color/Color.jsx';
+import Number from './Number/Number.jsx';
+import Date from './Date/Date.jsx';
 import './index.css';
 import Communities from './Communities/Communities.jsx';
 import Friends from './Friends/Friends.jsx';
@@ -73,7 +81,9 @@ const App = () => {
           <li className="nav-item"><Link to="/homepage">Homepage</Link></li>
           <li className="nav-item"><Link to="/signup">Sign Up</Link></li>
           <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
+          <li className="nav-item"><Link to="/lessons">Lessons</Link></li>
           <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
+          <li className="nav-item"><Link to="/grammar">Grammar</Link></li> 
           <li className="nav-item"><Link to="/profile">Profile</Link></li>
           <li className="nav-item"><Link to="/communities">Communities</Link></li>
           <li className="nav-item"><Link to="/friends">Friends</Link></li>
@@ -114,9 +124,16 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/homepage" element={<Homepage />} />
-        <Route path="/conjugate" element={<Conjugate />} />
+        <Route path="/homepage" element={<Homepage language={language} />} />
+        <Route path="/lessons" element={<Lessons language={language} />} />
+        <Route path="/grammar/conjugate" element={<Conjugate language={language} />} />
+        <Route path="/grammar/sentence" element={<Sentence language={language} />} />
+        <Route path="/grammar" element={<Grammar language={language} />} />
+        <Route path="/color" element={<Color language={language} />} />
+        <Route path="/number" element={<Number language={language} />} />
+        <Route path="/date" element={<Date language={language} />} />
         <Route path="/alpha" element={<Alpha language={language} />} />
+        <Route path="/matching" element={<FillInTheBlank language={language} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/language-selection" element={<LanguageSelection />} />
         <Route path="/profile" element={<Profile />} />
@@ -124,6 +141,7 @@ const App = () => {
         <Route path="/friends" element={<Friends />} />
         <Route path="/dailyquiz" element={<DailyQuiz />} />
         <Route path="/translate" element={<TranslateComponent />} /> 
+        <Route path="/forgotpassword" element={<Forgotpass />} />
       </Routes>
     </Router>
   );
@@ -134,3 +152,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <App />
   </React.StrictMode>,
 );
+
