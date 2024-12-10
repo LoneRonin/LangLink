@@ -17,6 +17,7 @@ import esFlag from './flags/es.png';
 import jpFlag from './flags/jp.png';
 import BluLogo from './Logo/LangLinkBlueTransparent.png';
 import Communities from './Communities/Communities';
+import TranslateComponent from './TranslateComponent';
 
 
 const App = () => {
@@ -68,6 +69,7 @@ const App = () => {
   <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
   <li className="nav-item"><Link to="/profile">Profile</Link></li>
   <li className="nav-item"><Link to="/communities">Communities</Link></li>
+  <li className="nav-item"><Link to="/translate">Translator</Link></li>
 </ul>
 
   {/* Group gear icon and language button */}
@@ -101,6 +103,7 @@ const App = () => {
         <Route path="/language-selection" element={<LanguageSelection />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/communities" element={<Communities />} /> 
+        <Route path="/translate" element={<TranslateComponent />} /> 
       </Routes>
     </Router>
   );

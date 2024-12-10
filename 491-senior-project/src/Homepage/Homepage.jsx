@@ -6,6 +6,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase'; // Ensure correct path to firebase.js
 import './Homepage.css'; // Optional for styling
 
+
 const Homepage = () => {
   // State to hold the user's first name, loading status, and error messages
   const [firstName, setFirstName] = useState(''); // Stores the user's first name
