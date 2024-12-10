@@ -1,40 +1,77 @@
-/* .forgot-password {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #000000;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  } */
-  
-  h1 {
-    color: #fcfcfc;
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  input {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+/* Styling for the main heading (h1) */
+h1 {
+  color: #fcfcfc; /* White color for the text */
+  text-align: center; /* Center the heading */
+  margin-bottom: 30px; /* Adds space below the heading */
+}
+/* Styling for the form container */
+form {
+  display: flex; /* Align form elements in a column */
+  flex-direction: column; /* Ensures input and button are stacked vertically */
+}
+/* Styling for the email input field */
+input {
+  margin-bottom: 15px; /* Space below the input field */
+  padding: 10px; /* Space inside the input box */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 3px; /* Slightly rounded corners */
+}
+/* Styling for the submit button */
+button {
+  background-color: #007bff; /* Blue background color for the button */
+  color: white; /* White text color */
+  border: none; /* Removes default button border */
+  padding: 10px; /* Adds padding inside the button */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  transition: background-color 0.3s; /* Smooth transition effect for background color */
+}
+/* Hover effect for the submit button */
+button:hover {
+  background-color: #0056b3; /* Darker blue when hovered */
+}
+/* Fading effect for messages */
+.fade-out {
+  opacity: 0; /* Make the element invisible */
+}
+.fade-in {
+  opacity: 1; /* Make the element visible */
+}
+/* Styling for both success and error message boxes */
+.correct-message, .incorrect-message {
+  margin-top: 1rem; /* Adds space above the message box */
+  padding: 1rem; /* Adds space inside the message box */
+  font-size: 1.2rem; /* Larger font for better readability */
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center-align the message text */
+  opacity: 1; /* Set initial opacity */
+  transition: opacity 0.5s ease-in-out; /* Fade effect for message visibility */
+}
+/* Success message styling */
+.correct-message {
+  background-color: green; /* Green background for success messages */
+  color: white; /* White text for contrast */
+}
+/* Error message styling */
+.incorrect-message {
+  background-color: red; /* Red background for error messages */
+  color: white; /* White text for contrast */
+}
+
+/* Styling for the 'Go to Login Page' link container */
+.login-links {
+  margin-top: 1.5rem; /* Adds space above the links */
+  text-align: center; /* Center the links */
+}
+
+/* Styling for the individual link */
+.login-links a {
+  display: block; /* Makes the link occupy full width */
+  color: #4267B2; /* Facebook-like blue color for the link */
+  text-decoration: none; /* Removes underline from the link */
+  margin-bottom: 1rem; /* Adds space below the link */
+}
+
+/* Hover effect for the link */
+.login-links a:hover {
+  text-decoration: underline; /* Underline appears on hover */
+}

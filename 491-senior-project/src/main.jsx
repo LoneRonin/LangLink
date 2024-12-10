@@ -23,10 +23,35 @@ import Forgotpass from './ForgotPassword/ForgotPass.jsx';
 import Color from './Color/Color.jsx';
 import Number from './Number/Number.jsx';
 import Date from './Date/Date.jsx';
+
+// Imports for Spanish Lessons
+import ColorDialouge from './SpanishLessons/Color/ColorDialouge.jsx'
+import ColorMatch from './SpanishLessons/Color/ColorMatching.jsx'
+
+import CalendarActivity from './SpanishLessons/Dates/CalendarActivity.jsx'
+import DateDialouge from './SpanishLessons/Dates/DateDialouge.jsx'
+
+import ShoppingList from './SpanishLessons/Number/ShoppingList.jsx'
+import NumberDialouge from './SpanishLessons/Number/NumberDialouge.jsx'
+
+import LessonPage from './SpanishLessons/lessonpagetemp.jsx'
+
+//Imports for Spanish Tests
+import ColorTest from './SpanishTest/ColorTest.jsx'
+import NumberTest from './SpanishTest/NumberTest.jsx';
+import DateTest from './SpanishTest/DateTest.jsx';
 import './index.css';
 import Communities from './Communities/Communities.jsx';
 import Friends from './Friends/Friends.jsx';
 import DailyQuiz from './DailyQuiz/Quiz.jsx';
+
+//Import for Daily quiz
+import SpanishQuiz from './DailyQuiz/quizEs.jsx';
+import JapaneseQuiz from './DailyQuiz/quizJp.jsx';
+import QuizPage from './DailyQuiz/dailytemp.jsx';
+
+//Import for Leaderboard
+import QuizLeaderboard from './DailyQuiz/board.jsx';
 
 // Import flag images
 import esFlag from './flags/es.png'; // Spanish flag
@@ -84,6 +109,7 @@ const App = () => {
           <li className="nav-item"><Link to="/lessons">Lessons</Link></li>
           <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
           <li className="nav-item"><Link to="/grammar">Grammar</Link></li> 
+        <li className="nav-item"><Link to="/lesson">Lesson</Link></li> 
           <li className="nav-item"><Link to="/profile">Profile</Link></li>
           <li className="nav-item"><Link to="/communities">Communities</Link></li>
           <li className="nav-item"><Link to="/friends">Friends</Link></li>
@@ -108,6 +134,8 @@ const App = () => {
       {showMenu && (
         <ul className="dropdown-menu">
           <li className="dropdown-item" onClick={handleSignOut}>Sign Out</li>
+        <li className="nav-item"><Link to="/dailyquiz">DailyQuiz</Link></li>
+        
         </ul>
       )}
     </div>
@@ -132,6 +160,29 @@ const App = () => {
         <Route path="/color" element={<Color language={language} />} />
         <Route path="/number" element={<Number language={language} />} />
         <Route path="/date" element={<Date language={language} />} />
+      
+      {/* Routes for Spanish Lessons */}
+      <Route path="/lesson/colormatching" element={<ColorMatch />} />
+      <Route path="/lesson/colordialouge" element={<ColorDialouge />} />
+      <Route path="/lesson/calendar" element={<CalendarActivity />} />
+      <Route path="/lesson/datedialouge" element={<DateDialouge />} />
+      <Route path="/lesson/shoppinglist" element={<ShoppingList />} />
+      <Route path="/lesson/numberdialouge" element={<NumberDialouge />} />
+      
+      <Route path="Lesson" element = {<LessonPage />} />
+
+      {/* Routes for Spanish Tests */}
+      <Route path="/lesson/colortest" element={<ColorTest />} />
+      <Route path="/lesson/numbertest" element={<NumberTest />} />
+      <Route path="/lesson/datetest" element={<DateTest />} />
+
+      {/* Routes for Daily Quiz */}
+
+      <Route path="/dailyquiz/es" element={<SpanishQuiz />} /> 
+      <Route path="/dailyquiz/jp" element={<JapaneseQuiz />} /> 
+      <Route path="/leaderboard" element={<QuizLeaderboard />} /> 
+      <Route path="dailyquiz" element = {<QuizPage />} />
+
         <Route path="/alpha" element={<Alpha language={language} />} />
         <Route path="/matching" element={<FillInTheBlank language={language} />} />
         <Route path="/signup" element={<Signup />} />
