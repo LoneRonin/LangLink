@@ -1,16 +1,19 @@
-import { arrayUnion, collection, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 import "./addUser.css";
 import { db } from "../../../../firebase";
 import { getAuth } from "firebase/auth";
+import { useState } from "react";
 
 const AddUser = () => {
     const [otherUser, setOtherUser] = useState(null);
+    const [name, setName] = useState("");
+    const [noResults, setNoResults] = useState(false);
     const auth = getAuth();
     const user = auth.currentUser;
 
     const handleSearch = async (e) => {
         e.preventDefault()
-        const formData = new FormData();
+        const formData = new FormData(e.target);
         const username = formData.get("username");
 
         try{
@@ -18,20 +21,24 @@ const AddUser = () => {
                 const userRef = collection(db, "users");
                 const q = query(userRef, where("firstName", "==", username));
                 //we dont actually have usernames so this is a temprary fix hopefully
-
-                const querySnapshot = await getDoc(q);
+                const querySnapshot = await getDocs(q);
                 if(!querySnapshot.empty) {
-                    setOtherUser(querySnapshot.docs[0].data());
+                    /*querySnapshot.forEach((doc) =>{
+                        console.log(doc.data());
+                    });*/
+                    const other = querySnapshot.docs[0].data()
+                    other.id = querySnapshot.docs[0].id;
+                    setOtherUser(other);
                 }
             }
         }catch(err){console.log(err)}
     };
 
     const handleAdd = async ()=>{
-        const chatRef = collection(db,"chats");
-        const userChatsRef = collection(db,"userChats");
         try{
             if(user){
+                const chatRef = collection(db,"chats");
+                const userChatsRef = collection(db,"userchats");
                 const newChatRef = doc(chatRef);
 
                 await setDoc(newChatRef, {
@@ -39,7 +46,7 @@ const AddUser = () => {
                     messages:[],
                 });
 
-                await updateDoc(doc(userChatsRef, otherUser.id),{
+                await setDoc(doc(userChatsRef, otherUser.id), {
                     chats:arrayUnion({
                         chatId: newChatRef.id,
                         lastMessage:"",
@@ -48,7 +55,7 @@ const AddUser = () => {
                     }),
                 });
 
-                await updateDoc(doc(userChatsRef, user.uid),{
+                await setDoc(doc(userChatsRef, user.uid),{
                     chats:arrayUnion({
                         chatId: newChatRef.id,
                         lastMessage:"",
@@ -64,7 +71,7 @@ const AddUser = () => {
         <div className="addUser">
             <form onSubmit={handleSearch}>
                 <input type="text" placeholder="Username" name="username"/>
-                <button>Search</button>
+                <button type="submit">Search</button>
             </form>
             {otherUser && <div className="user">
                 <div className="detail">
@@ -74,5 +81,7 @@ const AddUser = () => {
                 <button onClick={handleAdd}>Add User</button>
             </div>}
         </div>
-    )
+    );
 }
+
+export default AddUser;

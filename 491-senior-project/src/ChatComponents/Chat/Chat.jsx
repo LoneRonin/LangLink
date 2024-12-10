@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-//import DefaultProf from '../ProfilePics/defaultprofile.png';
+//import DefaultProf from '../../ProfilePics/defaultprofile.png';
 import "./Chat.css"
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -16,12 +16,13 @@ const Chat = () => {
     });
 
     useEffect(() => {
-        const fetchChat = onSnapshot(doc(db,"chats", ""), (res)=> {
+        const chatId = "xbabfhe"
+        const fetchChat = onSnapshot(doc(db,"chats", chatId), (res)=> {
             setChat(res.data())
         })
 
         return () => {
-            fetchChat();
+            //fetchChat();
         }
     },[])
 
