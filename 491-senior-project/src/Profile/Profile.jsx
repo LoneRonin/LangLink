@@ -197,15 +197,14 @@ const Profile = () => {
       } catch (error) {
         console.error('Error updating profile:', error);
       }
-    }
-        setError('Error fetching user data');
-      } finally {
+      finally {
         setLoading(false);
       }
-
+    }  
+    setError('Error fetching user data');
     fetchUserData();
     fetchBlockedUsers();
-  }, [user]);
+  };
 
   if (loading) {
     return <p>Loading...</p>;
