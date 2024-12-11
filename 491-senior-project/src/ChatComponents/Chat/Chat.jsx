@@ -66,7 +66,10 @@ const Chat = () => {
                 }
             });
         }catch(err){console.log(err);}
+        finally{setText("");}
     }
+
+    const getDateTime = () => {}
 
     return(
         <div className ='chat'>
