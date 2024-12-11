@@ -68,7 +68,7 @@ const App = () => {
         <li className="nav-item"><Link to="/profile">Profile</Link></li>
         <li className="nav-item"><Link to="/friends">Friends</Link></li>
       </ul>
-      {<button className='chat-button' onClick={toggleChatbox}>Chat</button>}
+      {user ? (<button className='chat-button' onClick={toggleChatbox}>Chat</button>) : <div></div>}
       {/* Language button on the far right */}
       <button className="language-button" onClick={toggleLanguage}>
           <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />

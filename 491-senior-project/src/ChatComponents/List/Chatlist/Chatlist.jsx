@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import "./Chatlist.css"
 import { getAuth } from 'firebase/auth';
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import searchContext from "../../searchContext.jsx";
 
@@ -10,13 +10,14 @@ const Chatlist = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     const [chats, setChats] = useState([])
-    const [addMode, setAddMode] = useState(false);
-    const {chatSearch, setChatSearch} = useContext(searchContext)
+    const {chatSearch, chatId, otherUser} = useContext(searchContext)
+    const [searchValue, setSearchValue] = chatSearch;
+    const [chatIdValue, setChatIdValue] = chatId;
+    const [otherChatter, setOtherChatter] = otherUser;
+    const [isChatEmpty, setIsChatEmpty] = useState(true);
 
     useEffect(() => {
         if(!user) return;
-        const userId = user.uid;
-        console.log("user;", userId);
 
         const updateChats = onSnapshot(doc(db, "userchats", user.uid), async (response) => {
             const items = response.data().chats;
@@ -24,12 +25,14 @@ const Chatlist = () => {
             const promises = items.map(async (item) => {
                 const userDocRef = doc(db, "users", item.receiverId);
                 const userDocSnap = await getDoc(userDocRef);
-                const user = userDocSnap.data();
+                const newUser = userDocSnap.data();
 
-                return {...item, user}
+                return {...item, newUser}
             });
             const chatData = await Promise.all(promises);
             setChats(chatData.sort((a,b) => b.updatedAt - a.updatedAt));
+            if(chatData.length>0){setIsChatEmpty(false);}
+            //console.log(chatData[0].chatId);
         });
 
         return () => {
@@ -38,7 +41,29 @@ const Chatlist = () => {
     }, []);
 
     const handleSelect = async (chat) => {
+        const userChats = chats.map((item) => {
+            const { user, ...rest } = item;
+            return rest;
+        });
+
+        const chatIndex = userChats.findIndex(
+            (item) => item.chatId === chat.chatId
+        );
+
+        userChats[chatIndex].isSeen = true;//returns true
+        const userChatsRef = doc(db, "userchats", user.uid);
+        try{await updateDoc(userChatsRef, {chats:userChats});}
+        catch(err){console.log(err);}
         
+        
+        //console.log(chat.chatId);
+        //console.log(chat.newUser);
+        //console.log(chat.receiverId);
+        const chatter = chat.newUser;
+        chatter.id = chat.receiverId;
+        setChatIdValue(chat.chatId);
+        setOtherChatter(chatter);
+        setSearchValue(false);
     }
 
     return(
@@ -47,14 +72,15 @@ const Chatlist = () => {
                 <div className="searchbar">
                     <input type="text" placeholder="Search" />
                 </div>
-                <button className="add" onClick={() => setChatSearch((prev) => !prev)}>+</button>
+                <button className="add" onClick={() => setSearchValue((prev) => !prev)}>+</button>
             </div>
+            {isChatEmpty && <div><p>Please log in to chat.</p></div>}
             {chats.map((chat) => (
                 <div className="item" key={chat.chatId} onClick={()=>handleSelect(chat)}>
-                    <img src={chat.user.profilePicture || "./defaultprofile.png"} alt="" />
+                    <img src={chat?.user?.profilePicture || "./defaultprofile.png"} alt="" />
                     <div className="texts">
-                        <span>{chat.user.firstName} {chat.user.lastName}</span>
-                        <p>{chat.lastMessage}</p>
+                        <span>{chat?.newUser?.firstName} {chat?.newUser?.lastName}</span>
+                        <p>{chat?.lastMessage}</p>
                     </div>
                 </div>))}
         </div>
