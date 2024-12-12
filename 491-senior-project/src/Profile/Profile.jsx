@@ -158,30 +158,6 @@ const Profile = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        if (user) {
-          const userDocRef = doc(db, 'users', user.uid);
-          const userDoc = await getDoc(userDocRef);
-          if (userDoc.exists()) {
-            setUserData(userDoc.data());
-          } else {
-            setError('No such document!');
-          }
-        } else {
-          setError('No user logged in');
-        }
-      } catch (error) {
-        setError('Error fetching user data');
-      }
-    };
-
-    fetchUserData();
-  }, [user]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
