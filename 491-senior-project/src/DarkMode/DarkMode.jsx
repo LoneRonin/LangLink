@@ -29,7 +29,8 @@ const DarkModeToggle = () => {
       document.querySelector('.signup-container'),
       document.querySelector('.signup-content'),
       document.querySelector('.homepage-container'),
-      document.querySelector('.homepage-content')
+      document.querySelector('.homepage-content'),
+      document.querySelector('.sentence-container')
     ];
 
     containers.forEach(container => {

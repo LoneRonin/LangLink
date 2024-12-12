@@ -59,7 +59,7 @@ const ColorMatch = () => {
   };
   return (
     <div className="color-match-container">
-      <h2>Guess the Spanish Name of the Color</h2>
+      <h1>Guess the Spanish Name of the Color</h1>
       <div
         className="color-display"
         style={{
