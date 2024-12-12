@@ -1,4 +1,4 @@
-/* Worked on by: Tristan Clayman, Victor Perez */
+/* Profile.css */
 
 /* Container for the entire profile section */
 .profile-container {
@@ -43,31 +43,8 @@
   width: 150px; /* Adjust size as needed */
   height: 150px; /* Adjust size as needed */
   object-fit: cover;
-  border: 10px solid #0f0f0f; /* Optional border color */
+  border: 2px solid #0f0f0f; /* Optional border color */
   margin-bottom: 1rem;
-}
-
-/* Edit icon styling */
-.input-group {
-  position: relative; /* Position relative for child elements */
-  display: inline-block; /* Ensure the icon is positioned correctly */
-}
-
-.edit-icon {
-  position: absolute; /* Position the pencil icon absolutely */
-  top: 70%; /* Adjust as necessary to center it vertically */
-  left: 70%; /* Adjust as necessary to center it horizontally */
-  transform: translate(-50%, -50%); /* Center the icon */
-  color: white; /* Icon color */
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-  border-radius: 50%; /* Circular background */
-  padding: 5px; /* Space around the icon */
-  display: none; /* Hide by default */
-  transition: display 0.3s ease; /* Smooth display transition */
-}
-
-.input-group:hover .edit-icon {
-  display: block; /* Show the pencil icon on hover */
 }
 
 /* Profile details styling */
@@ -113,129 +90,95 @@
 /* Responsive design */
 @media (max-width: 768px) {
   .profile-content {
-      padding: 1.5rem;
-      width: 100%;
+    padding: 1.5rem;
+    width: 100%;
   }
 
   .profile-header h1 {
-      font-size: 2em;
+    font-size: 2em;
   }
 
   .profile-details p {
-      font-size: 1rem;
+    font-size: 1rem;
   }
 }
 
-/* Dark Mode Styles */
-body.dark-mode .profile-container {
-  background-color: #121212; /* Darker background for dark mode */
-}
-
-body.dark-mode .profile-content {
-  background-color: #2e2e2e; /* Dark content background */
-}
-
-body.dark-mode .profile-details p {
-  color: #eeeeee; /* Lighter text color for details in dark mode */
-}
-
-body.dark-mode .profile-details .label {
-  color: #ffffff; /* Keep labels white in dark mode */
-}
-
-body.dark-mode .profile-details .value {
-  color: #dddddd; /* Lighter grey for values in dark mode */
-}
-
-body.dark-mode .edit-profile-button {
-  background-color: #4CAF50; /* Button background */
-  color: white; /* Button text color */
-}
-
-body.dark-mode .edit-profile-button:hover {
-  background-color: #45a049; /* Button hover effect */
-}
-
-    }
-  }
-
-  .button{
-    color:black;
-    background-color: skyblue;
-    border-radius: 16px;
-    margin: 2px 12px;
+.button{
+  color:black;
+  background-color: skyblue;
+  border-radius: 16px;
+  margin: 2px 12px;
 }
 
 .button:hover{
-    color:aliceblue;
-    background-color: darkblue;
-    transition-duration: 0.5s;
+  color:aliceblue;
+  background-color: darkblue;
+  transition-duration: 0.5s;
 }
 
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    text-align: center
-  }
-  
-  .modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    border: 1px solid #888;
-    width: 30%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s
-  }
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  text-align: center
+}
 
-  @-webkit-keyframes animatetop {
-    from {top:-300px; opacity:0} 
-    to {top:0; opacity:1}
-  }
-  
-  @keyframes animatetop {
-    from {top:-300px; opacity:0}
-    to {top:0; opacity:1}
-  }
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 30%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
 
-  .close {
-    color: black;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: dimgrey;
-    text-decoration: none;
-    cursor: pointer;
-  }
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
 
-  .nobutton{
-    background-color:lightcoral;
-    color: black;
-    border-radius: 16px;
-    margin: 2px 12px;
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+.close {
+  color: black;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: dimgrey;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nobutton{
+  background-color:lightcoral;
+  color: black;
+  border-radius: 16px;
+  margin: 2px 12px;
 }
 
 .yesbutton{
-    background-color: lightgreen;
-    color: black;
-    border-radius: 16px;
-    margin: 2px 12px;
+  background-color: lightgreen;
+  color: black;
+  border-radius: 16px;
+  margin: 2px 12px;
 }
-  

@@ -45,7 +45,7 @@ body.light-mode .forum-post {
 
 /* Button styles for upvote and comment */
 .upvote-btn, .comment-btn {
-  background-color: white;
+  background-color: rgb(97, 96, 96);
   border: none;
   cursor: pointer;
   font-size: 1.2em;

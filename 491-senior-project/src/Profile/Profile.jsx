@@ -2,14 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { getAuth, updateEmail } from 'firebase/auth';
-import { doc, onSnapshot, updateDoc, collection, getDocs, deleteDoc, arrayUnion } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc, collection, getDoc, deleteDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../firebase'; 
 import './Profile.css'; 
 import DefaultProf from '../ProfilePics/defaultprofile.png';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  // State to store user data and form data, error handling, and loading state
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,8 +26,7 @@ const Profile = () => {
   const auth = getAuth(); // Firebase authentication instance
   const user = auth.currentUser; // Get the current authenticated user
   const navigate = useNavigate();  // For navigation after edit
-
-  // useEffect to fetch user data from Firestore  const [blockedUsers, setBlockedUsers] = useState(null);
+  const [blockedUsers, setBlockedUsers] = useState(null);
   const [noneBlocked, setNoneBlocked] = useState(true);
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -72,43 +70,6 @@ const Profile = () => {
     catch(err){console.log(err);}
   }
 
-  const unBlockUser = async(uid) => {
-    try{
-        if(user){
-          //console.log(uid);
-          const blockedUserDocRef = doc(db, "users", user.uid, "blockedusers", uid);
-          await deleteDoc(blockedUserDocRef);
-
-          const blockedByDocRef = doc(db, "users", uid, "blockedby", user.uid);
-          await deleteDoc(blockedByDocRef);
-        }
-    }
-    catch(err){console.log(err);}
-    finally{fetchBlockedUsers()};
-}
-
-  const fetchBlockedUsers = async() => {
-    try{
-      if(user){
-        const blockList = [];
-        const blockedUsersRef = collection(db, "users", user.uid, "blockedusers");
-        const querySnapshot = await getDocs(blockedUsersRef);
-        querySnapshot.forEach((doc) => {
-          //console.log(doc.id, " => ", doc.data());
-          //var docEntry=doc.data();
-          var user = doc.data();
-          var userArray = [user.firstName, user.lastName, doc.id];
-          blockList.push(userArray);
-        });
-        setBlockedUsers(blockList);
-        if(blockList.length >=1){
-          setNoneBlocked(false);
-        }
-      }
-    }
-    catch(err){console.log(err);}
-  }
-
   useEffect(() => {
     if (user) {
       const userDocRef = doc(db, 'users', user.uid);
@@ -139,6 +100,9 @@ const Profile = () => {
         setLoading(false);
       });
 
+      // Fetch blocked users
+      fetchBlockedUsers();
+
       // Clean up subscription on unmount
       return () => unsubscribe();
     } else {
@@ -147,7 +111,32 @@ const Profile = () => {
     }
   }, [user]);
 
-  // Update form data as user types in input fields
+  useEffect(() => {
+    const fetchUserData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        if (user) {
+          const userDocRef = doc(db, 'users', user.uid);
+          const userDoc = await getDoc(userDocRef);
+          if (userDoc.exists()) {
+            setUserData(userDoc.data());
+          } else {
+            setError('No such document!');
+          }
+        } else {
+          setError('No user logged in');
+        }
+      } catch (error) {
+        setError('Error fetching user data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -156,7 +145,6 @@ const Profile = () => {
     }));
   };
 
-  // Handle profile picture upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0]; // Get the uploaded file
     if (file) {
@@ -168,7 +156,6 @@ const Profile = () => {
     }
   };
 
-  // Handle form submission to update user profile
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (user) {
@@ -197,13 +184,41 @@ const Profile = () => {
       } catch (error) {
         console.error('Error updating profile:', error);
       }
-      finally {
-        setLoading(false);
+    }
+  };
+
+  const fetchBlockedUsers = async () => {
+    try{
+      if(user){
+        const blockList = [];
+        const blockedUsersRef = collection(db, "users", user.uid, "blockedusers");
+        const querySnapshot = await getDocs(blockedUsersRef);
+        querySnapshot.forEach((doc) => {
+          var user = doc.data();
+          var userArray = [user.firstName, user.lastName, doc.id];
+          blockList.push(userArray);
+        });
+        setBlockedUsers(blockList);
+        if(blockList.length >=1){
+          setNoneBlocked(false);
+        }
       }
-    }  
-    setError('Error fetching user data');
-    fetchUserData();
-    fetchBlockedUsers();
+    }
+    catch(err){console.log(err);}
+  };
+
+  const unBlockUser = async(uid) => {
+    try{
+      if(user){
+        const blockedUserDocRef = doc(db, "users", user.uid, "blockedusers", uid);
+        await deleteDoc(blockedUserDocRef);
+
+        const blockedByDocRef = doc(db, "users", uid, "blockedby", user.uid);
+        await deleteDoc(blockedByDocRef);
+      }
+    }
+    catch(err){console.log(err);}
+    finally{fetchBlockedUsers();}Y4:0
   };
 
   if (loading) {
