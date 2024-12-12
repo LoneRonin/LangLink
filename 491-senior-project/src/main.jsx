@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
 import { faBell } from '@fortawesome/free-solid-svg-icons'; // Bell icon import
 import { getAuth, signOut } from 'firebase/auth'; // Import Firebase signOut
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Font Awesome icon
@@ -126,7 +125,6 @@ const App = () => {
           <li className="nav-item"><Link to="/signup">Sign Up</Link></li>
           <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
           <li className="nav-item"><Link to="/lessons">Lessons</Link></li>
-          <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
           <li className="nav-item"><Link to="/grammar">Grammar</Link></li> 
         <li className="nav-item"><Link to="/lesson">Lesson</Link></li> 
           <li className="nav-item"><Link to="/profile">Profile</Link></li>

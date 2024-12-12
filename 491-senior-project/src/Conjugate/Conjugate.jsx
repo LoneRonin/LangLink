@@ -145,9 +145,9 @@ const Conjugate = ({ language }) => {
 
       <div className="grammar-container">
         <h1>{language === 'es' ? 'Spanish Conjugation Practice' : 'Japanese Verb Practice'}</h1>
-        <h2>{currentExercise.word}: {currentExercise.definition}</h2>
-        <h2>Tense: {currentExercise.tense}</h2>
-        <h2>{currentExercise.pronoun}</h2>
+        <h1>{currentExercise.word}: {currentExercise.definition}</h1>
+        <h1>Tense: {currentExercise.tense}</h1>
+        <h1>{currentExercise.pronoun}</h1>
         <div className="grammar-buttons">
           {currentExercise.options.map((option) => (
             <button key={option} onClick={() => handleButtonClick(option)}>
