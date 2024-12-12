@@ -147,15 +147,18 @@ const Profile = () => {
         setLoading(false);
       });
 
-      // Fetch blocked users
-      fetchBlockedUsers();
-
       // Clean up subscription on unmount
       return () => unsubscribe();
     } else {
       setError('No user logged in');  // Handle case where no user is logged in
       setLoading(false);
     }
+  }, [user]);
+
+  useEffect(() => {
+    // Fetch blocked users
+    fetchBlockedUsers();
+    //add a userdata fetch
   }, [user]);
 
   const handleChange = (e) => {
