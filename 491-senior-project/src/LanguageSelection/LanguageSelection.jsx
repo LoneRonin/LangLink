@@ -1,4 +1,3 @@
-// Worked on by: Tristan Clayman, Victor Perez
 import React, { useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
@@ -7,31 +6,27 @@ import { useNavigate } from 'react-router-dom';
 import './LanguageSelection.css';
 
 const LanguageSelection = () => {
-  // State to store form data for language, difficulty, country, and about me section
   const [formData, setFormData] = useState({
     language: '',
     difficulty: '',
     country: '',
     aboutMe: ''
   });
-  const auth = getAuth(); // Get the current authenticated user
-  const user = auth.currentUser; // Reference to the current authenticated user
+  const auth = getAuth();
+  const user = auth.currentUser;
   const navigate = useNavigate();
 
-   // Handle form input changes and update the state dynamically
   const handleChange = (e) => {
-    const { name, value } = e.target; // Destructure the name and value from the event target
-    setFormData({ ...formData, [name]: value }); // Update the formData state with new input
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (user) {
       try {
         // Update Firestore with the language selection data
         const userDocRef = doc(db, 'users', user.uid);
-        // Update the user's document with the selected language, difficulty, country, and about me info
         await updateDoc(userDocRef, {
           language: formData.language,
           difficulty: formData.difficulty,
@@ -63,8 +58,8 @@ const LanguageSelection = () => {
               required
             >
               <option value="" disabled>Select a language</option>
-              <option value="Japanese">Japanese</option>
-              <option value="Spanish">Spanish</option>
+              <option value="japanese">Japanese</option>
+              <option value="spanish">Spanish</option>
             </select>
           </div>
 
@@ -87,40 +82,27 @@ const LanguageSelection = () => {
               required
             >
               <option value="" disabled>Select your current level</option>
-              <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
             </select>
           </div>
 
           {/* Country Selection */}
           <div className="input-group">
-              <label htmlFor="country">Country</label>
-              <select id="country" name="country" value={formData.country} onChange={handleChange} required>
-                <option value="" disabled>Select your country</option>
-                <option value="Afghanistan">Afghanistan</option>
-                <option value="Argentina">Argentina</option>
-                <option value="Australia">Australia</option>
-                <option value="Brazil">Brazil</option>
-                <option value="Canada">Canada</option>
-                <option value="China">China</option>
-                <option value="France">France</option>
-                <option value="Germany">Germany</option>
-                <option value="India">India</option>
-                <option value="Indonesia">Indonesia</option>
-                <option value="Italy">Italy</option>
-                <option value="Japan">Japan</option>
-                <option value="Kenya">Kenya</option>
-                <option value="Mexico">Mexico</option>
-                <option value="New Zealand">New Zealand</option>
-                <option value="Philippines">Philippines</option>
-                <option value="Russia">Russia</option>
-                <option value="South Africa">South Africa</option>
-                <option value="South Korea">South Korea</option>
-                <option value="Spain">Spain</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="United States">United States</option>
-                <option value="Vietnam">Vietnam</option>
-              </select>
+            <label htmlFor="country">Country</label>
+            <select
+              id="country"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>Select your country</option>
+              <option value="US">United States</option>
+              <option value="CN">China</option>
+              <option value="ES">Spain</option>
+              {/* Add other countries as needed */}
+            </select>
           </div>
 
           {/* About Me Section */}

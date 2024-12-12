@@ -1,23 +1,15 @@
-
+/* Base styles */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424; /* Default background for dark mode */
+  background-color: #242424;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* Light Mode Styles */
-.light-mode {
-  --background-color: #f9f9f9; /* Light background */
-  --text-color: rgba(0, 0, 0, 0.87); /* Dark text */
-  --container-background: #ffffff; /* White background for main content */
-  --friend-background: #f1f1f1; /* Light background for friends container */
 }
 
 body {
@@ -26,19 +18,8 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: var(--background-color); /* Use variable for background */
-  color: var(--text-color); /* Use variable for text color */
-}
-
-/* Light Mode Specific Styles */
-.light-mode body {
-  background-color: #f9f9f9; /* White background in light mode */
-  color: rgba(0, 0, 0, 0.87); /* Black text in light mode */
-}
-
-.light-mode .homepage-content {
-  background-color: var(--container-background); /* White background for main content */
-  color: var(--text-color); /* Ensure text color matches light mode */
+  background-color: #242424;
+  color: rgba(255, 255, 255, 0.87);
 }
 
 /* Navbar */
@@ -63,7 +44,7 @@ body {
 .nav-item a {
   color: white;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .nav-item a:hover {
@@ -73,184 +54,67 @@ body {
 /* Layout */
 .homepage-container {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: var(--background-color); /* Use variable for background */
+  background-color: #1e1e1e;
   padding: 2rem;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding-top: 6rem; /* Adjust padding for navbar */
+}
+
+.homepage-content {
+  background-color: #2e2e2e;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
   box-sizing: border-box;
 }
 
-/* Left Sidebar */
-.left-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  position: fixed;
-  left: 2rem; /* Distance from the left edge */
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Right Sidebar */
-.right-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  position: fixed;
-  right: 2rem; /* Distance from the right edge */
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Main Content */
-.homepage-content {
-  background-color: var(--container-background); /* Use variable for background */
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  max-width: 600px;
-  margin: 0 auto; /* Center align */
-  color: var(--text-color); /* Ensure text color matches light mode */
-}
-
-/* Welcome Text */
-.welcome-text {
-  font-size: 1.8em; /* Enlarged font size for welcome text */
+h1 {
+  font-size: 2.5em;
+  line-height: 1.2;
   color: #ffffff;
   margin: 0;
 }
 
-/* Buttons */
-.button-container {
-  margin-top: 1.5rem;
+/* Info Boxes */
+.info-boxes {
   display: flex;
   justify-content: space-around;
+  margin-top: 2rem;
 }
 
-.action-button {
-  background-color: #0062cc; /* Darker blue */
-  color: white;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+.info-box {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 30%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 }
 
-.action-button:hover {
-  background-color: #004ea2; /* Darker blue on hover */
-  transform: scale(1.05);
-}
-
-.action-button.small {
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-}
-
-/* Sidebar */
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  right: 2rem; /* Distance from the right edge */
-  top: 50%; /* Center the buttons vertically */
-  transform: translateY(-50%);
-  gap: 1.5rem; /* Space between buttons */
-}
-
-/* Circle Buttons */
-.circle-button {
-  width: 150px; /* Larger than regular buttons */
-  height: 150px; /* Make the button a circle */
-  background-color: #005a9e; /* Darker blue color */
-  color: white;
-  border: none;
-  border-radius: 50%; /* Makes the button circular */
-  font-size: 1.2rem; /* Adjust text size */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.circle-button:hover {
-  background-color: #004080; /* Slightly darker on hover */
-  transform: scale(1.05); /* Enlarges on hover */
-}
-
-.friend-suggestions {
-  background-color: #333; /* Dark background for friends container in dark mode */
-  padding: 1.5rem;
-  border-radius: 12px;
-  max-width: 300px; /* Adjust max width as needed */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  color: white; /* Default text color in dark mode */
-  max-height: 400px; /* Set a maximum height for the container */
-  overflow-y: auto; /* Enable vertical scrolling */
-}
-/* Customize the scrollbar for a better look */
-.friend-suggestions::-webkit-scrollbar {
-  width: 10px;
-}
-.friend {
-  display: flex;
-  justify-content: space-between; /* Space between name and actions */
-  align-items: center;
-  margin-bottom: 1rem; /* Space between friends */
-}
-
-.friend-info {
-  display: flex;
-  align-items: center; /* Align items vertically */
-}
-
-.friend-flag {
-  margin-left: 0.5rem; /* Space between name and flag */
-}
-
-.friend-actions {
-  display: flex;
-  gap: 0.5rem; /* Space between buttons */
-}
-
-/* Light Mode Styles for Friend Suggestions */
-.light-mode .friend-suggestions {
-  background-color: var(--friend-background); /* Light mode background for friends container */
-  color: black; /* Ensure text is black in light mode */
-}
-
-.light-mode .friend {
-  color: black; /* Ensure friend names are black in light mode */
-}
-
-.light-mode .homepage-content {
-  background-color: var(--container-background); /* Match light mode background */
-  color: var(--text-color); /* Ensure text color in main content is dark */
-}
-
-.light-mode .homepage-container,
-.light-mode .left-sidebar,
-.light-mode .right-sidebar {
-  background-color: var(--background-color); /* Light mode background for containers */
+.info-box:not(:last-child) {
+  margin-right: 1rem;
 }
 
 @media (max-width: 768px) {
-  .button-container {
+  .info-boxes {
       flex-direction: column;
   }
 
-  .action-button {
+  .info-box {
       width: 100%;
       margin-bottom: 1rem;
   }
 
-  .action-button:last-child {
+  .info-box:last-child {
       margin-bottom: 0;
   }
 }

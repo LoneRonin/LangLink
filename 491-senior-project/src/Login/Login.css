@@ -1,49 +1,17 @@
-/* login.css */
-
-/* Define CSS variables for light and dark mode */
-:root {
-  --bg-color: #ffffff; /* Light background */
-  --container-bg-color: #ffffff; /* Light background for the login box */
-  --text-color: rgba(0, 0, 0, 0.87); /* Dark text color */
-  --input-bg-color: #ffffff; /* Input background color for light mode */
-  --button-color: #007bff; /* Button color */
-  --button-hover-color: #0056b3; /* Button hover color */
-}
-
-/* Dark Mode Variables */
-body.dark-mode {
-  --bg-color: #121212; /* Dark background */
-  --container-bg-color: #1e1e1e; /* Dark background for the login box */
-  --text-color: rgba(255, 255, 255, 0.87); /* Light text color */
-  --input-bg-color: #333333; /* Input background color for dark mode */
-}
-
-/* Light Mode Variables */
-body.light-mode {
-  --bg-color: #ffffff; /* Pure white background */
-  color: #333; /* Dark text color */
-}
-
-/* Apply background color to body */
-body {
-  background-color: var(--bg-color); /* Use variable for body background */
-}
-
-/* Login container styles */
+/* Layout for login container */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: var(--bg-color); /* Use variable for background */
+  background-color: #242424;
   padding: 1rem;
   box-sizing: border-box;
 }
 
-/* Login box styles */
 .login-box {
-  background-color: var(--container-bg-color); /* Use variable for login box background */
+  background-color: #1e1e1e;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -53,40 +21,45 @@ body {
   box-sizing: border-box;
 }
 
-/* Logo/Header Text */
 .logo {
   font-size: 2.5rem;
-  color: var(--text-color); /* Set based on mode */
+  color: #ffffff;
   margin-bottom: 1rem;
 }
 
-/* Label and Input Styling */
-.input-group label {
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+label {
   display: block;
-  font-size: 1rem;
-  color: var(--text-color); /* Set label color based on mode */
-  margin-bottom: 0.5rem;
   text-align: left;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
 }
 
 input {
-  background-color: var(--input-bg-color); /* Input background color */
-  color: var(--text-color); /* Ensure input text color matches mode */
   width: 100%;
   padding: 0.75rem;
   border-radius: 4px;
   border: none;
+  background-color: #333;
+  color: #fff;
   font-size: 1rem;
 }
 
 input:focus {
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Adjust focus shadow for light mode */
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
-/* Button Styling */
 .btn {
-  background-color: var(--button-color);
+  background-color: #4267B2;
   color: white;
   padding: 1rem;
   font-size: 1.2rem;
@@ -94,27 +67,74 @@ input:focus {
   border-radius: 4px;
   cursor: pointer;
   margin-top: 1rem;
-  transition: background-color 0.3s ease;
 }
 
 .btn:hover {
-  background-color: var(--button-hover-color);
+  background-color: #365899;
 }
 
-/* Link Styling */
+.login-links {
+  margin-top: 1.5rem;
+}
+
 .login-links a {
-  display: inline-block;
-  color: var(--button-color); /* Use button color for links */
-  margin-top: 1rem;
+  display: block;
+  color: #4267B2;
+  text-decoration: none;
+  margin-bottom: 1rem;
 }
 
 .login-links a:hover {
-  color: var(--button-hover-color); /* Hover color for links */
+  text-decoration: underline;
 }
 
-/* Error and Success Messages */
-.error-message,
+/* Responsive design */
+@media (max-width: 768px) {
+  .login-box {
+    padding: 1rem;
+  }
+  
+  .btn {
+    padding: 0.75rem;
+  }
+}
+/* Success message style */
 .success-message {
-  color: var(--text-color);
+  color: #4CAF50; /* Green color for success */
+  font-size: 1rem;
   margin-top: 1rem;
+  text-align: center;
+}
+
+/* Error message style */
+.error-message {
+  color: #ff4d4d; /* Red for errors */
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* Add success styles to login container */
+.login-container.login-success .login-box {
+  background-color: #2e7d32; /* Change background color on success */
+  border: 2px solid #4CAF50; /* Add green border */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* You can add animation or different styles when login is successful */
+.login-container.login-success h1 {
+  color: #ffffff; /* Ensure text remains readable */
+}
+
+.login-container.login-success input {
+  background-color: #ffffff; /* Change input background */
+  color: #2e7d32; /* Change text color */
+  border: 1px solid #4CAF50; /* Add green border */
+}
+
+.login-container.login-success .btn {
+  background-color: #4CAF50; /* Success button color */
+}
+
+.login-container.login-success .btn:hover {
+  background-color: #388e3c;
 }
