@@ -1,49 +1,91 @@
-/*Conjugate Page */
+/* Conjugate Page */
 .grammar-container {
   text-align: center;
-  margin: 8rem auto; /* Increased margin-top to 4rem to lower the content */
+  margin: 8rem auto; /* Keeps content positioned well */
   padding: 2rem;
-  background-color: #4e3535;
+  background-color: var(--container-background); /* Dynamic based on theme */
+  color: var(--text-color); /* Matches light/dark mode */
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   max-width: 600px;
 }
-
 
 .grammar-buttons {
   display: flex;
   justify-content: space-around;
   margin-top: 1rem;
 }
-
+/*Edit color of buttons here*/
 .grammar-buttons button {
   padding: 0.5rem 1rem;
   font-size: 1.2rem;
   cursor: pointer;
-  background-color: #646cff;
-  color: white;
+  background-color: var(--button-background, #646cff); /* Theme-aware default */
+  color: var(--button-text-color, white); /* Theme-aware text */
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
-
 .grammar-buttons button:hover {
-  background-color: #5155e0;
+  background-color: var(--button-hover-background, #5155e0); /* Hover for both modes */
 }
-
+/*Correct and Incorrect Box should be similar*/
 .correct-message, .incorrect-message {
   margin-top: 1rem;
   padding: 1rem;
   font-size: 1.2rem;
   border-radius: 5px;
+  color: white; /* Maintain text contrast */
 }
-
 .correct-message {
-  background-color: green;
+  background-color: var(--correct-background, #28a745); /* Theme-friendly green */
+}
+.incorrect-message {
+  background-color: var(--incorrect-background, #dc3545); /* Theme-friendly red */
+}
+
+/* Light Mode Adjustments */
+.light-mode .grammar-container {
+  background-color: #f9f9f9; /* Light background */
+  color: rgba(0, 0, 0, 0.87); /* Dark text */
+}
+
+.light-mode .grammar-buttons button {
+  background-color: #007bff; /* Lighter blue for light mode */
   color: white;
 }
 
-.incorrect-message {
-  background-color: red;
+.light-mode .grammar-buttons button:hover {
+  background-color: #0056b3; /* Darker hover effect */
+}
+
+.light-mode .correct-message {
+  background-color: #218838; /* Softer green for light mode */
+}
+
+.light-mode .incorrect-message {
+  background-color: #c82333; /* Softer red for light mode */
+}
+
+/* Dark Mode Adjustments */
+.dark-mode .grammar-container {
+  background-color: #333333; /* Dark background */
+  color: #f1f1f1; /* Light text */
+}
+
+.dark-mode .grammar-buttons button {
+  background-color: #646cff; /* Vibrant blue for dark mode */
   color: white;
+}
+
+.dark-mode .grammar-buttons button:hover {
+  background-color: #5155e0; /* Slightly darker hover */
+}
+
+.dark-mode .correct-message {
+  background-color: #28a745; /* Green for dark mode */
+}
+
+.dark-mode .incorrect-message {
+  background-color: #dc3545; /* Red for dark mode */
 }
