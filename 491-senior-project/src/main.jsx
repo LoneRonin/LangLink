@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
 import { faBell } from '@fortawesome/free-solid-svg-icons'; // Bell icon import
 import { getAuth, signOut } from 'firebase/auth'; // Import Firebase signOut
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Font Awesome icon

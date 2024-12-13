@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { getAuth, updateEmail } from 'firebase/auth';
-import { doc, onSnapshot, updateDoc, collection, getDoc, deleteDoc, arrayUnion } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc, collection, getDoc, deleteDoc, arrayUnion, getDocs } from 'firebase/firestore';
 import { db } from '../firebase'; 
 import './Profile.css'; 
 import DefaultProf from '../ProfilePics/defaultprofile.png';
@@ -30,30 +30,14 @@ const Profile = () => {
   const [noneBlocked, setNoneBlocked] = useState(true);
   const [isDisabled, setIsDisabled] = useState(false);
 
-  function deleteUserAccountPopup(){
-    var popupID = "delete-profile-popup";
-    var popup = document.getElementById(popupID);
-    popup.style.display=("block");
+  const createPopup = (elementId) => {
+    const popup = document.getElementById(elementId);
+    popup.style.display = ("block");
   }
 
-  function removeDeletePopup(){
-    var popupID = "delete-profile-popup";
-    var popup = document.getElementById(popupID);
-    popup.style.display=("none");
-  }
-
-  function unBlockPopup(fid){
-    //console.log("creating popup");
-    var blockID = "popup_"+fid;
-    var blockElement = document.getElementById(blockID);
-    blockElement.style.display = ("block");
-  }
-
-  function removeBlockPopup(fid){
-    //console.log('removing popup');
-    var blockID = "popup_"+fid;
-    var blockElement = document.getElementById(blockID);
-    blockElement.style.display = ("none");
+  const hidePopup = (elementId) => {
+    const popup = document.getElementById(elementId);
+    popup.style.display = ("none");
   }
 
   const deleteUserAccount = async() => {
@@ -61,7 +45,7 @@ const Profile = () => {
       if(user){
         const userRef = doc(db, "users", user.uid)
         await updateDoc(userRef,{
-            isDeleted: arrayUnion(true)
+            isDeleted: true
         });
         
         setIsDisabled(true);
@@ -72,16 +56,32 @@ const Profile = () => {
 
   const reEnableAccount = async() => {
     try{
-    if(user){
+      if(user){
         const userRef = doc(db, "users", user.uid)
         await updateDoc(userRef,{
-            isDeleted: arrayUnion(false)
+          isDeleted: false
         });
-        
         setIsDisabled(false);
-    }
+      }
     }
     catch(err){console.log(err);}
+    //finally{hidePopup('enable-account-popup');}
+  }
+
+  const updateAllProfiles = async() => {
+    try{
+      const usersRef = collection(db, "users");
+      const allUsers = await getDocs(usersRef);
+      allUsers.forEach(async(doc) => {
+        const userDoc = doc.data();
+        const userRef = doc(db, "users", doc.id);
+        const name = userDoc.firstName +" "+ userDoc.lastName
+        await updateDoc(userRef, {
+          displayName: name,
+          isDisabled: false,
+        });
+      });
+    }catch(err){console.log(err);}
   }
 
   const fetchBlockedUsers = async () => {
@@ -126,6 +126,7 @@ const Profile = () => {
         if (docSnapshot.exists()) {
           const data = docSnapshot.data(); // Retrieve user data
           setUserData(data); // Set user data
+          setIsDisabled(data.isDeleted);
           // Populate the form with the fetched data
           setFormData({
             firstName: data.firstName || '',
@@ -226,7 +227,7 @@ const Profile = () => {
 
   return (
     <section className="profile-container">
-    <div className="profile-content">
+      <div className="profile-content">
         <div className="profile-header">
         {editMode ? (
             <label htmlFor="profilePicInput" className="profile-pic-label">
@@ -380,57 +381,61 @@ const Profile = () => {
             <button className="edit-button" onClick={() => setEditMode(true)}>Edit Profile</button>
         </div>
         )}
-            <div>
+          <div>
             <p>Blocked Users:</p>
             <p>{noneBlocked && "No users blocked."}</p>
             <ul className='list'>
                 {blockedUsers?.map((doc) => (
-                <div key={Math.random()}>
-                    <li className='listElement' id={`${doc[2]}`}>{doc[0]} {doc[1]}
-                    <button className='button' onClick={(event) => unBlockPopup(doc[2])}>Unblock</button>
-                    <div id={`popup_${doc[2]}`} className='modal'>
+                  <li className='listElement' id={doc.id} key={doc.id}>{doc.firstName} {doc.lastName}
+                    <button className='button' onClick={(event) => createPopup(`popup_${doc.id}`)}>Unblock</button>
+                    <div id={`popup_${doc.id}`} className='modal'>
                         <div className='modal-content'>
-                        <span className='close' onClick={(event) => removeBlockPopup(doc[2])}>&times;</span>
-                        <p>Unblock this user?</p>
-                        <p>
-                            <button className = 'yesbutton' onClick={(event) => unBlockUser(doc[2])}>Yes</button>
-                            <button className = 'nobutton' onClick={(event) => removeBlockPopup(doc[2])}>No</button>
-                        </p>
+                          <span className='close' onClick={(event) => hidePopup(`popup_${doc.id}`)}>&times;</span>
+                          <p>Unblock this user?</p>
+                          <p>
+                            <button className = 'yesbutton' onClick={(event) => unBlockUser(doc.id)}>Yes</button>
+                            <button className = 'nobutton' onClick={(event) => hidePopup(`popup_${doc.id}`)}>No</button>
+                          </p>
                         </div>
                     </div>
-                    </li>
-                </div>
+                  </li>
                 ))}
             </ul>
-            </div>
-            {!isDisabled && (
+          </div>
+          {!isDisabled && (
             <div id="delete-account">
-                <button className="delete-profile-button" onClick={(event) => deleteUserAccountPopup()}>Disable Account</button>
+                <button className="delete-profile-button" onClick={(event) => createPopup('delete-profile-popup')}>Disable Account</button>
                 <div id='delete-profile-popup' className='modal'>
-                <div className='modal-content'>
-                    <span className='close' onClick={(event) => removeDeletePopup(doc)}>&times;</span>
-                    <p>Are you sure you want to disable your account?</p>
-                    <p>You will be able to re-enable your account by logging in again.</p>
-                    <p>Until then, your account will be hidden from other users, but posts and comments made will still be visible.</p>
-                    <p>
-                    <button className = 'yesbutton' onClick={(event) => deleteUserAccount()}>Yes</button>
-                    <button className = 'nobutton' onClick={(event) => removeDeletePopup(doc)}>No</button>
-                    </p>
-                </div>
+                  <div className='modal-content'>
+                      <span className='close' onClick={(event) => hidePopup('delete-profile-popup')}>&times;</span>
+                      <p>Are you sure you want to disable your account?</p>
+                      <p>You will be able to re-enable your account by logging in again.</p>
+                      <p>Until then, your account will be hidden from other users, but posts and comments made will still be visible.</p>
+                      <p>
+                        <button className = 'yesbutton' onClick={(event) => deleteUserAccount()}>Yes</button>
+                        <button className = 'nobutton' onClick={(event) => hidePopup('delete-profile-popup')}>No</button>
+                      </p>
+                  </div>
                 </div>
             </div>
-            )}
-            {isDisabled && (
+          )}
+          {isDisabled && (
             <div id='enable-account'>
-                <button className='enable-account-button'>Re-enable account</button>
+                <button className='enable-account-button' onClick={(event) => createPopup('enable-account-popup')}>Re-enable account</button>
                 <div id='enable-account-popup' className='modal'>
-                <div className='modal-content'>
-                    <span className='close' onClick={(event) => removeDeletePopup(doc)}>&times;</span>
-                </div>
+                  <div className='modal-content'>
+                      <span className='close' onClick={(event) => removePopup('enable-account-popup')}>&times;</span>
+                      <p>Would you like to re-enable your account?</p>
+                      <p>You can disable your account again at any time.</p>
+                      <p>
+                        <button className = 'yesbutton' onClick={(event) => reEnableAccount()}>Yes</button>
+                        <button className = 'nobutton' onClick={(event) => removePopup('enable-account-popup')}>No</button>
+                      </p>
+                  </div>
                 </div>
             </div>
-            )}
-    </div>
+          )}
+      </div>
     </section>
   );
 };

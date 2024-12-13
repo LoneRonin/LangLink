@@ -156,14 +156,11 @@ body.dark-mode .edit-profile-button:hover {
   background-color: #45a049; /* Button hover effect */
 }
 
-    }
-  }
-
-  .button{
-    color:black;
-    background-color: skyblue;
-    border-radius: 16px;
-    margin: 2px 12px;
+.button{
+  color:black;
+  background-color: skyblue;
+  border-radius: 16px;
+  margin: 2px 12px;
 }
 
 .button:hover{
@@ -175,7 +172,7 @@ body.dark-mode .edit-profile-button:hover {
   .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 5; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
