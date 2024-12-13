@@ -196,6 +196,7 @@ const Profile = () => {
           country: formData.country,
           aboutMe: formData.aboutMe,
           profilePicture: profilePicture, // Update the profile picture in Firestore
+          displayName: formData.firstName + formData.lastName,
         });
 
         // Update Firebase Auth email if changed
