@@ -399,10 +399,20 @@ const Friends = () => {
 
     return(
         <section className='friendsList'>
-            <div>
-                <h2>Fwiends</h2>
+            <div className='friends'>
+                <div id = 'requests'>
+                    <p>incoming friend requests</p>
+                    <ul className='list'>
+                        {requests?.map((request) => (
+                            <li className='listElement' key={request.id} id={request.email}>{request.firstName} {request.lastName}
+                                <button className='button' id='denyReqButton' onClick={(event) => clearFriendRequest(request)}>x</button>
+                                <button className='button' id='acceptReqButton' onClick={(event) => acceptFriendRequest(request)}>+</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
                 <div id = 'friendDisplay'>
-                    <p>Welcome to the friend zone</p>
+                    <h2>Friends:</h2>
                     {loading && "Loading..."}
                     <ul className='list'>
                         {friends?.map((friend) => (
@@ -430,17 +440,6 @@ const Friends = () => {
                         {suggestions?.map((guy) => (
                             <li className='listElement' key={guy.id} id={guy.id}>{guy.email} {guy.lastName} 
                                 <button className='button' id='addFriendButton' onClick={(event) => sendFriendRequest(guy)}>+</button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                <div id = 'requests'>
-                    <p>incoming friend requests</p>
-                    <ul className='list'>
-                        {requests?.map((request) => (
-                            <li className='listElement' key={request.id} id={request.email}>{request.firstName} {request.lastName}
-                                <button className='button' id='denyReqButton' onClick={(event) => clearFriendRequest(request)}>x</button>
-                                <button className='button' id='acceptReqButton' onClick={(event) => acceptFriendRequest(request)}>+</button>
                             </li>
                         ))}
                     </ul>

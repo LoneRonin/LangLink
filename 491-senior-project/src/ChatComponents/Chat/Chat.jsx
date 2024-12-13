@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react"
-//import DefaultProf from '../../ProfilePics/defaultprofile.png';
+import DefaultProf from '../../ProfilePics/defaultprofile.png';
 import "./Chat.css"
 import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -13,6 +13,7 @@ const Chat = () => {
     const {chatId, otherUser} = useContext(searchContext);
     const [chatIdValue, setChatIdValue] = chatId;
     const [chatter, setChatter] = otherUser;
+    
     const auth = getAuth();
     const user = auth.currentUser;
 
@@ -75,7 +76,7 @@ const Chat = () => {
         <div className ='chat'>
             <div className="top">
                 <div className="user">
-                    <img src="./defaultprofile.png" alt=""/>
+                    <img src={chatter.profilePicture} alt="profile"/>
                     <div className="texts">
                         <span>{chatter?.firstName} {chatter?.lastName}</span>
                     </div>

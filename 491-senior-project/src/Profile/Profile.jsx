@@ -2,11 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { getAuth, updateEmail } from 'firebase/auth';
-import { doc, onSnapshot, updateDoc, collection, getDoc, deleteDoc, arrayUnion, getDocs } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc, collection, getDoc, deleteDoc, arrayUnion, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../firebase'; 
 import './Profile.css'; 
 import DefaultProf from '../ProfilePics/defaultprofile.png';
 import { useNavigate } from 'react-router-dom';
+import Friends from '../Friends/Friends';
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -72,14 +73,12 @@ const Profile = () => {
     try{
       const usersRef = collection(db, "users");
       const allUsers = await getDocs(usersRef);
-      allUsers.forEach(async(doc) => {
-        const userDoc = doc.data();
-        const userRef = doc(db, "users", doc.id);
-        const name = userDoc.firstName +" "+ userDoc.lastName
-        await updateDoc(userRef, {
-          displayName: name,
-          isDisabled: false,
+      allUsers.forEach(async(guy) => {
+
+        await setDoc(doc(db, "userchats", guy.id), {
+          chats:"",
         });
+        console.log("updated ", guy.firstName);
       });
     }catch(err){console.log(err);}
   }
@@ -159,7 +158,7 @@ const Profile = () => {
   useEffect(() => {
     // Fetch blocked users
     fetchBlockedUsers();
-    //add a userdata fetch
+    //updateAllProfiles();
   }, [user]);
 
   const handleChange = (e) => {
@@ -381,60 +380,65 @@ const Profile = () => {
             <button className="edit-button" onClick={() => setEditMode(true)}>Edit Profile</button>
         </div>
         )}
-          <div>
-            <p>Blocked Users:</p>
-            <p>{noneBlocked && "No users blocked."}</p>
-            <ul className='list'>
-                {blockedUsers?.map((doc) => (
-                  <li className='listElement' id={doc.id} key={doc.id}>{doc.firstName} {doc.lastName}
-                    <button className='button' onClick={(event) => createPopup(`popup_${doc.id}`)}>Unblock</button>
-                    <div id={`popup_${doc.id}`} className='modal'>
-                        <div className='modal-content'>
-                          <span className='close' onClick={(event) => hidePopup(`popup_${doc.id}`)}>&times;</span>
-                          <p>Unblock this user?</p>
-                          <p>
-                            <button className = 'yesbutton' onClick={(event) => unBlockUser(doc.id)}>Yes</button>
-                            <button className = 'nobutton' onClick={(event) => hidePopup(`popup_${doc.id}`)}>No</button>
-                          </p>
-                        </div>
-                    </div>
-                  </li>
-                ))}
-            </ul>
+      </div>
+
+      <div><Friends/></div>
+
+      <div className='profileExtras'>
+        <div>
+          <p>Blocked Users:</p>
+          <p>{noneBlocked && "No users blocked."}</p>
+          <ul className='list'>
+              {blockedUsers?.map((doc) => (
+                <li className='listElement' id={doc.id} key={doc.id}>{doc.firstName} {doc.lastName}
+                  <button className='button' onClick={(event) => createPopup(`popup_${doc.id}`)}>Unblock</button>
+                  <div id={`popup_${doc.id}`} className='modal'>
+                      <div className='modal-content'>
+                        <span className='close' onClick={(event) => hidePopup(`popup_${doc.id}`)}>&times;</span>
+                        <p>Unblock this user?</p>
+                        <p>
+                          <button className = 'yesbutton' onClick={(event) => unBlockUser(doc.id)}>Yes</button>
+                          <button className = 'nobutton' onClick={(event) => hidePopup(`popup_${doc.id}`)}>No</button>
+                        </p>
+                      </div>
+                  </div>
+                </li>
+              ))}
+          </ul>
+        </div>
+        {!isDisabled && (
+          <div id="delete-account">
+              <button className="delete-profile-button" onClick={(event) => createPopup('delete-profile-popup')}>Disable Account</button>
+              <div id='delete-profile-popup' className='modal'>
+                <div className='modal-content'>
+                    <span className='close' onClick={(event) => hidePopup('delete-profile-popup')}>&times;</span>
+                    <p>Are you sure you want to disable your account?</p>
+                    <p>You will be able to re-enable your account by logging in again.</p>
+                    <p>Until then, your account will be hidden from other users, but posts and comments made will still be visible.</p>
+                    <p>
+                      <button className = 'yesbutton' onClick={(event) => deleteUserAccount()}>Yes</button>
+                      <button className = 'nobutton' onClick={(event) => hidePopup('delete-profile-popup')}>No</button>
+                    </p>
+                </div>
+              </div>
           </div>
-          {!isDisabled && (
-            <div id="delete-account">
-                <button className="delete-profile-button" onClick={(event) => createPopup('delete-profile-popup')}>Disable Account</button>
-                <div id='delete-profile-popup' className='modal'>
-                  <div className='modal-content'>
-                      <span className='close' onClick={(event) => hidePopup('delete-profile-popup')}>&times;</span>
-                      <p>Are you sure you want to disable your account?</p>
-                      <p>You will be able to re-enable your account by logging in again.</p>
-                      <p>Until then, your account will be hidden from other users, but posts and comments made will still be visible.</p>
-                      <p>
-                        <button className = 'yesbutton' onClick={(event) => deleteUserAccount()}>Yes</button>
-                        <button className = 'nobutton' onClick={(event) => hidePopup('delete-profile-popup')}>No</button>
-                      </p>
-                  </div>
+        )}
+        {isDisabled && (
+          <div id='enable-account'>
+              <button className='enable-account-button' onClick={(event) => createPopup('enable-account-popup')}>Re-enable account</button>
+              <div id='enable-account-popup' className='modal'>
+                <div className='modal-content'>
+                    <span className='close' onClick={(event) => removePopup('enable-account-popup')}>&times;</span>
+                    <p>Would you like to re-enable your account?</p>
+                    <p>You can disable your account again at any time.</p>
+                    <p>
+                      <button className = 'yesbutton' onClick={(event) => reEnableAccount()}>Yes</button>
+                      <button className = 'nobutton' onClick={(event) => removePopup('enable-account-popup')}>No</button>
+                    </p>
                 </div>
-            </div>
-          )}
-          {isDisabled && (
-            <div id='enable-account'>
-                <button className='enable-account-button' onClick={(event) => createPopup('enable-account-popup')}>Re-enable account</button>
-                <div id='enable-account-popup' className='modal'>
-                  <div className='modal-content'>
-                      <span className='close' onClick={(event) => removePopup('enable-account-popup')}>&times;</span>
-                      <p>Would you like to re-enable your account?</p>
-                      <p>You can disable your account again at any time.</p>
-                      <p>
-                        <button className = 'yesbutton' onClick={(event) => reEnableAccount()}>Yes</button>
-                        <button className = 'nobutton' onClick={(event) => removePopup('enable-account-popup')}>No</button>
-                      </p>
-                  </div>
-                </div>
-            </div>
-          )}
+              </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -97,7 +97,7 @@
         align-items: center;
         justify-content: space-between;
         border-top: 1px solid #dddddd35;
-        gap: 20px;
+        gap: 10px;
         margin-top: auto;
 
         input{
@@ -107,16 +107,18 @@
             outline: none;
             padding: 10px;
             border-radius: 5px;
-            font-size: 12px;
+            font-size: 16px;
         }
 
         .send-button{
             color:white;
             background-color:teal;
-            padding: 10px 20px;
+            padding: 8px;
             border:none;
             border-radius: 5px;
             cursor: pointer;
+            width: 60px;
+            text-align: center;
         }
     }
 }

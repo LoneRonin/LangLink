@@ -4,6 +4,7 @@ import { getAuth } from 'firebase/auth';
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import searchContext from "../../searchContext.jsx";
+import DefaultProf from '../../../ProfilePics/defaultprofile.png';
 
 
 const Chatlist = () => {
@@ -15,6 +16,7 @@ const Chatlist = () => {
     const [chatIdValue, setChatIdValue] = chatId;
     const [otherChatter, setOtherChatter] = otherUser;
     const [isChatEmpty, setIsChatEmpty] = useState(true);
+    const [chatterProfilePicture, setChatterProfilePicture] = useState(DefaultProf);
 
     useEffect(() => {
         if(!user) return;
@@ -31,8 +33,7 @@ const Chatlist = () => {
             });
             const chatData = await Promise.all(promises);
             setChats(chatData.sort((a,b) => b.updatedAt - a.updatedAt));
-            if(chatData.length>0){setIsChatEmpty(false);}
-            //console.log(chatData[0].chatId);
+            if(chatData.length!=0){setIsChatEmpty(false);}
         });
 
         return () => {
@@ -74,12 +75,13 @@ const Chatlist = () => {
                 </div>
                 <button className="add" onClick={() => setSearchValue((prev) => !prev)}>+</button>
             </div>
-            {isChatEmpty && <div><p>Please log in to chat.</p></div>}
+            {!user && <div><p>Please log in to chat.</p></div>}
+            {isChatEmpty && <div><p>Add a user to chat!</p></div>}
             {chats.map((chat) => (
                 <div className="item" key={chat.chatId} onClick={()=>handleSelect(chat)}>
-                    <img src={chat?.user?.profilePicture || "./defaultprofile.png"} alt="" />
+                    <img src={chat.newUser?.profilePicture || chatterProfilePicture} alt="" />
                     <div className="texts">
-                        <span>{chat?.newUser?.firstName} {chat?.newUser?.lastName}</span>
+                        <span>{chat.newUser?.firstName} {chat.newUser?.lastName}</span>
                         <p>{chat?.lastMessage}</p>
                     </div>
                 </div>))}

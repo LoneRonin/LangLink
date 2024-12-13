@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { faBell } from '@fortawesome/free-solid-svg-icons'; // Bell icon import
 import { getAuth, signOut } from 'firebase/auth'; // Import Firebase signOut
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Font Awesome icon
-import { faCog } from '@fortawesome/free-solid-svg-icons'; // Import the gear icon
+import { faCog, faComment } from '@fortawesome/free-solid-svg-icons'; // Import the gear icon
 import Login from './Login/Login.jsx';
 import Homepage from './Homepage/Homepage.jsx';
 import Signup from './Signup/Signup.jsx';
@@ -120,17 +120,17 @@ const App = () => {
         </Link>
 
         <ul className="nav-list">
-          <li className="nav-item"><Link to="/">Log In</Link></li>
+          {/*<li className="nav-item"><Link to="/">Log In</Link></li>
           <li className="nav-item"><Link to="/homepage">Homepage</Link></li>
-          <li className="nav-item"><Link to="/signup">Sign Up</Link></li>
+          <li className="nav-item"><Link to="/signup">Sign Up</Link></li>*/}
           <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
           <li className="nav-item"><Link to="/lessons">Lessons</Link></li>
           <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
           <li className="nav-item"><Link to="/grammar">Grammar</Link></li> 
-        <li className="nav-item"><Link to="/lesson">Lesson</Link></li> 
+          <li className="nav-item"><Link to="/lesson">Lesson</Link></li> 
           <li className="nav-item"><Link to="/profile">Profile</Link></li>
           <li className="nav-item"><Link to="/communities">Communities</Link></li>
-          <li className="nav-item"><Link to="/friends">Friends</Link></li>
+          {/*<li className="nav-item"><Link to="/friends">Friends</Link></li>*/}
           <li className="nav-item"><Link to="/dailyquiz">DailyQuiz</Link></li>
           <li className="nav-item"><Link to="/translate">Translator</Link></li>
 
@@ -140,9 +140,15 @@ const App = () => {
             <NotificationsDropdown />
           </li>
         </ul>
-        {user ? (<button className='chat-button' onClick={toggleChatbox}>Chat</button>) : <div></div>}
-        {/* Group gear icon and language button */}
+      {/* Group gear icon and language button */}
     <div className="navbar-right">
+    <div className='chat-button'>
+      <FontAwesomeIcon
+        icon={faComment}
+        className = 'chat-icon'
+        onClick={toggleChatbox}
+      />
+    </div>
     <div className="settings-dropdown">
       <FontAwesomeIcon 
         icon={faCog} 

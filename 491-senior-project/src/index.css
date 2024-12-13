@@ -93,6 +93,14 @@ button:focus-visible {
   margin-right: 30px;
 }
 
+.chat-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  width: 30px;
+}
+
 .logo-icon {
   width: 75px;
   height: auto;

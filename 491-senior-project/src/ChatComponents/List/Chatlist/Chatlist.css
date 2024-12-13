@@ -42,6 +42,7 @@
         padding: 20px;
         cursor: pointer;
         border-bottom: 1px solid #dddddd35;
+        background-color: #3e3e3e;
 
         img{
             width: 20px;
