@@ -71,13 +71,13 @@ const CalendarActivity = () => {
       ); } return days; };
   return (
     <div className="calendar-container">
-      <h2>Interactive Calendar</h2>
+      <h1>Interactive Calendar</h1>
       <div className="calendar-header">
-        <button onClick={previousMonth}>Previous Month</button>
-        <div className="month-year">
+        <btn onClick={previousMonth}>{"<<"}</btn>
+        <h1>
           {monthsInEnglish[currentMonth]} {currentYear}
-        </div>
-        <button onClick={nextMonth}>Next Month</button>
+        </h1>
+        <btn onClick={nextMonth}>{">>"}</btn>
       </div>
       <div className="calendar-grid">
         {daysOfWeekInEnglish.map((day, index) => (
@@ -87,10 +87,10 @@ const CalendarActivity = () => {
       </div>
       {selectedDate && (
         <div className="selected-date">
-          <p><strong>Selected Day:</strong></p>
-          <p>
+          <h1><strong>Selected Day:</strong></h1>
+          <h1>
             {daysOfWeekInSpanish[selectedDate.getDay()]}, {selectedDate.getDate()} de {monthsInSpanish[selectedDate.getMonth()]} de {selectedDate.getFullYear()}
-          </p>
+          </h1>
         </div>
       )}
       

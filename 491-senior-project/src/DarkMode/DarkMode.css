@@ -33,6 +33,8 @@ body.light-mode {
 
 /* Ensure specific text elements are black in light mode */
 body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
 body.light-mode label,
 body.light-mode p,
 body.light-mode input {
@@ -47,6 +49,8 @@ body.dark-mode {
 
 /* Ensure specific text elements are white in dark mode */
 body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
 body.dark-mode label,
 body.dark-mode p,
 body.dark-mode input {
@@ -109,6 +113,31 @@ body.dark-mode .btn:hover {
   background-color: var(--button-hover-color-dark);
 }
 
+/* Calendar Buttons*/
+body.light-mode .calendar-day.clickable{
+  background-color: var(--button-color-light);
+}
+body.dark-mode .calendar-day.clickable{
+  background-color: var(--button-color-dark);
+}
+
+body.light-mode .calendar-day.clickable:hover {
+  background-color: var(--button-hover-color-light);
+}
+
+body.dark-mode .calendar-day.clickable:hover {
+  background-color: var(--button-hover-color-dark);
+}
+
+/*Shopping List*/
+
+body.light-mode .item{
+  background-color: var(--bg-color-light);
+}
+body.dark-mode .item{
+  background-color: var(--bg-color-dark);
+}
+
 /*Radio Buttons*/
 body.light-mode .radio{
   background-color: var(--button-color-light);
@@ -118,6 +147,22 @@ body.light-mode .radio{
 body.dark-mode .radio{
   background-color: var(--button-color-dark);
   color: var(--text-color-dark);
+}
+
+/*Dialouge Containers*/
+
+body.light-mode .dialogue{
+  background-color: var(--bg-color-light);
+}
+body.dark-mode .dialogue{
+  background-color: var(--bg-color-dark);
+}
+
+body.light-mode .dialogue-container{
+  background-color: var(--bg-color-light);
+}
+body.dark-mode .dialogue-container{
+  background-color: var(--bg-color-dark);
 }
 
 /* Link Colors */

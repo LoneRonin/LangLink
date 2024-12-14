@@ -8,7 +8,7 @@ const items = [
   { name: "Plátanos", price: 0.5 }, // bananas
   { name: "Leche", price: 1.5 },      // milk
   { name: "Huevos", price: 2.5 },    // eggs
-  { name: "Pan", price: 1.0 },        // bread
+  // { name: "Pan", price: 1.0 },        // bread
 ];
 
 // Function to convert Spanish quantity words to numbers for comparison
@@ -63,15 +63,15 @@ const ShoppingList = () => {
   };
 
   return (
-    <div className="shopping-list-container">
-      <h2>Shopping List</h2>
+    <div className="shoppinglist-container">
+      <h3>Shopping List</h3>
       <h3>Budget: €{totalCost.toFixed(2)}</h3>
       <div className="items">
         {items.map((item, index) => (
           <div className="item" key={index}>
-            <p>
-              <strong>{item.name}</strong> - Unit Price: €{item.price.toFixed(2)}
-            </p>
+            <h3>
+              {item.name} - Unit Price: €{item.price.toFixed(2)}
+            </h3>
             <select value={quantities[index]} onChange={(e) => handleQuantityChange(index, e.target.value)}>
               {/* Include an option for zero */}
               <option value="0">cero (0)</option> {/* Explicitly set for zero */}
