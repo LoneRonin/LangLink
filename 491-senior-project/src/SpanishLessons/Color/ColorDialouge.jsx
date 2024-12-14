@@ -7,14 +7,14 @@ const ColorDialogue = () => {
     <div className="dialogue-container">
       <h2>Diálogo sobre los Colores</h2>
       <div className="dialogue">
-        <p><strong>Ana:</strong> Hola, Miguel. ¿Cuál es tu color favorito?</p>
-        <p><strong>Miguel:</strong> Hola, Ana. Mi color favorito es el azul. ¿Y el tuyo?</p>
-        <p><strong>Ana:</strong> Me encanta el verde. Es tan relajante.</p>
-        <p><strong>Miguel:</strong> ¡Sí! El verde me recuerda a la naturaleza. ¿Te gustan los colores brillantes?</p>
-        <p><strong>Ana:</strong> Claro, el amarillo es muy alegre. ¿Y tú?</p>
-        <p><strong>Miguel:</strong> Prefiero el rojo, es un color muy fuerte y apasionado.</p>
-        <p><strong>Ana:</strong> ¡Qué interesante! A veces me gusta el morado también, es muy elegante.</p>
-        <p><strong>Miguel:</strong> ¡De acuerdo! Cada color tiene su propio encanto.</p>
+        <h3><strong>Ana:</strong> Hola, Miguel. ¿Cuál es tu color favorito?</h3>
+        <h3><strong>Miguel:</strong> Hola, Ana. Mi color favorito es el azul. ¿Y el tuyo?</h3>
+        <h3><strong>Ana:</strong> Me encanta el verde. Es tan relajante.</h3>
+        <h3><strong>Miguel:</strong> ¡Sí! El verde me recuerda a la naturaleza. ¿Te gustan los colores brillantes?</h3>
+        <h3><strong>Ana:</strong> Claro, el amarillo es muy alegre. ¿Y tú?</h3>
+        <h3><strong>Miguel:</strong> Prefiero el rojo, es un color muy fuerte y apasionado.</h3>
+        <h3><strong>Ana:</strong> ¡Qué interesante! A veces me gusta el morado también, es muy elegante.</h3>
+        <h3><strong>Miguel:</strong> ¡De acuerdo! Cada color tiene su propio encanto.</h3>
       </div>
 
       <h3>Vocabulario de Colores</h3>
