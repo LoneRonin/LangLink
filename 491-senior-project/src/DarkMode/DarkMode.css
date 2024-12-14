@@ -109,6 +109,17 @@ body.dark-mode .btn:hover {
   background-color: var(--button-hover-color-dark);
 }
 
+/*Radio Buttons*/
+body.light-mode .radio{
+  background-color: var(--button-color-light);
+  color: var(--text-color-light);
+}
+
+body.dark-mode .radio{
+  background-color: var(--button-color-dark);
+  color: var(--text-color-dark);
+}
+
 /* Link Colors */
 body.light-mode .nav-item a,
 body.light-mode .login-links a {

@@ -16,21 +16,17 @@ const colors = [
   { color: "#808080", spanish: "Gris" },       // Grey
 ];
 
-
 const ColorMatch = () => {
   const [selectedColor, setSelectedColor] = useState({});
-  const [shuffledColors, setShuffledColors] = useState([]);
+  const [choices, setChoices] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
   const [isCorrect, setIsCorrect] = useState(null);
 
   useEffect(() => {
-    const shuffled = shuffleColors([...colors]);
-    setShuffledColors(shuffled);
-    setNewColor(shuffled); // Set the first color to guess
+    setNewColor();
   }, []);
 
-  // Function to shuffle colors
-  const shuffleColors = (array) => {
+  const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
@@ -38,13 +34,22 @@ const ColorMatch = () => {
     return array;
   };
 
-  const setNewColor = (shuffled) => {
-    const randomIndex = Math.floor(Math.random() * shuffled.length);
-    setSelectedColor(shuffled[randomIndex]);
+  const setNewColor = () => {
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    const correctColor = colors[randomIndex];
+
+    const incorrectColors = colors.filter(color => color.spanish !== correctColor.spanish);
+    const randomIncorrectChoices = shuffleArray(incorrectColors).slice(0, 3);
+
+    const newChoices = shuffleArray([correctColor, ...randomIncorrectChoices]);
+    setSelectedColor(correctColor);
+    setChoices(newChoices);
   };
+
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
   const handleSubmit = () => {
     if (selectedOption === selectedColor.spanish) {
       setIsCorrect(true);
@@ -52,11 +57,13 @@ const ColorMatch = () => {
       setIsCorrect(false);
     }
   };
+
   const nextColor = () => {
     setIsCorrect(null);
     setSelectedOption("");
-    setNewColor(shuffledColors); // Set a new color to guess
+    setNewColor();
   };
+
   return (
     <div className="color-match-container">
       <h1>Guess the Spanish Name of the Color</h1>
@@ -67,16 +74,16 @@ const ColorMatch = () => {
         }}
       ></div>
       <form className="radio-group">
-        {shuffledColors.map((color, index) => (
+        {choices.map((choice, index) => (
           <div key={index}>
             <input
               type="radio"
-              id={color.spanish}
-              value={color.spanish}
-              checked={selectedOption === color.spanish}
+              id={choice.spanish}
+              value={choice.spanish}
+              checked={selectedOption === choice.spanish}
               onChange={handleOptionChange}
             />
-            <label htmlFor={color.spanish}>{color.spanish}</label>
+            <label htmlFor={choice.spanish}>{choice.spanish}</label>
           </div>
         ))}
       </form>
@@ -90,4 +97,5 @@ const ColorMatch = () => {
     </div>
   );
 };
+
 export default ColorMatch;
