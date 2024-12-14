@@ -1,18 +1,24 @@
 .chatlist{
     flex:1;
     overflow-y: auto;
+    height: 100%;
+    padding-top: 0;
+    align-self:flex-start;
+    margin-top: -90%;
     .search{
         display:flex;
         align-items: center;
+        margin-top: 0px;
         gap: 4px;
         padding: 10px;
+        height: 30px;
 
         .searchbar{
             background-color: rgba(40, 44, 50, 0.5);
             flex:1;
             display: flex;
             align-items: center;
-            gap:20px;
+            gap:12px;
             border-radius: 10px;
 
             input{
@@ -39,7 +45,7 @@
         display:flex;
         align-items: center;
         gap:10px;
-        padding: 20px;
+        padding: 8px;
         cursor: pointer;
         border-bottom: 1px solid #dddddd35;
         background-color: #3e3e3e;
@@ -54,7 +60,7 @@
         .texts{
             display: flex;
             flex-direction: column;
-            gap:10px;
+            gap:0px;
 
             span{
                 font-weight: 500;
@@ -62,6 +68,10 @@
             p{
                 font-size: 10px;
                 font-weight: 300;
+                background-color: #3e3e3e;
+                border: none;
+                margin: 0;
+                height: 8px;
             }
         }
     }

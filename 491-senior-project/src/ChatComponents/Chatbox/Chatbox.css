@@ -4,7 +4,7 @@
     position: fixed; /* Stay in place */
     z-index: 2; /* Sit on top */
     padding-top: 10px; /* Location of the box */
-    padding-bottom: 10px;
+    padding-bottom: 0px;
     right: 15px;
     bottom: 0;
     width: 40%;

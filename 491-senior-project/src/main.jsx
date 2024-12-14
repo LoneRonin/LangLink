@@ -158,7 +158,9 @@ const App = () => {
       {showMenu && (
         <ul className="dropdown-menu">
           <li className="dropdown-item" onClick={handleSignOut}>Sign Out</li>
-        <li className="nav-item"><Link to="/dailyquiz">DailyQuiz</Link></li>
+          <li className="nav-item"><Link to="/dailyquiz">DailyQuiz</Link></li>
+          <li>{/* Dark Mode Toggle Button */}
+          <DarkModeToggle />  {/* This will add the toggle button for dark mode */}</li>
         
         </ul>
       )}
@@ -169,8 +171,7 @@ const App = () => {
           <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
       </button>
 
-        {/* Dark Mode Toggle Button */}
-        <DarkModeToggle />  {/* This will add the toggle button for dark mode */}
+        
         </div>
       </nav>
 

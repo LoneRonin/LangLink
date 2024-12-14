@@ -13,6 +13,7 @@ const Chat = () => {
     const {chatId, otherUser} = useContext(searchContext);
     const [chatIdValue, setChatIdValue] = chatId;
     const [chatter, setChatter] = otherUser;
+    const [chatterProfilePicture, setChatterProfilePicture] = useState(DefaultProf);
     
     const auth = getAuth();
     const user = auth.currentUser;
@@ -76,7 +77,7 @@ const Chat = () => {
         <div className ='chat'>
             <div className="top">
                 <div className="user">
-                    <img src={chatter.profilePicture} alt="profile"/>
+                    <img src={chatter.profilePicture || chatterProfilePicture} alt="profile"/>
                     <div className="texts">
                         <span>{chatter?.firstName} {chatter?.lastName}</span>
                     </div>

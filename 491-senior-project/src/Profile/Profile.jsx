@@ -381,15 +381,12 @@ const Profile = () => {
             <button className="edit-button" onClick={() => setEditMode(true)}>Edit Profile</button>
         </div>
         )}
-      </div>
 
-      <div><Friends/></div>
-
-      <div className='profileExtras'>
+<div className='profileExtras'>
         <div>
-          <p>Blocked Users:</p>
-          <p>{noneBlocked && "No users blocked."}</p>
+          <h2>Blocked Users:</h2>
           <ul className='list'>
+          {noneBlocked && "No users blocked."}
               {blockedUsers?.map((doc) => (
                 <li className='listElement' id={doc.id} key={doc.id}>{doc.firstName} {doc.lastName}
                   <button className='button' onClick={(event) => createPopup(`popup_${doc.id}`)}>Unblock</button>
@@ -441,6 +438,10 @@ const Profile = () => {
           </div>
         )}
       </div>
+      </div>
+      <div><Friends/></div>
+
+      
     </section>
   );
 };

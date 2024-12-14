@@ -36,6 +36,9 @@ const Friends = () => {
             friendList.push({ ...friend, id: doc.id });
             emailList.push(friend.email);
         });
+        if(friendList.length <= 0){
+            setNoFriends(true);
+        }
         setFriends(friendList);
         setEmails(emailList);
         //sets the set state with the finished lists
@@ -361,7 +364,7 @@ const Friends = () => {
         try{
             if(user){
                 const requestsRef = collection(db, "users", user.uid, "friendrequests");
-                const incomingReuqestsQuery = query(requestsRef);
+                const incomingRequestsQuery = query(requestsRef);
                 const querySnapshot = await getDocs(incomingRequestsQuery);
                 updateRequests(querySnapshot);
             }
@@ -398,25 +401,28 @@ const Friends = () => {
     if (!user) {return <p>No user data available</p>;}
 
     return(
-        <section className='friendsList'>
-            <div className='friends'>
+        <section>
+            <div  className='friendsList'>
                 <div id = 'requests'>
-                    <p>incoming friend requests</p>
+                    {!noRequests && <h2>Incoming Requests</h2>}
                     <ul className='list'>
                         {requests?.map((request) => (
-                            <li className='listElement' key={request.id} id={request.email}>{request.firstName} {request.lastName}
+                            <li className='listElement' key={request.id} id={request.email}>
+                                <span>{request.firstName} {request.lastName}</span>
                                 <button className='button' id='denyReqButton' onClick={(event) => clearFriendRequest(request)}>x</button>
                                 <button className='button' id='acceptReqButton' onClick={(event) => acceptFriendRequest(request)}>+</button>
                             </li>
                         ))}
                     </ul>
                 </div>
-                <div id = 'friendDisplay'>
+                <div id = 'friendDisplay' className='friends'>
                     <h2>Friends:</h2>
                     {loading && "Loading..."}
+                    {noFriends && <span>No friends :u</span>}
                     <ul className='list'>
                         {friends?.map((friend) => (
-                            <li className='listElement' key={friend.id} id={friend.email}>{friend.firstName} {friend.lastName}
+                            <li className='listElement' key={friend.id} id={friend.email}>
+                                <span>{friend.firstName} {friend.lastName}</span>
                                 <button className='button' id='removeFriendButton' onClick={(event) => appearFriendPopup(friend)}>-</button>
                                 <div id={`popup_${friend.email}`} className='modal'>
                                     <div className='modal-content'>
@@ -433,13 +439,14 @@ const Friends = () => {
                         ))}
                     </ul>
                 </div>
-                <div id = 'friendsuggestion'>
-                    <p>Make a new friend!</p>
+                <div id = 'friendsuggestion' className='suggestions'>
+                    <h2>Suggested Users:</h2>
                     {loading2 && "Loading..."}
                     <ul className='list'>
                         {suggestions?.map((guy) => (
-                            <li className='listElement' key={guy.id} id={guy.id}>{guy.email} {guy.lastName} 
-                                <button className='button' id='addFriendButton' onClick={(event) => sendFriendRequest(guy)}>+</button>
+                            <li className='listElement' key={guy.id} id={guy.id}>
+                                <span>{guy.firstName} {guy.lastName} </span>
+                                <button className='friendbutton' id='addFriendButton' onClick={(event) => sendFriendRequest(guy)}>+</button>
                             </li>
                         ))}
                     </ul>
