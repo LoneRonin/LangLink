@@ -16,19 +16,19 @@ const QuizPage = () => {
       <h1>Daily Quiz Page</h1>
       
       {/* Button Container for all four buttons */}
-      <div className="button-container">
+      <div className="btn-container">
         {/* Navigation Buttons for each page */}
-        <button className="button" onClick={() => navigate('/dailyquiz/es')}>
+        <btn className="btn" onClick={() => navigate('/dailyquiz/es')}>
           Take Spanish Daily Quiz
-        </button>
-        <button className="button" onClick={() => navigate('/dailyquiz/jp')}>
+        </btn>
+        <btn className="btn" onClick={() => navigate('/dailyquiz/jp')}>
           Take Japanese Daily Quiz
-        </button>
+        </btn>
 
         {/* New button to toggle Leaderboard visibility */}
-        <button className="button" onClick={handleLeaderboardToggle}>
+        <btn className="btn" onClick={handleLeaderboardToggle}>
           {showLeaderboard ? "Hide Leaderboard" : "View Leaderboard"}
-        </button>
+        </btn>
       </div>
 
       {/* Conditionally render the Leaderboard */}
