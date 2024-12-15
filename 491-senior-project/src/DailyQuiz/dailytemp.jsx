@@ -15,29 +15,30 @@ const QuizPage = () => {
     <div className="page-container">
       <h1>Daily Quiz Page</h1>
       
-      {/* Button Container for all four buttons */}
-      <div className="btn-container">
-        {/* Navigation Buttons for each page */}
-        <btn className="btn" onClick={() => navigate('/dailyquiz/es')}>
-          Take Spanish Daily Quiz
-        </btn>
-        <btn className="btn" onClick={() => navigate('/dailyquiz/jp')}>
-          Take Japanese Daily Quiz
-        </btn>
+      {/* Conditionally render the button container */}
+      {!showLeaderboard && (
+        <div className="btn-container">
+          {/* Navigation Buttons */}
+          <button className="btn" onClick={() => navigate('/dailyquiz/es')}>
+            Take Spanish Daily Quiz
+          </button>
+          <button className="btn" onClick={() => navigate('/dailyquiz/jp')}>
+            Take Japanese Daily Quiz
+          </button>
+          <button className="btn" onClick={handleLeaderboardToggle}>
+            View Leaderboard
+          </button>
+        </div>
+      )}
 
-        {/* New button to toggle Leaderboard visibility */}
-        <btn className="btn" onClick={handleLeaderboardToggle}>
-          {showLeaderboard ? "Hide Leaderboard" : "View Leaderboard"}
-        </btn>
-      </div>
-
-      {/* Conditionally render the Leaderboard */}
+      {/* Conditionally render the leaderboard */}
       {showLeaderboard && (
-        <div className="leaderboard-overlay">
-          <div className="leaderboard-container">
-            <button className="close-btn" onClick={handleLeaderboardToggle}>X</button>
-            <Leaderboard />  {/* Render the Leaderboard component here */}
-          </div>
+        <div className="leaderboard-container">
+          {/* Close button */}
+          <button className="close-btn" onClick={handleLeaderboardToggle}>
+            X
+          </button>
+          <Leaderboard /> {/* Render the Leaderboard component */}
         </div>
       )}
     </div>

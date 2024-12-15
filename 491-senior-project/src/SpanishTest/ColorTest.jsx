@@ -38,21 +38,20 @@ const ColorTest = () => {
       return (
         <form onSubmit={handleSubmit}>
           <h2>Spanish Test: Colors</h2>
-    
           {/* Section 1: Fill-in-the-Blank with Dropdown Options (5 Questions) */}
           <div>
             <p>1. Fill in the blanks with the appropriate word </p>
             <p>Miguel: Hola, mi nombre es Miguel. Mi color favorito es el 
-            <select name="q1" onChange={handleChange}><option value=""></option><option value="azul">azul</option><option value="alegría">alegría</option><option value="elegante">elegante</option></select> porque es muy tranquilo.
-            Me gusta también el <select name="q2" onChange={handleChange}><option value=""></option><option value="verde">verde</option><option value="azul">azul</option><option value="favorito">favorito</option></select> porque me recuerda a la 
-            <select name="q3" onChange={handleChange}><option value=""></option><option value="naturaleza">naturaleza</option><option value="verde">verde</option><option value="favorito">favorito</option></select>.
+            <select className="color-dropdown" name="q1" onChange={handleChange}><option value=""></option><option value="azul">azul</option><option value="alegría">alegría</option><option value="elegante">elegante</option></select> porque es muy tranquilo.
+            Me gusta también el <select className="color-dropdown" name="q2" onChange={handleChange}><option value=""></option><option value="verde">verde</option><option value="azul">azul</option><option value="favorito">favorito</option></select> porque me recuerda a la 
+            <select className="color-dropdown" name="q3" onChange={handleChange}><option value=""></option><option value="naturaleza">naturaleza</option><option value="verde">verde</option><option value="favorito">favorito</option></select>.
             A veces, disfruto de colores brillantes como el 
-                <select name="q4" onChange={handleChange}><option value=""></option><option value="amarillo">amarillo</option><option value="naturaleza">naturaleza</option><option value="favorito">favorito</option></select>, ya que es un color muy 
-                <select name="q5" onChange={handleChange}><option value=""></option><option value="alegre">alegre</option><option value="amarillo">amarillo</option><option value="azul">azul</option></select>.</p>
+                <select className="color-dropdown" name="q4" onChange={handleChange}><option value=""></option><option value="amarillo">amarillo</option><option value="naturaleza">naturaleza</option><option value="favorito">favorito</option></select>, ya que es un color muy 
+                <select className="color-dropdown" name="q5" onChange={handleChange}><option value=""></option><option value="alegre">alegre</option><option value="amarillo">amarillo</option><option value="azul">azul</option></select>.</p>
           </div>
     
           {/* Section 2: Multiple-Choice with Radio Buttons in a 2x2 Grid */}
-          <div className="section-2">
+ 
             <div>
               <p>2. What is the Spanish word for "charm"?</p>
               <label><input type="radio" name="q6" value="brillante" onChange={handleChange} /> Brillante</label>
@@ -84,7 +83,7 @@ const ColorTest = () => {
               <label><input type="radio" name="q9" value="morado" onChange={handleChange} /> Morado</label>
               <label><input type="radio" name="q9" value="amarillo" onChange={handleChange} /> Amarillo</label>
             </div>
-          </div>
+
     
           {/* Section 3: Translation Exercises */}
           <div>

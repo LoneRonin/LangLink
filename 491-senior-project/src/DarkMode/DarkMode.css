@@ -113,6 +113,15 @@ body.dark-mode .btn:hover {
   background-color: var(--button-hover-color-dark);
 }
 
+body.light-mode .close-btn
+{
+  color: var(--text-color-light);
+}
+body.dark-mode .close-btn
+{
+color: var(--text-color-dark);
+}
+
 /* Calendar Buttons*/
 body.light-mode .calendar-day.clickable{
   background-color: var(--button-color-light);
@@ -162,6 +171,20 @@ body.light-mode .dialogue-container{
   background-color: var(--bg-color-light);
 }
 body.dark-mode .dialogue-container{
+  background-color: var(--bg-color-dark);
+}
+
+/*Daily Quiz Container*/
+body.light-mode .leaderboard-container{
+  background-color: var(--bg-color-light);
+}
+body.dark-mode .leaderboard-container{
+  background-color: var(--bg-color-dark);
+}
+body.light-mode .page-container{
+  background-color: var(--bg-color-light);
+}
+body.dark-mode .page-container{
   background-color: var(--bg-color-dark);
 }
 
