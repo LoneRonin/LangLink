@@ -101,7 +101,7 @@ const ColorMatch = () => {
         <button className="back-button" onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
-        <button className="back-button" onClick={() => navigate('/colors')}>
+        <button className="back-button" onClick={() => navigate('/color')}>
           Do Color Flashcards
         </button>
         <button className="back-button" onClick={() => navigate('/lesson/colordialouge')}>

@@ -164,7 +164,6 @@ const NumberTest = () => {
           {/* Section 3: Mixed Translation Questions */}
           <div>
             <h3>Section 3: Translate the phrases.</h3>
-            <p>Word Bank: <strong>Mi, libro, favorito, hay, dos, tres.</strong></p>
             <p>11. Translate: My favorite book is three.</p>
             <input type="text" name="q11" onChange={handleChange} placeholder="Enter your answer here" />
     
