@@ -130,3 +130,6 @@ body.dark-mode .login-links a:hover {
   color: var(--link-hover-color-dark);
 }
 
+.toggle-dark-mode{
+  margin-right: 40px;
+}

@@ -33,7 +33,9 @@ const Chatlist = () => {
             });
             const chatData = await Promise.all(promises);
             setChats(chatData.sort((a,b) => b.updatedAt - a.updatedAt));
-            if(chatData.length!=0){setIsChatEmpty(false);}
+            if(chatData.length!=0){setIsChatEmpty(false);
+                console.log(chatData);
+            }
         });
 
         return () => {

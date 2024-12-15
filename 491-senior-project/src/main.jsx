@@ -59,7 +59,7 @@ import QuizLeaderboard from './DailyQuiz/board.jsx';
 import esFlag from './flags/es.png'; // Spanish flag
 import jpFlag from './flags/jp.png'; // Japanese flag
 import BluLogo from './Logo/LangLinkBlueTransparent.png';
-import TranslateComponent from './TranslateComponent';
+import TranslateComponent from './TranslateComponent/TranslateComponent.jsx';
 
 
 const App = () => {
@@ -159,8 +159,7 @@ const App = () => {
         <ul className="dropdown-menu">
           <li className="dropdown-item" onClick={handleSignOut}>Sign Out</li>
           <li className="nav-item"><Link to="/dailyquiz">DailyQuiz</Link></li>
-          <li>{/* Dark Mode Toggle Button */}
-          <DarkModeToggle />  {/* This will add the toggle button for dark mode */}</li>
+          <li></li>
         
         </ul>
       )}
@@ -171,7 +170,8 @@ const App = () => {
           <img src={getFlag()} alt={`Current language: ${language}`} className="flag-icon" />
       </button>
 
-        
+        {/* Dark Mode Toggle Button */}
+        <DarkModeToggle />  {/* This will add the toggle button for dark mode */}
         </div>
       </nav>
 
