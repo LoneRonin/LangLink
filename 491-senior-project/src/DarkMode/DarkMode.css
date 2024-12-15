@@ -101,8 +101,16 @@ body.light-mode .btn {
 }
 
 body.dark-mode .btn {
-  background-color: var(--button-color-dark);
+  background-color: var(--bg-color-dark);
   color: var(--text-color-dark); /* Button text color for dark mode */
+}
+
+body.light-mode .btn-container {
+  background-color: var(--bg-color-light);
+}
+
+body.dark-mode .btn-container {
+  background-color: var(--bg-color-dark);
 }
 
 body.light-mode .btn:hover {

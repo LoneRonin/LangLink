@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { useNavigate } from 'react-router-dom';
+ // Import Link from react-router-dom
 import "./ShoppingList.css";
 
 // List of items with prices
@@ -29,6 +30,8 @@ const quantityWords = {
 };
 
 const ShoppingList = () => {
+      const navigate = useNavigate();
+  
   const [quantities, setQuantities] = useState(Array(items.length).fill(0));
   const [totalCost, setTotalCost] = useState(0);
   const [isCorrect, setIsCorrect] = useState(null);
@@ -94,9 +97,21 @@ const ShoppingList = () => {
           }
         </div>
       )}
-      {/* Link to navigate back */}
-      <Link to="/lesson/numberdialouge" className="back-button">Back to number dialogue</Link>
-    </div>
+     <div className="back-button-container">
+        <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
+        <button className="back-button" onClick={() => navigate("/number")}>
+          Do Flashcards
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/numberdialouge")}>
+          Learn Vocabulary
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/numbertest")}>
+          Take Test
+        </button>
+      </div>
+      </div>
   );
 };
 

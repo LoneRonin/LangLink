@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import { useNavigate } from 'react-router-dom';
 import './NumDialouge.css';
 const NumberDialogue = () => {
+    const navigate = useNavigate();
+  
   return (
     <div className="dialogue-container">
       <h2>Diálogo sobre Números y Cantidades</h2>
@@ -38,11 +40,19 @@ const NumberDialogue = () => {
         </tbody>
       </table>
       {/* Button to navigate to Shopping List */}
-      <Link to="/lesson/shoppinglist" className="button">
-        Do Shopping List Activity
-      </Link>
-      <Link to="/lesson/numbertest" className="button">
-        Take Test
-      </Link>
+      <div className="back-button-container">
+        <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/shoppinglist")}>
+          Do Shopping Activity
+        </button>
+        <button className="back-button" onClick={() => navigate("/number")}>
+          Do Flashcards
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/numbertest")}>
+          Take Test
+        </button>
+      </div>
     </div>);};
 export default NumberDialogue;

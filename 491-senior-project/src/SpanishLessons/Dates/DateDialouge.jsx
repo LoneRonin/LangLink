@@ -1,8 +1,11 @@
 import React from 'react'; 
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import './Dates.css';
+import { useNavigate } from 'react-router-dom';
 
 const DateDialogue = () => {
+     const navigate = useNavigate();
+  
   return (
     <div className="dialogue-container">
       <h2>Diálogo sobre Fechas y Horas</h2>
@@ -46,14 +49,20 @@ const DateDialogue = () => {
           <tr><td>Próxima semana</td><td>Next week</td></tr>
         </tbody>
       </table>
-      {/* Button to navigate to Calendar */} 
-      <Link to="/lesson/calendar" className="button">
-        Do Calendar Activity
-      </Link>
-      {/* Button to navigate to Test */} 
-      <Link to="/lesson/datetest" className="button">
-        Take Test
-      </Link>
+      <div className="back-button-container">
+        <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/calendar")}>
+          Do Calendar Activity
+        </button>
+        <button className="back-button" onClick={() => navigate("/date")}>
+         Do Flashcards
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/datetest")}>
+          Take Test
+        </button>
+      </div>
     </div>
   );
 };

@@ -5,7 +5,11 @@ import book from './image2.png';
 import orange from './image3.png';
 import strawberry from './image4.png';
 import pencil from './image5.png';
+
+import { useNavigate } from 'react-router-dom';
 const NumberTest = () => {
+     const navigate = useNavigate();
+  
     const [answers, setAnswers] = useState({
         q1: '', q2: '', q3: '', q4: '', q5: '', q6: '', q7: '', q8: '', q9: '', q10: '', q11: '', q12: '', q13: '', q14: '', q15: ''
       });
@@ -178,5 +182,8 @@ const NumberTest = () => {
           </div>
     
           <button type="submit">Submit</button>
+          <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
         </form>);};
 export default NumberTest;

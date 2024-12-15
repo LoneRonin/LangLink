@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ColorMatching.css"; // Ensure this path is correct
+import { useNavigate } from 'react-router-dom';
 
 // List of colors with their Spanish names
 const colors = [
@@ -17,6 +18,7 @@ const colors = [
 ];
 
 const ColorMatch = () => {
+  const navigate = useNavigate();
   const [selectedColor, setSelectedColor] = useState({});
   const [choices, setChoices] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
@@ -94,6 +96,22 @@ const ColorMatch = () => {
         </div>
       )}
       <button onClick={nextColor}>Next Color</button>
+      
+      <div className="back-button-container">
+        <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
+        <button className="back-button" onClick={() => navigate('/colors')}>
+          Do Color Flashcards
+        </button>
+        <button className="back-button" onClick={() => navigate('/lesson/colordialouge')}>
+          Learn Vocabulary
+        </button>
+        <button className="back-button" onClick={() => navigate('/lesson/colortest')}>
+          Take Test
+        </button>
+      </div>
+
     </div>
   );
 };

@@ -41,13 +41,22 @@ const ColorDialogue = () => {
       </table>
 
       {/* Button to navigate to Color Matching */}
-      <Link to="/lesson/colormatching" className="button">
-        Go to Color Matching
-      </Link>
-      {/* Button to navigate to Color Test */}
-      <Link to="/lesson/colortest" className="button">
-        Take Test
-      </Link>
+      
+
+      <div className="back-button-container">
+      <Link to='/lessons' className="back-button"> 
+          Back to Lessons
+          </Link>
+        <Link to="/color" className="back-button"> 
+          Do Flashcards
+          </Link>
+        <Link to="/lesson/colormatching" className="back-button">          
+        Do Color Matching
+        </Link>
+        <Link to="/lesson/colortest" className="back-button">  
+          Take Test
+          </Link>
+      </div>
     </div>
   );
 };

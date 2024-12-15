@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "./Calendar.css";
-
+import { useNavigate } from 'react-router-dom';
 // Spanish translations
 const monthsInSpanish = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -22,6 +22,8 @@ const daysOfWeekInEnglish = [
 ];
 
 const CalendarActivity = () => {
+     const navigate = useNavigate();
+  
   const [selectedDate, setSelectedDate] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -94,9 +96,21 @@ const CalendarActivity = () => {
         </div>
       )}
       
-      {/* Add a Link button to navigate back to DateDialogue */}
-      <Link to='/lesson/datedialouge' className="back-button">Go to Date Dialouge</Link>
-    </div>
+      <div className="back-button-container">
+        <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
+        <button className="back-button" onClick={() => navigate("/date")}>
+          Do Flashcards
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/datedialouge")}>
+          Learn Vocabulary
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/datetest")}>
+          Take Test
+        </button>
+      </div>
+      </div>
   );
 };
 
