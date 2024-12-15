@@ -14,12 +14,13 @@ const Chatbox = () => {
     const [chatId, setChatId] = useState(null);
     const [isCurrentUserBlocked, setIsCurrentUserBlocked] = useState(false);
     const [isReceiverBlocked, setIsReceiverBlocked] = useState(false);
+    const [otherUser, setOtherUser] = useState(null);
 
     return(
-        <searchContext.Provider value={{chatSearch, setChatSearch}}>
+        <searchContext.Provider value={{chatSearch:[chatSearch, setChatSearch], chatId:[chatId, setChatId], otherUser:[otherUser, setOtherUser], isCurrentUserBlocked:[isCurrentUserBlocked, setIsCurrentUserBlocked], isReceiverBlocked:[isReceiverBlocked, setIsReceiverBlocked]}}>
             <div className='chat-container'>
                 <List/>
-                {!chatSearch && <Chat/>}
+                {!chatSearch && (chatId && <Chat/>)}
                 {chatSearch && <AddUser/>}
             </div>
         </searchContext.Provider>

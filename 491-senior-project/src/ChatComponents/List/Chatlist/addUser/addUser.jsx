@@ -3,6 +3,7 @@ import "./addUser.css";
 import { db } from "../../../../firebase";
 import { getAuth } from "firebase/auth";
 import { useState } from "react";
+import DefaultProf from '../../../../ProfilePics/defaultprofile.png';
 
 const AddUser = () => {
     const [otherUser, setOtherUser] = useState(null);
@@ -10,6 +11,7 @@ const AddUser = () => {
     const [noResults, setNoResults] = useState(false);
     const auth = getAuth();
     const user = auth.currentUser;
+    const [chatterProfilePicture, setChatterProfilePicture] = useState(DefaultProf);
 
     const handleSearch = async (e) => {
         e.preventDefault()
@@ -46,7 +48,7 @@ const AddUser = () => {
                     messages:[],
                 });
 
-                await setDoc(doc(userChatsRef, otherUser.id), {
+                await updateDoc(doc(userChatsRef, otherUser.id), {
                     chats:arrayUnion({
                         chatId: newChatRef.id,
                         lastMessage:"",
@@ -55,7 +57,7 @@ const AddUser = () => {
                     }),
                 });
 
-                await setDoc(doc(userChatsRef, user.uid),{
+                await updateDoc(doc(userChatsRef, user.uid),{
                     chats:arrayUnion({
                         chatId: newChatRef.id,
                         lastMessage:"",
@@ -75,7 +77,7 @@ const AddUser = () => {
             </form>
             {otherUser && <div className="user">
                 <div className="detail">
-                    <img src={otherUser.profilePicture || "./defaultProfile.png"} alt="" />
+                    <img src={otherUser.profilePicture || chatterProfilePicture} alt="" />
                     <span>{otherUser.firstName} {otherUser.lastName}</span>
                 </div>
                 <button onClick={handleAdd}>Add User</button>

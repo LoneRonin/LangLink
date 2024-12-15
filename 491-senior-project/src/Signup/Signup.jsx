@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { arrayUnion, doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase'; // Ensure correct path to firebase.js
 import './Signup.css';
 
@@ -39,8 +39,10 @@ const Signup = () => {
       await setDoc(doc(db, 'users', user.uid), {
         firstName,
         lastName,
+        displayName,
         email,
         language: '', // Default empty language to be selected later
+        isDisabled: false,
       });
 
       // Add a welcome notification in the 'notifications' subcollection
@@ -49,6 +51,10 @@ const Signup = () => {
         message: `Welcome to the app, ${firstName}! We're glad to have you here.`,
         timestamp: new Date(),
         read: false, // Notification is unread by default
+      });
+
+      await setDoc(doc(db, "userchats", user.uid), {
+        chats:"",
       });
 
       // Redirect to language selection page

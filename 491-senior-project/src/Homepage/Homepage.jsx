@@ -132,13 +132,13 @@ const Homepage = ({ language }) => {
         </div>
       </div>
 
-      {/* Right Sidebar for Friend Suggestions */}
+      {/* Right Sidebar for Friend Suggestions 
       <div className="right-sidebar">
         <div className="friend-suggestions">
           <h2>Friend Suggestions</h2>
-          <Friends /> {/* Use the Friends component to display friend suggestions */}
+          <Friends /> {/* Use the Friends component to display friend suggestions }
         </div>
-      </div>
+      </div>*/}
     </section>
   );
 };

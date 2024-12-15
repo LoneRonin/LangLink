@@ -1,7 +1,12 @@
 .friendsList{
-    padding: 100px;
+    padding: 60px;
+    padding-top: 16px;
     margin: auto;
     text-align: center;
+    border: 1px white;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    margin-top: 4px;
 }
 .friendDisplay{
     background-color: lightgray;
@@ -9,12 +14,20 @@
 
 .list{
     list-style-type:none;
-    text-align: right;
+    text-align: left;
+    gap: 8px;
+    width: 100%;
+    margin: auto;
+
 }
 
 .listElement {
     border-radius: 16px;
-    padding: 2px 12px;
+    padding: 6px 12px;
+    display: flex;
+    border: 1px solid #3e3e3e;
+    background-color: #2e2e2e;
+    align-items: center;
 }
 
 .listElement:hover {
@@ -23,11 +36,14 @@
     transition-duration: 0.5s;
 }
 
-.button{
+.friendbutton{
     color:black;
     background-color: skyblue;
     border-radius: 16px;
-    margin: 2px 12px;
+    margin: auto;
+    width: 40px;
+    margin-right: 10px;
+    float: right;
 }
 
 .button:hover{
@@ -60,7 +76,7 @@
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 5; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;

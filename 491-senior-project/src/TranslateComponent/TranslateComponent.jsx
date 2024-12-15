@@ -1,7 +1,7 @@
 // Worked on by: Tristan Clayman
 import React, { useState } from 'react';
 import './TranslateComponent.css';
-import API_KEY from './config.js';
+import API_KEY from '../config.js';
 
 async function translateText(text, targetLanguage) {
   if (!text.trim()) {
