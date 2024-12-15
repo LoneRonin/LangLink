@@ -34,14 +34,15 @@ const Chatlist = () => {
             const chatData = await Promise.all(promises);
             setChats(chatData.sort((a,b) => b.updatedAt - a.updatedAt));
             if(chatData.length!=0){setIsChatEmpty(false);
-                console.log(chatData);
+                
             }
+            console.log(chatData);
         });
 
         return () => {
             updateChats();
         }
-    }, []);
+    }, [user]);
 
     const handleSelect = async (chat) => {
         const userChats = chats.map((item) => {
