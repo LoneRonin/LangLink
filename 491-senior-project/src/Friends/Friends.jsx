@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from "react-dom/client";
 import { Link } from 'react-router-dom';
-import { collection, query, where, doc, getDocs, getDoc, limit, deleteDoc, setDoc } from "firebase/firestore";
+import { collection, query, where, doc, getDocs, getDoc, limit, deleteDoc, setDoc, addDoc, onSnapshot } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase';
 import './Friends.css';
@@ -44,20 +44,7 @@ const Friends = () => {
         //sets the set state with the finished lists
     };
 
-    //this function is similar to above but updates the suggestions list
-    const updateSuggestions = (docs) => {
-        const suggestionsList = [];
-        docs.forEach((doc) => {
-            const docEntry = doc.data();
-            suggestionsList.push({...docEntry, id: doc.id});
-        });
-
-        if(suggestionsList.length <5){
-            constructSuggestionsList();
-        }
-        else{setSuggestions(suggestionsList);}
-        //console.log(suggestionsList);
-    };
+    
 
     //this function is similar to above but handles incoming requests
     const updateRequests = (docs) => {
@@ -67,6 +54,7 @@ const Friends = () => {
             const request = doc.data();
             requestsList.push({ ...request, id: doc.id });
         });
+        console.log(requestsList)
 
         if(requestsList.length <= 0){
             setNoRequests(true);
@@ -76,7 +64,7 @@ const Friends = () => {
     }
 
     //creates a "friend request" document in another users subcollection
-    const sendFriendRequest = async(recipientId) => {
+    const sendFriendRequest = async(recipient) => {
         try{
             if(!user){
                 console.error("User is not authenticated");
@@ -84,17 +72,20 @@ const Friends = () => {
             }
 
             //constrcuts document reference and a document to create
-            const reqRef = doc(db, "users", fid, "friendrequests", user.uid);
+            const reqRef = doc(db, "users", recipient.id, "friendrequests", user.uid);
             //uses setDoc to prevent duplicate requests from being made
             await setDoc(reqRef, {
                 firstName: userData.firstName,
                 lastName: userData.lastName,
+                email: userData.email,
                 timestamp: new Date(),
             });
             console.log("Friend request sent successfully!");
 
+            await deleteDoc(doc(db, "users", user.uid, "usersuggestions", recipient.id));
+
             // Now add a notification for the recipient about the new friend request
-            const notificationRef = collection(db, "users", recipientId, "notifications");
+            const notificationRef = collection(db, "users", recipient.id, "notifications");
             await addDoc(notificationRef, {
                 message: `${user.displayName} sent you a friend request.`,
                 timestamp: new Date(),
@@ -109,6 +100,7 @@ const Friends = () => {
 
     //moves a users details from the requests subcollection to the friends one
     const acceptFriendRequest = async(friend) => {
+        console.log(friend)
         try{
             if(user){
                 const friendRef = doc(db, "users", user.uid, "friendlist", friend.id);
@@ -157,7 +149,7 @@ const Friends = () => {
                 const userRef = doc(db, "users", id, "friendrequests", user.uid);
                 await deleteDoc(userRef);
                 //this is supposed to remove the element from the html
-                document.getElementById(elementID).style.display='none';
+                //document.getElementById(elementID).style.display='none';
             }
         }
         catch(err){console.log(err);}
@@ -304,7 +296,7 @@ const Friends = () => {
                     });
                 }
                 //ideally this will update the users suggestion collection to minimize the amounts of reads that happens
-                setSuggestions(acquaintances);
+                //setSuggestions(acquaintances);
 
                 acquaintances.forEach(async (guy) => {
                     const userSuggestionDocRef = doc(db, "users", user.uid, "usersuggestions", guy.id);
@@ -386,12 +378,70 @@ const Friends = () => {
         catch(err){console.error("Error fetching user data:", err);}
     }
 
+    
+
     useEffect(() => {//when friends is called, runs this async react effect
-        if(user){
-            fetchUserData();
-            fetchFriendsList(user.uid);
-            fetchIncomingRequests();
-            fetchFriendSuggestions();
+        if(!user) return;
+        const userDataSnapshot = onSnapshot(doc(db, "users", user.uid), async(doc) => {
+            setUserData(doc.data());
+            //console.log(userData);
+        });
+
+        const friendQuery = query(collection(db, "users", user.uid, "friendlist"));
+        const friendsListSnapshot = onSnapshot(friendQuery, async(friendSnap) => {
+            const promises = friendSnap.docs.map(async (userDoc) => {
+                const userDocRef = doc(db, "users", userDoc.id)
+                const userDocSnap = await getDoc(userDocRef);
+                if(userDocSnap.exists()){
+                    const docEntry = userDocSnap.data();
+                    return {...docEntry, id: userDocSnap.id};
+                }
+            });
+            const friendData = await Promise.all(promises);
+            setFriends(friendData);
+            setLoading(false);
+            if(friendData.length == 0){setNoFriends(true);}
+            else{setNoFriends(false);}
+        });
+
+        const requestQuery = query(collection(db, "users", user.uid, "friendrequests"));
+        const requestsSnapshot = onSnapshot(requestQuery, async(reqSnap) => {
+            const promises = reqSnap.docs.map(async(userDoc)=>{
+                const userDocRef = doc(db, "users", userDoc.id)
+                const userDocSnap = await getDoc(userDocRef);
+                if(userDocSnap.exists()){
+                    const docEntry = userDocSnap.data();
+                    return {...docEntry, id: userDocSnap.id};
+                }
+            });
+            const requestData = await Promise.all(promises);
+            setRequests(requestData);
+            if(requestData.length == 0){setNoRequests(true);}
+            else{setNoRequests(false);}
+        });
+
+        const suggestionQuery = query(collection(db, "users", user.uid, "usersuggestions"));
+        const suggestionsSnapshot = onSnapshot(suggestionQuery, async(suggSnap) => {
+            const promises = suggSnap.docs.map(async(userDoc)=>{
+                const userDocRef = doc(db, "users", userDoc.id)
+                const userDocSnap = await getDoc(userDocRef);
+                if(userDocSnap.exists()){
+                    const docEntry = userDocSnap.data();
+                    return {...docEntry, id: userDocSnap.id};
+                }
+            });
+            const suggestionData = await Promise.all(promises);
+            //console.log(suggestionData);
+            setLoading2(false);
+            if(suggestionData.length <5){constructSuggestionsList();}
+            else{setSuggestions(suggestionData);}
+        });
+
+        return () => {
+            userDataSnapshot();
+            friendsListSnapshot();
+            requestsSnapshot();
+            suggestionsSnapshot();
         }
         
     }, [user]);
@@ -457,11 +507,3 @@ const Friends = () => {
 };
 
 export default Friends;
-//TODO:
-/** 
- * still need to add filters to other function, 
- * probably need to also make a "blockedby" collection. 
- * also have to update database rules
- * buttons
- * removesuggestion
-*/

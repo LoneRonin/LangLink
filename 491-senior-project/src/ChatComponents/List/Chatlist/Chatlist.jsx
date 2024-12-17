@@ -76,7 +76,7 @@ const Chatlist = () => {
                 <div className="searchbar">
                     <input type="text" placeholder="Search" />
                 </div>
-                <button className="add" onClick={() => setSearchValue((prev) => !prev)}>+</button>
+                <button className="user-add" onClick={() => setSearchValue((prev) => !prev)}>+</button>
             </div>
             {!user && <div><p>Please log in to chat.</p></div>}
             {isChatEmpty && <div><p>Add a user to chat!</p></div>}

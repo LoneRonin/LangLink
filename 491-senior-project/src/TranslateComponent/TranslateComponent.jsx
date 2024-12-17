@@ -77,7 +77,7 @@ const TranslateComponent = () => {
         <option value="ja">Japanese</option>
         <option value="en">English</option>
       </select>
-      <button onClick={handleTranslate}>Translate</button>
+      <button className='translate-button' onClick={handleTranslate}>Translate</button>
       <div>
         <h2>Translation:</h2>
         <p>{translatedText}</p>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { getAuth, updateEmail } from 'firebase/auth';
-import { doc, onSnapshot, updateDoc, collection, getDoc, deleteDoc, arrayUnion, getDocs, setDoc } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc, collection, getDoc, deleteDoc, arrayUnion, getDocs, setDoc, query } from 'firebase/firestore';
 import { db } from '../firebase'; 
 import './Profile.css'; 
 import DefaultProf from '../ProfilePics/defaultprofile.png';
@@ -83,37 +83,20 @@ const Profile = () => {
     }catch(err){console.log(err);}
   }
 
-  const fetchBlockedUsers = async () => {
+  const unBlockUser = async(blockedUserId) => {
     try{
       if(user){
-        const blockList = [];
-        const blockedUsersRef = collection(db, "users", user.uid, "blockedusers");
-        const querySnapshot = await getDocs(blockedUsersRef);
-        querySnapshot.forEach((doc) => {
-          const blockedUser = doc.data();
-          blockList.push({...blockedUser, id: doc.id});
-        });
-        setBlockedUsers(blockList);
-        if(blockList.length >=1){
-          setNoneBlocked(false);
-        }
-      }
-    }
-    catch(err){console.log(err);}
-  };
-
-  const unBlockUser = async(blockedUser) => {
-    try{
-      if(user){
-        const blockedUserDocRef = doc(db, "users", user.uid, "blockedusers", blockedUser.id);
+        if(blockedUsers.length() <= 1){setNoneBlocked(true);}
+        const blockedUserDocRef = doc(db, "users", user.uid, "blockedusers", blockedUserId);
         await deleteDoc(blockedUserDocRef);
 
-        const blockedByDocRef = doc(db, "users", blockedUser.id, "blockedby", user.uid);
+        const blockedByDocRef = doc(db, "users", blockedUserId, "blockedby", user.uid);
         await deleteDoc(blockedByDocRef);
+
+        console.log();
       }
     }
     catch(err){console.log(err);}
-    finally{fetchBlockedUsers();}
   };
 
   useEffect(() => {
@@ -156,9 +139,23 @@ const Profile = () => {
   }, [user]);
 
   useEffect(() => {
+
+    const blockedQuery = query(collection(db, "users", user.uid, "blockedusers"));
+    const blockedUserSnapshot = onSnapshot(blockedQuery, async(blockSnap) => {
+      const promises = blockSnap.docs.map(async(userDoc)=>{
+        const userDocRef = doc(db, "users", userDoc.id)
+          const userDocSnap = await getDoc(userDocRef);
+          if(userDocSnap.exists()){
+              const docEntry = userDocSnap.data();
+              return {...docEntry, id: userDocSnap.id};
+          }
+      });
+      const blockData = await Promise.all(promises);
+      setBlockedUsers(blockData);
+      if(blockData.length>=1){setNoneBlocked(false);}
+    });
     // Fetch blocked users
-    fetchBlockedUsers();
-    //updateAllProfiles();
+    return () => {blockedUserSnapshot();}
   }, [user]);
 
   const handleChange = (e) => {
@@ -381,7 +378,7 @@ const Profile = () => {
         </div>
         )}
 
-<div className='profileExtras'>
+<div className='profile-extras'>
         <div>
           <h2>Blocked Users:</h2>
           <ul className='list'>
