@@ -19,13 +19,13 @@ const QuizPage = () => {
       {!showLeaderboard && (
         <div className="btn-container">
           {/* Navigation Buttons */}
-          <button className="btn" onClick={() => navigate('/dailyquiz/es')}>
+          <button className="button" onClick={() => navigate('/dailyquiz/es')}>
             Take Spanish Daily Quiz
           </button>
-          <button className="btn" onClick={() => navigate('/dailyquiz/jp')}>
+          <button className="button" onClick={() => navigate('/dailyquiz/jp')}>
             Take Japanese Daily Quiz
           </button>
-          <button className="btn" onClick={handleLeaderboardToggle}>
+          <button className="button" onClick={handleLeaderboardToggle}>
             View Leaderboard
           </button>
         </div>

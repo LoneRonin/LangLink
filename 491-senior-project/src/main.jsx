@@ -135,12 +135,12 @@ const App = () => {
 
 
           {/* Add Notifications Dropdown */}
-          <li className="nav-item">
-            <NotificationsDropdown />
-          </li>
         </ul>
       {/* Group gear icon and language button */}
     <div className="navbar-right">
+    <div classname= "settings-dropdown">
+    <NotificationsDropdown />
+    </div>
     <div className='chat-button'>
       <FontAwesomeIcon
         icon={faComment}
