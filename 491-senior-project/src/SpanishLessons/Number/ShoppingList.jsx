@@ -101,13 +101,13 @@ const ShoppingList = () => {
         <button className="back-button" onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
-        <button className="back-button" onClick={() => navigate("/number")}>
+        <button className="numlesson-button" onClick={() => navigate("/number")}>
           Do Flashcards
         </button>
-        <button className="back-button" onClick={() => navigate("/lesson/numberdialouge")}>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/numberdialouge")}>
           Learn Vocabulary
         </button>
-        <button className="back-button" onClick={() => navigate("/lesson/numbertest")}>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/numbertest")}>
           Take Test
         </button>
       </div>

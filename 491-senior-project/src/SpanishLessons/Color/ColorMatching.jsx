@@ -101,13 +101,13 @@ const ColorMatch = () => {
         <button className="back-button" onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
-        <button className="back-button" onClick={() => navigate('/color')}>
+        <button className="numlesson-button" onClick={() => navigate('/color')}>
           Do Color Flashcards
         </button>
-        <button className="back-button" onClick={() => navigate('/lesson/colordialouge')}>
+        <button className="numlesson-button" onClick={() => navigate('/lesson/colordialouge')}>
           Learn Vocabulary
         </button>
-        <button className="back-button" onClick={() => navigate('/lesson/colortest')}>
+        <button className="numlesson-button" onClick={() => navigate('/lesson/colortest')}>
           Take Test
         </button>
       </div>

@@ -100,13 +100,13 @@ const CalendarActivity = () => {
         <button className="back-button" onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
-        <button className="back-button" onClick={() => navigate("/date")}>
+        <button className="numlesson-button" onClick={() => navigate("/date")}>
           Do Flashcards
         </button>
-        <button className="back-button" onClick={() => navigate("/lesson/datedialouge")}>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/datedialouge")}>
           Learn Vocabulary
         </button>
-        <button className="back-button" onClick={() => navigate("/lesson/datetest")}>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/datetest")}>
           Take Test
         </button>
       </div>
