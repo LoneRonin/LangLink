@@ -46,7 +46,7 @@ const Profile = () => {
       if(user){
         const userRef = doc(db, "users", user.uid)
         await updateDoc(userRef,{
-            isDeleted: true
+            isDisabled: true
         });
         
         setIsDisabled(true);
@@ -60,7 +60,7 @@ const Profile = () => {
       if(user){
         const userRef = doc(db, "users", user.uid)
         await updateDoc(userRef,{
-          isDeleted: false
+          isDisabled: false
         });
         setIsDisabled(false);
       }
@@ -423,9 +423,9 @@ const Profile = () => {
               <div id='enable-account-popup' className='modal'>
                 <div className='modal-content'>
                     <span className='close' onClick={(event) => removePopup('enable-account-popup')}>&times;</span>
-                    <p>Would you like to re-enable your account?</p>
-                    <p>You can disable your account again at any time.</p>
-                    <p>
+                    <p className='modal-p'>Would you like to re-enable your account?</p>
+                    <p className='modal-p'>You can disable your account again at any time.</p>
+                    <p className='modal-p'>
                       <button className = 'yesbutton' onClick={(event) => reEnableAccount()}>Yes</button>
                       <button className = 'nobutton' onClick={(event) => removePopup('enable-account-popup')}>No</button>
                     </p>

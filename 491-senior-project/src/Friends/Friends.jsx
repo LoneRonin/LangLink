@@ -13,6 +13,7 @@ const Friends = () => {
     const [suggestions, setSuggestions] = useState(null);
     const [requests, setRequests] = useState(null);
     const [userData, setUserData] = useState(null);
+    const [userLanguage, setUserLanguage] = useState("Spanish");
     //uses a state of type set to store array of user data, not optimal but least complicated way of doing it
     //moreso that sets are hard to monitor updates on, allegedly
     const [loading, setLoading] = useState(true);
@@ -100,7 +101,7 @@ const Friends = () => {
 
     //moves a users details from the requests subcollection to the friends one
     const acceptFriendRequest = async(friend) => {
-        console.log(friend)
+        //console.log(friend)
         try{
             if(user){
                 const friendRef = doc(db, "users", user.uid, "friendlist", friend.id);
@@ -136,7 +137,21 @@ const Friends = () => {
         finally{
             clearFriendRequest(friend.email, friend.id);
             fetchFriendsList(user.uid);
+            clearUserSuggestion(friend.id);
         }
+    }
+
+    const clearUserSuggestion = async(id) => {
+        try{
+            if(user){
+                const suggRef = doc(db, "users", user.uid, "usersuggestions", id);
+                const userRef = doc(db, "users", id, "usersuggestions", user.uid);
+
+                await deleteDoc(suggRef);
+                await deleteDoc(userRef);
+            }
+        }
+        catch(err){console.log(err);}
     }
 
     //removes a request from a users incoming requests subcollection
@@ -153,18 +168,18 @@ const Friends = () => {
             }
         }
         catch(err){console.log(err);}
-        finally{fetchIncomingRequests;}
+        //finally{fetchIncomingRequests;}
     }
 
     function removeFriendPopup(friend){
-        console.log('removing popup')
+        //console.log('removing popup')
         var popupID = "popup_"+friend.email;
         var popup = document.getElementById(popupID);
         popup.style.display = ("none");
     }
 
     function appearFriendPopup(friend){
-        console.log('creating popup')
+        //console.log('creating popup')
         var popupID = "popup_"+friend.email;
         var popup = document.getElementById(popupID);
         popup.style.display = ("block");
@@ -195,8 +210,8 @@ const Friends = () => {
         }
         catch(err){console.log(err);}
         finally{
-            removeFriendPopup(friend);
-            fetchFriendsList(user.uid);
+            //removeFriendPopup(friend);
+            //fetchFriendsList(user.uid);
         }
     };
 
@@ -245,60 +260,86 @@ const Friends = () => {
             if(user){
                 console.log("fetching user suggestions...")
                 //query user's friend list
+
                 //query each individual friend for their friend list
                 //find users that are friends of friends but not the user's friend
                 //ideally we can pick out users from posts a user has recently interacted with, would require keeping track w/ the community feature
                 const friendsList = collection(db, "users", user.uid, "friendlist");
                 const querySnapshot = await getDocs(friendsList);
-                const friends = [];
+                const userFriends = [];
                 querySnapshot.forEach((doc) => {
                     //console.log(doc.id, " => ", doc.data());
                     //var docEntry=doc.data();
-                    const friend = doc.id;
-                    friends.push(friend);
+                    const userFriend = doc.id;
+                    userFriends.push(userFriend);
                 });
-                //console.log(friends);
+                //console.log("friend length", userFriends.length);
+                
                 //takes each id for each friend and queries the system for their friends list
                 //each user that is not the current user, already a friend, or already logged as a nacquantaince is added
-                const acquaintances = [];
                 const usersEmailArray = ["test"];
-                friends.forEach(async(friendID) => {
-                    //console.log(friend);
-                    var friendsList = collection(db, "users", friendID, "friendlist");
-                    const querySnapshot = await getDocs(friendsList);
-                    querySnapshot.forEach((doc) => {
-                        const docEntry = doc.data();
-                        if((doc.id != user.uid) && !(friends.includes(doc.id)) && !(usersEmailArray.includes(docEntry.email))){
-                            acquaintances.push({ ...docEntry, id: doc.id });
-                            usersEmailArray.push(docEntry.email);
-                        }
+                const acquaintancesList = [];
+                //console.log("created ", acquaintancesList.length ,acquaintancesList);
+
+                if(userFriends.length >0){
+                    const friendPromises = userFriends.map(async(userRef) => {
+                        //console.log(userRef);
+                        const friendsListRef = collection(db, "users", userRef, "friendlist");
+                        const querySnapshot = await getDocs(friendsListRef);
+                        querySnapshot.forEach((friendOfAFriend) => {
+                            const docEntry = friendOfAFriend.data();
+                            //console.log(docEntry)
+                            if((friendOfAFriend.id != user.uid) && !(userFriends.includes(friendOfAFriend.id)) && !(usersEmailArray.includes(docEntry.email))){
+                                usersEmailArray.push(docEntry.email);
+                                acquaintancesList.push({ ...docEntry, id: friendOfAFriend.id })
+                                console.log("array",acquaintancesList);
+                            }
+                        });
                     });
-                });
+                    const acquaintance = await Promise.all(friendPromises);
+                }
+                
+                //acquaintances.pop();
+                //console.log("emails:", usersEmailArray);
+                //console.log("list: ", acquaintancesList.length);
+
 
                 //if the current acquantaince list is too short, pulls some users from the general userbase
-                if(acquaintances.length < 5){
-                    console.log(userData);
+                if(acquaintancesList.length < 4){
+                    //console.log(userLanguage);
                     const usersref = collection(db, "users");
-                    if(usersEmailArray.length <= 1){
-                        var userQuery = query(usersref, where('language', '==', userData.language), limit(5));
-                    }
-                    else{
-                        var userQuery = query(usersref, where('email', 'not-in', usersEmailArray), where('language', '==', userData.language), limit(5));
-                    }
+                    const userQuery = query(usersref, where('email', 'not-in', usersEmailArray), where('language', '==', userLanguage));
                     const querySnapshot = await getDocs(userQuery);
                     querySnapshot.forEach((doc) => {
                         const docEntry = doc.data();
-                        if((doc.id != user.uid) && !(friends.includes(doc.id)) && !(usersEmailArray.includes(docEntry.email))){
-                            if(docEntry.isDeleted != true){
-                                acquaintances.push({ ...docEntry, id: doc.id });
+                        //console.log(doc.data());
+                        if((doc.id != user.uid) && !(userFriends.includes(doc.id)) && !(usersEmailArray.includes(docEntry.email))){
+                            if(docEntry.isDisabled != true){
+                                acquaintancesList.push({ ...docEntry, id: doc.id });
                             }
                         }
                     });
                 }
+
+                //console.log(acquaintancesList);
+
+                const newSuggestions = [];
+                //console.log(acquaintances);
+                if(acquaintancesList.length >8){
+                    const acqLength = acquaintancesList.length;
+                    for(let i=0; i<9; i++){
+                        const randIndex = Math.floor(Math.random() * acqLength);
+                        //console.log(randIndex);
+                        const newUser = acquaintancesList[randIndex]
+                        newSuggestions.push(newUser);
+                    }
+                }else{acquaintancesList.forEach((guy) => {
+                    newSuggestions.push(guy);
+                });}
+                //console.log(newSuggestions);
                 //ideally this will update the users suggestion collection to minimize the amounts of reads that happens
                 //setSuggestions(acquaintances);
-
-                acquaintances.forEach(async (guy) => {
+                newSuggestions.forEach(async (guy) => {
                     const userSuggestionDocRef = doc(db, "users", user.uid, "usersuggestions", guy.id);
                     const userTempDoc = {
                         firstName: guy.firstName,
@@ -307,30 +348,13 @@ const Friends = () => {
                     };
                     await setDoc(userSuggestionDocRef, userTempDoc);
                 });
+                
             }
         }
         catch(err){console.log(err);}
         finally{setLoading2(false);}
     };
 
-    //async function to retrieve a list of recommended users to send friend requests too (WIP) but functions
-    const fetchFriendSuggestions = async() => {
-        setLoading2(true);
-        try{
-            if(user){
-                const userSuggestions = collection(db, "users", user.uid, "usersuggestions");
-                const suggestionQuery = query(userSuggestions);
-
-                const suggestions = await getDocs(suggestionQuery)
-                updateSuggestions(suggestions);
-            }
-        }
-        catch(err){
-            console.error("Error fetching friend suggestions:", err);
-            setError("Error loading suggestions.");
-        }
-        finally{setLoading2(false);}
-    }
 
     //async function to retrieve a users friend list, then passes it into a constructor
     const fetchFriendsList = async(id) => {
@@ -383,8 +407,10 @@ const Friends = () => {
     useEffect(() => {//when friends is called, runs this async react effect
         if(!user) return;
         const userDataSnapshot = onSnapshot(doc(db, "users", user.uid), async(doc) => {
-            setUserData(doc.data());
-            //console.log(userData);
+            const data = doc.data();
+            //console.log(data.language);
+            setUserData(data);
+            setUserLanguage(data.language);
         });
 
         const friendQuery = query(collection(db, "users", user.uid, "friendlist"));
@@ -433,7 +459,8 @@ const Friends = () => {
             const suggestionData = await Promise.all(promises);
             //console.log(suggestionData);
             setLoading2(false);
-            if(suggestionData.length <5){constructSuggestionsList();}
+            //constructSuggestionsList();
+            if(suggestionData.length <1){constructSuggestionsList();}
             else{setSuggestions(suggestionData);}
         });
 
@@ -459,8 +486,8 @@ const Friends = () => {
                         {requests?.map((request) => (
                             <li className='listElement' key={request.id} id={request.email}>
                                 <span>{request.firstName} {request.lastName}</span>
-                                <button className='button' id='denyReqButton' onClick={(event) => clearFriendRequest(request)}>x</button>
-                                <button className='button' id='acceptReqButton' onClick={(event) => acceptFriendRequest(request)}>+</button>
+                                <button className='friendbutton' id='denyReqButton' onClick={(event) => clearFriendRequest(request)}>x</button>
+                                <button className='friendbutton' id='acceptReqButton' onClick={(event) => acceptFriendRequest(request)}>+</button>
                             </li>
                         ))}
                     </ul>
@@ -473,12 +500,12 @@ const Friends = () => {
                         {friends?.map((friend) => (
                             <li className='listElement' key={friend.id} id={friend.email}>
                                 <span>{friend.firstName} {friend.lastName}</span>
-                                <button className='button' id='removeFriendButton' onClick={(event) => appearFriendPopup(friend)}>-</button>
+                                <button className='friendbutton' id='removeFriendButton' onClick={(event) => appearFriendPopup(friend)}>-</button>
                                 <div id={`popup_${friend.email}`} className='modal'>
                                     <div className='modal-content'>
                                         <span className='close' onClick={(event) => removeFriendPopup(friend)}>&times;</span>
-                                        <p>Are you sure you want to remove this user?</p>
-                                        <p>
+                                        <p className='modal-p'>Are you sure you want to remove this user?</p>
+                                        <p className='modal-p'>
                                             <button className = 'yesbutton' onClick={(event) => removeFriend(friend)}>Yes</button>
                                             <button className = 'nobutton' onClick={(event) => removeFriendPopup(friend)}>No</button>
                                             <button className = 'blockbutton' onClick={(event) => blockUser(friend)}>Block</button>
