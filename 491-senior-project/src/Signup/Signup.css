@@ -1,21 +1,27 @@
-/* signup.css */
+/* Worked on by: Tristan Clayman, Victor Perez */
 
-/* Default Styles for Light Mode */
+/* Base styles */
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 body {
     margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    background-color: var(--bg-color-light); /* Light background color */
-    color: var(--text-color-light); /* Darker text color */
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background-color: #242424;
+    color: rgba(255, 255, 255, 0.87);
 }
 
 /* Layout */
@@ -45,7 +51,7 @@ body {
 h1 {
     font-size: 2.5em;
     line-height: 1.2;
-    color: var(--text-color-light); /* Heading text color */
+    color: #ffffff;
     margin-bottom: 1rem;
 }
 
@@ -65,7 +71,7 @@ label {
     display: block;
     margin-bottom: 0.5rem;
     text-align: left;
-    color: var(--text-color-light); /* Label text color */
+    color: #ffffff;
 }
 
 input {
@@ -73,20 +79,20 @@ input {
     padding: 0.75rem;
     border-radius: 4px;
     border: none;
-    background-color: var(--input-bg-color-light); /* Input field background */
-    color: var(--text-color-light); /* Input text color */
+    background-color: #333;
+    color: #fff;
     box-sizing: border-box;
     font-size: 1rem;
 }
 
 input:focus {
     outline: none;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Focus effect */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .continue-button {
-    background-color: #4CAF50; /* Button background color */
-    color: white; /* Button text color */
+    background-color: #4CAF50;
+    color: white;
     padding: 1rem 2rem;
     font-size: 1.2rem;
     border: none;
@@ -95,11 +101,37 @@ input:focus {
 }
 
 .continue-button:hover {
-    background-color: #45a049; /* Hover effect */
+    background-color: #45a049;
 }
 
-/* Dark Mode Styles */
-body.dark-mode {
+@media (max-width: 768px) {
+    .signup-content {
+        width: 100%;
+        padding: 1.5rem;
+    }
+
+    .input-group {
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+
+    input {
+        padding: 0.5rem;
+        font-size: 1rem;
+    }
+}
+.error-message {
+    color: #ff4d4d; /* Red for error */
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .success-message {
+    color: #4CAF50; /* Green for success */
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  body.dark-mode {
     background-color: var(--bg-color-dark); /* Dark background color */
     color: var(--text-color-dark); /* Light text color */
 }
@@ -120,34 +152,4 @@ label.dark-mode {
 input.dark-mode {
     background-color: var(--input-bg-color-dark); /* Darker input field background */
     color: var(--text-color-dark); /* Light text color for input */
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-    .signup-content {
-        width: 100%;
-        padding: 1.5rem;
-    }
-
-    .input-group {
-        margin-bottom: 1rem;
-        width: 100%;
-    }
-
-    input {
-        padding: 0.5rem;
-        font-size: 1rem;
-    }
-}
-
-.error-message {
-    color: #ff4d4d; /* Red for error */
-    margin-top: 1rem;
-    font-size: 0.9rem;
-}
-
-.success-message {
-    color: #4CAF50; /* Green for success */
-    margin-top: 1rem;
-    font-size: 0.9rem;
 }

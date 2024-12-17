@@ -215,7 +215,7 @@ body.dark-mode .edit-profile-button:hover {
   
   .modal-content {
     position: relative;
-    background-color: #fefefe;
+    background-color: var(--container-background);
     margin: auto;
     padding: 0;
     border: 1px solid #888;
@@ -224,7 +224,8 @@ body.dark-mode .edit-profile-button:hover {
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
-    animation-duration: 0.4s
+    animation-duration: 0.4s;
+    /* color: var(--text-color); */
   }
 
   @-webkit-keyframes animatetop {
