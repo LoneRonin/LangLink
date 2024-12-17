@@ -10,7 +10,7 @@
   
   h2, h3 {
     text-align: center;
-    color: #333;
+    color: var(--text-color);
   }
   
   label {
