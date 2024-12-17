@@ -40,6 +40,9 @@ const Sentence = ({ language }) => {
         <button className="back-button" onClick={() => navigate('/grammar')}>
           Back to Grammar
         </button>
+        <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
       </div>
 
       <div className=".sentence-container">
@@ -57,7 +60,8 @@ const Sentence = ({ language }) => {
           ))}
         </div>
         {/* Reset sentence button */}
-        <button onClick={resetSentence} className="reset-button">Reset</button>
+        <div className="resetbtnsent-container"><button onClick={resetSentence} className="reset-button">Reset</button></div>
+        
       </div>
     </div>
   );

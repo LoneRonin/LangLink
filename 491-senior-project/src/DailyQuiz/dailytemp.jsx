@@ -35,7 +35,7 @@ const QuizPage = () => {
       {showLeaderboard && (
         <div className="leaderboard-container">
           {/* Close button */}
-          <button className="close-btn" onClick={handleLeaderboardToggle}>
+          <button className="close-button" onClick={handleLeaderboardToggle}>
             X
           </button>
           <Leaderboard /> {/* Render the Leaderboard component */}

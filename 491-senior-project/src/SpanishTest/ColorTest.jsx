@@ -40,7 +40,7 @@ const ColorTest = () => {
       return (
         <div className="colortest-container">
         <form onSubmit={handleSubmit}>
-          <h2>Spanish Test: Colors</h2>
+        <h2>Spanish Colors Test</h2>
           {/* Section 1: Fill-in-the-Blank with Dropdown Options (5 Questions) */}
           <div className="dialogue-container">
             <p>1. Fill in the blanks with the appropriate word </p>

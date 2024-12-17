@@ -1,16 +1,21 @@
 .colortest-container{
-  .dialogue-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+  dialogu-container {
+    padding: 10px;
+
     font-family: Arial, sans-serif;
+    color: #333;
   }
   
-  h2, h3 {
+  h2 {
+    padding: 75px;
     text-align: center;
     color: var(--text-color);
   }
   
+  h3 {
+    text-align: center;
+    color: var(--text-color);
+  }
   select {
     width: 1px; /* Adjust the width as needed */
     padding: 4px; /* Optional: Add some padding for better appearance */
@@ -28,11 +33,12 @@
     border: 1px solid #ccc; /* Optional: Add a border for a cleaner look */
     border-radius: 4px; /* Optional: Add rounded corners */
   }
-  
+
   label {
     display: block;
     margin-bottom: 5px;
     cursor: pointer;
+    
   }
   
   input[type="text"] {

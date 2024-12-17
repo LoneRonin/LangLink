@@ -50,10 +50,10 @@ const DateTest = () => {
     <div className="datetest-container">
 
     <form onSubmit={handleSubmit} className="dialogue-container">
-      <h2>Spanish Dates Vocabulary Test</h2>
-
+      
       {/* Section 1: Type the English translation for the given Spanish day */}
       <div>
+      <h2>Spanish Dates Test</h2>
         <h3>Section 1: Type the correct English translation</h3>
         <div>
           <p>1. Martes: <input type="text" name="q1" onChange={handleChange} /></p>

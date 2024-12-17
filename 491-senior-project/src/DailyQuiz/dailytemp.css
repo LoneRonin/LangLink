@@ -8,16 +8,17 @@
     width: 80%;
     margin: auto;
     background-color: var(--primary-bg-color); /* Dark background color */
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: for better visual separation */
+    border-radius: 0px;
+    box-shadow: none; /* Optional: for better visual separation */
 }
 
 /* Close button styling for top-right corner */
 .close-button {
     position: absolute;
-    top: -120px;
-    right: -350px;
+    top: -100px;
+    right: -65px;
     font-size: 24px;
+    width: 15%;
     cursor: pointer;
     color: var(--text-color); /* Dark text color */
     background: transparent;
@@ -44,6 +45,8 @@ h2 {
     justify-content: center;
     gap: 20px;  /* Space between buttons */
     margin-bottom: 20px;
+    border-radius: 0px;
+    box-shadow: none; /* Optional: for better visual separation */
 }
 
 /* Individual button styling */
@@ -57,6 +60,8 @@ button {
     cursor: pointer;
     transition: background-color 0.3s;
     width: 200px; /* Adjust width for uniformity */
+    border-radius: 0px;
+    box-shadow: none; /* Optional: for better visual separation */
 }
 
 /* Button hover effect */

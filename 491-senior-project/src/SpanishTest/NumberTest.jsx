@@ -56,7 +56,7 @@ const NumberTest = () => {
       return (
         <div className="numbertest-container">
         <form onSubmit={handleSubmit} className="dialogue-container">
-          <h2>Spanish Vocabulary Test</h2>
+          <h2>Spanish Numbers Test</h2>
     
           {/* Section 1: Multiple Choice Questions (5 Questions) */}
           <div>
