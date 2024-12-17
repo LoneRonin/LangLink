@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from "react-dom/client";
 import { Link } from 'react-router-dom';
-import { collection, query, where, doc, getDocs, getDoc, limit, deleteDoc, setDoc, addDoc } from "firebase/firestore";
+import { collection, query, where, doc, getDocs, getDoc, limit, deleteDoc, setDoc, addDoc, onSnapshot } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase';
 import './Friends.css';
@@ -44,20 +44,7 @@ const Friends = () => {
         //sets the set state with the finished lists
     };
 
-    //this function is similar to above but updates the suggestions list
-    const updateSuggestions = (docs) => {
-        const suggestionsList = [];
-        docs.forEach((doc) => {
-            const docEntry = doc.data();
-            suggestionsList.push({...docEntry, id: doc.id});
-        });
-
-        if(suggestionsList.length <5){
-            constructSuggestionsList();
-        }
-        else{setSuggestions(suggestionsList);}
-        //console.log(suggestionsList);
-    };
+    
 
     //this function is similar to above but handles incoming requests
     const updateRequests = (docs) => {
@@ -309,7 +296,7 @@ const Friends = () => {
                     });
                 }
                 //ideally this will update the users suggestion collection to minimize the amounts of reads that happens
-                setSuggestions(acquaintances);
+                //setSuggestions(acquaintances);
 
                 acquaintances.forEach(async (guy) => {
                     const userSuggestionDocRef = doc(db, "users", user.uid, "usersuggestions", guy.id);
@@ -391,12 +378,70 @@ const Friends = () => {
         catch(err){console.error("Error fetching user data:", err);}
     }
 
+    
+
     useEffect(() => {//when friends is called, runs this async react effect
-        if(user){
-            fetchUserData();
-            fetchFriendsList(user.uid);
-            fetchIncomingRequests();
-            fetchFriendSuggestions();
+        if(!user) return;
+        const userDataSnapshot = onSnapshot(doc(db, "users", user.uid), async(doc) => {
+            setUserData(doc.data());
+            //console.log(userData);
+        });
+
+        const friendQuery = query(collection(db, "users", user.uid, "friendlist"));
+        const friendsListSnapshot = onSnapshot(friendQuery, async(friendSnap) => {
+            const promises = friendSnap.docs.map(async (userDoc) => {
+                const userDocRef = doc(db, "users", userDoc.id)
+                const userDocSnap = await getDoc(userDocRef);
+                if(userDocSnap.exists()){
+                    const docEntry = userDocSnap.data();
+                    return {...docEntry, id: userDocSnap.id};
+                }
+            });
+            const friendData = await Promise.all(promises);
+            setFriends(friendData);
+            setLoading(false);
+            if(friendData.length == 0){setNoFriends(true);}
+            else{setNoFriends(false);}
+        });
+
+        const requestQuery = query(collection(db, "users", user.uid, "friendrequests"));
+        const requestsSnapshot = onSnapshot(requestQuery, async(reqSnap) => {
+            const promises = reqSnap.docs.map(async(userDoc)=>{
+                const userDocRef = doc(db, "users", userDoc.id)
+                const userDocSnap = await getDoc(userDocRef);
+                if(userDocSnap.exists()){
+                    const docEntry = userDocSnap.data();
+                    return {...docEntry, id: userDocSnap.id};
+                }
+            });
+            const requestData = await Promise.all(promises);
+            setRequests(requestData);
+            if(requestData.length == 0){setNoRequests(true);}
+            else{setNoRequests(false);}
+        });
+
+        const suggestionQuery = query(collection(db, "users", user.uid, "usersuggestions"));
+        const suggestionsSnapshot = onSnapshot(suggestionQuery, async(suggSnap) => {
+            const promises = suggSnap.docs.map(async(userDoc)=>{
+                const userDocRef = doc(db, "users", userDoc.id)
+                const userDocSnap = await getDoc(userDocRef);
+                if(userDocSnap.exists()){
+                    const docEntry = userDocSnap.data();
+                    return {...docEntry, id: userDocSnap.id};
+                }
+            });
+            const suggestionData = await Promise.all(promises);
+            //console.log(suggestionData);
+            setLoading2(false);
+            if(suggestionData.length <5){constructSuggestionsList();}
+            else{setSuggestions(suggestionData);}
+        });
+
+        return () => {
+            userDataSnapshot();
+            friendsListSnapshot();
+            requestsSnapshot();
+            suggestionsSnapshot();
         }
         
     }, [user]);
@@ -449,7 +494,7 @@ const Friends = () => {
                     {loading2 && "Loading..."}
                     <ul className='list'>
                         {suggestions?.map((guy) => (
-                            <li className='listElement' key={guy.id} id={guy.email}>
+                            <li className='listElement' key={guy.id} id={guy.id}>
                                 <span>{guy.firstName} {guy.lastName} </span>
                                 <button className='friendbutton' id='addFriendButton' onClick={(event) => sendFriendRequest(guy)}>+</button>
                             </li>
@@ -462,11 +507,3 @@ const Friends = () => {
 };
 
 export default Friends;
-//TODO:
-/** 
- * still need to add filters to other function, 
- * probably need to also make a "blockedby" collection. 
- * also have to update database rules
- * buttons
- * removesuggestion
-*/
