@@ -5,7 +5,11 @@ import book from './image2.png';
 import orange from './image3.png';
 import strawberry from './image4.png';
 import pencil from './image5.png';
+
+import { useNavigate } from 'react-router-dom';
 const NumberTest = () => {
+     const navigate = useNavigate();
+  
     const [answers, setAnswers] = useState({
         q1: '', q2: '', q3: '', q4: '', q5: '', q6: '', q7: '', q8: '', q9: '', q10: '', q11: '', q12: '', q13: '', q14: '', q15: ''
       });
@@ -50,6 +54,7 @@ const NumberTest = () => {
       };
     
       return (
+        <div className="numbertest-container">
         <form onSubmit={handleSubmit} className="dialogue-container">
           <h2>Spanish Vocabulary Test</h2>
     
@@ -160,7 +165,6 @@ const NumberTest = () => {
           {/* Section 3: Mixed Translation Questions */}
           <div>
             <h3>Section 3: Translate the phrases.</h3>
-            <p>Word Bank: <strong>Mi, libro, favorito, hay, dos, tres.</strong></p>
             <p>11. Translate: My favorite book is three.</p>
             <input type="text" name="q11" onChange={handleChange} placeholder="Enter your answer here" />
     
@@ -178,5 +182,9 @@ const NumberTest = () => {
           </div>
     
           <button type="submit">Submit</button>
-        </form>);};
+          <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
+        </form>
+        </div>);};
 export default NumberTest;

@@ -12,8 +12,9 @@ const Forgotpass = () => {
     const [error, setError] = useState(null); 
     // State to store success messages (like successful email sent)
     const [successMessage, setSuccessMessage] = useState(null); 
-    // Hook to allow navigation between routes
-    const navigate = useNavigate();
+    
+
+    
     // Function to handle the form submission when the user submits the form
     const handleFormSubmit = async (event) => {
         event.preventDefault();  // Prevent the default form submission behavior
@@ -21,29 +22,14 @@ const Forgotpass = () => {
         setSuccessMessage(null);  // Clear previous success message (if any)
     
         try {
-            // Reference to the "users" collection in Firestore
-            const usersRef = collection(db, "users");
-            
-            // Query Firestore to check if the email exists in the database
-            const q = query(usersRef, where("email", "==", email));
-            const querySnapshot = await getDocs(q);
-
-            if (querySnapshot.empty) {
-                // If no user with the email is found, display an error
-                setError("Email not found.");
-                clearMessageAfterDelay();  // Clear error message after 5 seconds
-            } else {
-                // If email is found, proceed with sending the password reset email
-                await sendPasswordResetEmail(auth, email);
-                
-                // Show success message once the reset email is sent
-                setSuccessMessage("Password reset email sent successfully!");
-                clearMessageAfterDelay();  // Clear success message after 5 seconds
-            }
+            // Send the password reset email directly
+            await sendPasswordResetEmail(auth, email);
+            setSuccessMessage("Password reset email sent successfully!");
+            clearMessageAfterDelay();
         } catch (error) {
-            // If an error occurs during the email sending process, show an error
-            setError("An error occurred while sending the reset email.");
-            clearMessageAfterDelay();  // Clear error message after 5 seconds
+            // Handle errors and show them to the user
+            setError(error.message);
+            clearMessageAfterDelay();
         }
     };
 

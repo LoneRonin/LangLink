@@ -7,7 +7,7 @@ const LessonPage = ({ language, toggleFlag, flag }) => {
   return (
     <div className="page-container">
       <h1>Spanish Lesson Page</h1>
-      <div className="button-container">
+      <div className="btn-container">
         {/* Navigation Buttons for each page */}
         <button className="button" onClick={() => navigate('/lesson/colormatching')}>
           Color Matching

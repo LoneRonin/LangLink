@@ -8,7 +8,7 @@ body {
   }
   
     /* CSS for activity buttons */
-  .button-container {
+  .btn-container {
     display: flex;
     justify-content: center;
     width: 400px;

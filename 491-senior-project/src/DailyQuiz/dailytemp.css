@@ -1,6 +1,8 @@
-/* Container for the entire leaderboard */
-.leaderboard-container {
-    padding: 30px;
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     position: relative; /* For positioning the close button */
     width: 80%;

@@ -77,7 +77,6 @@ const Board = () => {
 
   return (
     <div className="leaderboard-container">
-      <button className="close-btn" onClick={() => window.close()}>X</button>
       <h1>Leaderboard</h1>
       <h2>Sort by</h2>
 

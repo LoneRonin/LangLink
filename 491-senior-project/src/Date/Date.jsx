@@ -95,6 +95,15 @@ const Date = ({ language }) => {
         <button className="back-button" onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
+        <button className="back-button" onClick={() => navigate("/lesson/calendar")}>
+          Do Calendar Activity
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/datedialouge")}>
+          Learn Vocabulary
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/datetest")}>
+          Take Test
+        </button>
       </div>
 
       <div className="grammar-container">

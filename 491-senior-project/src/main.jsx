@@ -125,7 +125,6 @@ const App = () => {
           <li className="nav-item"><Link to="/signup">Sign Up</Link></li>*/}
           <li className="nav-item"><Link to="/alpha">Alphabet</Link></li>
           <li className="nav-item"><Link to="/lessons">Lessons</Link></li>
-          <li className="nav-item"><Link to="/conjugate">Conjugate</Link></li>
           <li className="nav-item"><Link to="/grammar">Grammar</Link></li> 
           {/*<li className="nav-item"><Link to="/lesson">Lesson</Link></li> */}
           <li className="nav-item"><Link to="/profile">Profile</Link></li>

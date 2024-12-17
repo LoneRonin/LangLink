@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "./Calendar.css";
-
+import { useNavigate } from 'react-router-dom';
 // Spanish translations
 const monthsInSpanish = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -22,6 +22,8 @@ const daysOfWeekInEnglish = [
 ];
 
 const CalendarActivity = () => {
+     const navigate = useNavigate();
+  
   const [selectedDate, setSelectedDate] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -71,13 +73,13 @@ const CalendarActivity = () => {
       ); } return days; };
   return (
     <div className="calendar-container">
-      <h2>Interactive Calendar</h2>
+      <h1>Interactive Calendar</h1>
       <div className="calendar-header">
-        <button onClick={previousMonth}>Previous Month</button>
-        <div className="month-year">
+        <btn onClick={previousMonth}>{"<<"}</btn>
+        <h1>
           {monthsInEnglish[currentMonth]} {currentYear}
-        </div>
-        <button onClick={nextMonth}>Next Month</button>
+        </h1>
+        <btn onClick={nextMonth}>{">>"}</btn>
       </div>
       <div className="calendar-grid">
         {daysOfWeekInEnglish.map((day, index) => (
@@ -87,16 +89,28 @@ const CalendarActivity = () => {
       </div>
       {selectedDate && (
         <div className="selected-date">
-          <p><strong>Selected Day:</strong></p>
-          <p>
+          <h1><strong>Selected Day:</strong></h1>
+          <h1>
             {daysOfWeekInSpanish[selectedDate.getDay()]}, {selectedDate.getDate()} de {monthsInSpanish[selectedDate.getMonth()]} de {selectedDate.getFullYear()}
-          </p>
+          </h1>
         </div>
       )}
       
-      {/* Add a Link button to navigate back to DateDialogue */}
-      <Link to='/lesson/datedialouge' className="back-button">Go to Date Dialouge</Link>
-    </div>
+      <div className="back-button-container">
+        <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
+        <button className="back-button" onClick={() => navigate("/date")}>
+          Do Flashcards
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/datedialouge")}>
+          Learn Vocabulary
+        </button>
+        <button className="back-button" onClick={() => navigate("/lesson/datetest")}>
+          Take Test
+        </button>
+      </div>
+      </div>
   );
 };
 

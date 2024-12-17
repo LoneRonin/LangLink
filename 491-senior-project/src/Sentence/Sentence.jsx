@@ -42,9 +42,9 @@ const Sentence = ({ language }) => {
         </button>
       </div>
 
-      <div className="container">
+      <div className=".sentence-container">
         <h1>{language === 'es' ? 'Spanish Sentence Builder' : 'Japanese Sentence Builder'}</h1>
-        <p>Current Sentence: {sentence}</p>
+        <h1>Current Sentence: {sentence}</h1>
         <div>
           {/* Displays word bank as a grid of buttons you can click to add to sentence */}
           {words.map((word, index) => (
