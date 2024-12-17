@@ -184,18 +184,19 @@ body.dark-mode .edit-profile-button:hover {
   background-color: #45a049; /* Button hover effect */
 }
 
+.profile-extras{
   .button{
     color:black;
     background-color: skyblue;
     border-radius: 16px;
     margin: 2px 12px;
-}
+  }
 
 .button:hover{
     color:aliceblue;
     background-color: darkblue;
     transition-duration: 0.5s;
-}
+  }
 
   .modal {
     display: none; /* Hidden by default */
@@ -255,12 +256,14 @@ body.dark-mode .edit-profile-button:hover {
     color: black;
     border-radius: 16px;
     margin: 2px 12px;
-}
+  }
 
-.yesbutton{
+  .yesbutton{
     background-color: lightgreen;
     color: black;
     border-radius: 16px;
     margin: 2px 12px;
+  }
 }
+  
   

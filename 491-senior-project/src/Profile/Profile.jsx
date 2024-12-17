@@ -381,7 +381,7 @@ const Profile = () => {
         </div>
         )}
 
-<div className='profileExtras'>
+<div className='profile-extras'>
         <div>
           <h2>Blocked Users:</h2>
           <ul className='list'>
