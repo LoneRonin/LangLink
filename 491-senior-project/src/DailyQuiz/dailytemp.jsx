@@ -17,7 +17,7 @@ const QuizPage = () => {
       
       {/* Conditionally render the button container */}
       {!showLeaderboard && (
-        <div className="btn-container">
+        <div className="button-container">
           {/* Navigation Buttons */}
           <button className="button" onClick={() => navigate('/dailyquiz/es')}>
             Take Spanish Daily Quiz
