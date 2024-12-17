@@ -54,6 +54,7 @@ const NumberTest = () => {
       };
     
       return (
+        <div className="numbertest-container">
         <form onSubmit={handleSubmit} className="dialogue-container">
           <h2>Spanish Vocabulary Test</h2>
     
@@ -184,5 +185,6 @@ const NumberTest = () => {
           <button className="back-button" onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
-        </form>);};
+        </form>
+        </div>);};
 export default NumberTest;

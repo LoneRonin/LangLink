@@ -47,6 +47,8 @@ const DateTest = () => {
   };
 
   return (
+    <div className="datetest-container">
+
     <form onSubmit={handleSubmit} className="dialogue-container">
       <h2>Spanish Dates Vocabulary Test</h2>
 
@@ -170,10 +172,11 @@ const DateTest = () => {
       </div>
 
       <button type="submit">Submit</button>
-      <button className="back-button" onClick={() => navigate('/lessons')}>
+      <button onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
     </form>
+    </div>
   );
 };
 

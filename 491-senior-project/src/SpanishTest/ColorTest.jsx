@@ -38,10 +38,11 @@ const ColorTest = () => {
       };
     
       return (
+        <div className="colortest-container">
         <form onSubmit={handleSubmit}>
           <h2>Spanish Test: Colors</h2>
           {/* Section 1: Fill-in-the-Blank with Dropdown Options (5 Questions) */}
-          <div>
+          <div className="dialogue-container">
             <p>1. Fill in the blanks with the appropriate word </p>
             <p>Miguel: Hola, mi nombre es Miguel. Mi color favorito es el 
             <select className="color-dropdown" name="q1" onChange={handleChange}><option value=""></option><option value="azul">azul</option><option value="alegría">alegría</option><option value="elegante">elegante</option></select> porque es muy tranquilo.
@@ -104,6 +105,7 @@ const ColorTest = () => {
           Back to Lessons
         </button>
         </form>
+        </div>
       );
     };
     
