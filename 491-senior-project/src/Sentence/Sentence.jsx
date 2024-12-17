@@ -40,11 +40,14 @@ const Sentence = ({ language }) => {
         <button className="back-button" onClick={() => navigate('/grammar')}>
           Back to Grammar
         </button>
+        <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
       </div>
 
-      <div className="container">
+      <div className=".sentence-container">
         <h1>{language === 'es' ? 'Spanish Sentence Builder' : 'Japanese Sentence Builder'}</h1>
-        <p>Current Sentence: {sentence}</p>
+        <h1>Current Sentence: {sentence}</h1>
         <div>
           {/* Displays word bank as a grid of buttons you can click to add to sentence */}
           {words.map((word, index) => (
@@ -57,7 +60,8 @@ const Sentence = ({ language }) => {
           ))}
         </div>
         {/* Reset sentence button */}
-        <button onClick={resetSentence} className="reset-button">Reset</button>
+        <div className="resetbtnsent-container"><button onClick={resetSentence} className="reset-button">Reset</button></div>
+        
       </div>
     </div>
   );

@@ -1,19 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import { useNavigate } from 'react-router-dom';
 import './NumDialouge.css';
 const NumberDialogue = () => {
+    const navigate = useNavigate();
+  
   return (
     <div className="dialogue-container">
       <h2>Diálogo sobre Números y Cantidades</h2>
       <div className="dialogue">
-        <p><strong>Lucía:</strong> Hola, Juan. ¿Cuántas manzanas tenemos?</p>
-        <p><strong>Juan:</strong> Hola, Lucía. Creo que tenemos cinco manzanas. ¿Necesitamos más?</p>
-        <p><strong>Lucía:</strong> Sí, necesitamos al menos diez para la receta.</p>
-        <p><strong>Juan:</strong> Entendido. ¿Y cuántos huevos tenemos?</p>
-        <p><strong>Lucía:</strong> Tenemos doce huevos, suficientes para la receta.</p>
-        <p><strong>Juan:</strong> Perfecto. ¿Cuántos vasos vamos a necesitar para la bebida?</p>
-        <p><strong>Lucía:</strong> Cuatro, ya que somos cuatro personas. ¿Tienes alguna otra pregunta?</p>
-        <p><strong>Juan:</strong> No, todo claro. Gracias, Lucía.</p>
+        <h3><strong>Lucía:</strong> Hola, Juan. ¿Cuántas manzanas tenemos?</h3>
+        <h3><strong>Juan:</strong> Hola, Lucía. Creo que tenemos cinco manzanas. ¿Necesitamos más?</h3>
+        <h3><strong>Lucía:</strong> Sí, necesitamos al menos diez para la receta.</h3>
+        <h3><strong>Juan:</strong> Entendido. ¿Y cuántos huevos tenemos?</h3>
+        <h3><strong>Lucía:</strong> Tenemos doce huevos, suficientes para la receta.</h3>
+        <h3><strong>Juan:</strong> Perfecto. ¿Cuántos vasos vamos a necesitar para la bebida?</h3>
+        <h3><strong>Lucía:</strong> Cuatro, ya que somos cuatro personas. ¿Tienes alguna otra pregunta?</h3>
+        <h3><strong>Juan:</strong> No, todo claro. Gracias, Lucía.</h3>
       </div>
     <h3>Vocabulario de Números y Cantidades</h3>
       <table className="vocab-table">
@@ -38,11 +40,19 @@ const NumberDialogue = () => {
         </tbody>
       </table>
       {/* Button to navigate to Shopping List */}
-      <Link to="/lesson/shoppinglist" className="button">
-        Do Shopping List Activity
-      </Link>
-      <Link to="/lesson/numbertest" className="button">
-        Take Test
-      </Link>
+      <div className="back-button-container">
+        <button className="back-button " onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/shoppinglist")}>
+          Do Shopping Activity
+        </button>
+        <button className="numlesson-button " onClick={() => navigate("/number")}>
+          Do Flashcards
+        </button>
+        <button className="numlesson-button " onClick={() => navigate("/lesson/numbertest")}>
+          Take Test
+        </button>
+      </div>
     </div>);};
 export default NumberDialogue;

@@ -39,7 +39,6 @@ const Signup = () => {
       await setDoc(doc(db, 'users', user.uid), {
         firstName,
         lastName,
-        displayName,
         email,
         language: '', // Default empty language to be selected later
         isDisabled: false,

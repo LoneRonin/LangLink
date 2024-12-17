@@ -285,7 +285,7 @@ const Friends = () => {
 
                 //if the current acquantaince list is too short, pulls some users from the general userbase
                 if(acquaintances.length < 5){
-                    console.log(usersEmailArray);
+                    console.log(userData);
                     const usersref = collection(db, "users");
                     if(usersEmailArray.length <= 1){
                         var userQuery = query(usersref, where('language', '==', userData.language), limit(5));

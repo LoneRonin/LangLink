@@ -61,6 +61,15 @@ const Number = ({ language }) => {
         <button className="back-button" onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/shoppinglist")}>
+          Do Shopping Activity
+        </button>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/numberdialouge")}>
+          Learn Vocabulary
+        </button>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/numbertest")}>
+          Take Test
+        </button>
       </div>
 
       <div className="grammar-container">

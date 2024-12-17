@@ -15,7 +15,7 @@ const Grammar = ({ language }) => {
       <button className="back-button" onClick={() => navigate('/lessons')}>
         Back to Lessons
       </button>
-      <div className="button-container">
+      <div className="btn-container">
         {/* Conditionally route based on the selected language */}
         <button onClick={() => navigate('/grammar/conjugate')}>Conjugate</button>
         {/* Conditionally route based on the selected language */}

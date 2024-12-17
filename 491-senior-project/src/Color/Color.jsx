@@ -58,6 +58,15 @@ const Color = ({ language }) => {
         <button className="back-button" onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
+        <button className="numlesson-button" onClick={() => navigate('/lesson/colormatching')}>
+          Do Color Matching
+        </button>
+        <button className="numlesson-button" onClick={() => navigate('/lesson/colordialouge')}>
+          Learn Vocabulary
+        </button>
+        <button className="numlesson-button" onClick={() => navigate('/lesson/colortest')}>
+          Take Test
+        </button>
       </div>
 
       <div className="grammar-container">

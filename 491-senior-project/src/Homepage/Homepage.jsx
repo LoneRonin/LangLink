@@ -108,9 +108,6 @@ const Homepage = ({ language }) => {
         <button className="circle-button" onClick={() => handleRedirect('/dailyquiz')}>
           Daily Quiz
         </button>
-        <button className="circle-button" onClick={() => handleRedirect('/lesson-themes')}>
-          Lesson Themes
-        </button>
       </div>
 
       {/* Main Content */}
@@ -120,9 +117,6 @@ const Homepage = ({ language }) => {
         <button onClick={handleShowPopup}>Show Word of the Day</button>
         {showPopup && wordOfTheDay && <Popup word={word} definition={definition} audioSrc={audioSrc} onClose={handlePopupClose} />}
         <div className="button-container">
-          <button className="action-button" onClick={() => handleRedirect('/conjugate')}>
-            Learn Spanish Grammar
-          </button>
           <button className="action-button" onClick={() => handleRedirect('/alpha')}>
             Learn Alphabet
           </button>
@@ -139,6 +133,7 @@ const Homepage = ({ language }) => {
           <Friends /> {/* Use the Friends component to display friend suggestions }
         </div>
       </div>*/}
+      <div><Friends/></div>
     </section>
   );
 };

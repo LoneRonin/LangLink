@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './datetests.css';
-
+import { useNavigate } from 'react-router-dom';
 const DateTest = () => {
+   const navigate = useNavigate();
   const [answers, setAnswers] = useState({
     q1: '', q2: '', q3: '', q4: '', q5: '', q6: '', q7: '', q8: '', q9: '', q10: '', q11: '', q12: '', q13: '', q14: '', q15: ''
   });
@@ -46,11 +47,13 @@ const DateTest = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="dialogue-container">
-      <h2>Spanish Dates Vocabulary Test</h2>
+    <div className="datetest-container">
 
+    <form onSubmit={handleSubmit} className="dialogue-container">
+      
       {/* Section 1: Type the English translation for the given Spanish day */}
       <div>
+      <h2>Spanish Dates Test</h2>
         <h3>Section 1: Type the correct English translation</h3>
         <div>
           <p>1. Martes: <input type="text" name="q1" onChange={handleChange} /></p>
@@ -169,7 +172,11 @@ const DateTest = () => {
       </div>
 
       <button type="submit">Submit</button>
+      <button onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
     </form>
+    </div>
   );
 };
 

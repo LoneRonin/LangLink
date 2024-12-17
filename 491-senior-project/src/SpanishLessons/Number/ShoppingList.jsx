@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { useNavigate } from 'react-router-dom';
+ // Import Link from react-router-dom
 import "./ShoppingList.css";
 
 // List of items with prices
@@ -8,7 +9,7 @@ const items = [
   { name: "Plátanos", price: 0.5 }, // bananas
   { name: "Leche", price: 1.5 },      // milk
   { name: "Huevos", price: 2.5 },    // eggs
-  { name: "Pan", price: 1.0 },        // bread
+  // { name: "Pan", price: 1.0 },        // bread
 ];
 
 // Function to convert Spanish quantity words to numbers for comparison
@@ -29,6 +30,8 @@ const quantityWords = {
 };
 
 const ShoppingList = () => {
+      const navigate = useNavigate();
+  
   const [quantities, setQuantities] = useState(Array(items.length).fill(0));
   const [totalCost, setTotalCost] = useState(0);
   const [isCorrect, setIsCorrect] = useState(null);
@@ -63,15 +66,15 @@ const ShoppingList = () => {
   };
 
   return (
-    <div className="shopping-list-container">
-      <h2>Shopping List</h2>
+    <div className="shoppinglist-container">
+      <h3>Shopping List</h3>
       <h3>Budget: €{totalCost.toFixed(2)}</h3>
       <div className="items">
         {items.map((item, index) => (
           <div className="item" key={index}>
-            <p>
-              <strong>{item.name}</strong> - Unit Price: €{item.price.toFixed(2)}
-            </p>
+            <h3>
+              {item.name} - Unit Price: €{item.price.toFixed(2)}
+            </h3>
             <select value={quantities[index]} onChange={(e) => handleQuantityChange(index, e.target.value)}>
               {/* Include an option for zero */}
               <option value="0">cero (0)</option> {/* Explicitly set for zero */}
@@ -94,9 +97,21 @@ const ShoppingList = () => {
           }
         </div>
       )}
-      {/* Link to navigate back */}
-      <Link to="/lesson/numberdialouge" className="back-button">Back to number dialogue</Link>
-    </div>
+     <div className="back-button-container">
+        <button className="back-button" onClick={() => navigate('/lessons')}>
+          Back to Lessons
+        </button>
+        <button className="numlesson-button" onClick={() => navigate("/number")}>
+          Do Flashcards
+        </button>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/numberdialouge")}>
+          Learn Vocabulary
+        </button>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/numbertest")}>
+          Take Test
+        </button>
+      </div>
+      </div>
   );
 };
 
