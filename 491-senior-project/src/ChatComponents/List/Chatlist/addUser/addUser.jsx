@@ -1,4 +1,4 @@
-import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, or, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 import "./addUser.css";
 import { db } from "../../../../firebase";
 import { getAuth } from "firebase/auth";
@@ -7,6 +7,7 @@ import DefaultProf from '../../../../ProfilePics/defaultprofile.png';
 
 const AddUser = () => {
     const [otherUser, setOtherUser] = useState(null);
+    const [otherUsers, setOtherUsers] = useState(null);
     const [name, setName] = useState("");
     const [noResults, setNoResults] = useState(false);
     const auth = getAuth();
@@ -21,22 +22,29 @@ const AddUser = () => {
         try{
             if(user){
                 const userRef = collection(db, "users");
-                const q = query(userRef, where("firstName", "==", username));
+                const q = query(userRef, or(where("firstName", "==", username), where("displayName", "==", username)));
                 //we dont actually have usernames so this is a temprary fix hopefully
                 const querySnapshot = await getDocs(q);
                 if(!querySnapshot.empty) {
-                    /*querySnapshot.forEach((doc) =>{
+                    const foundUsers = [];
+                    querySnapshot.forEach((doc) =>{
                         console.log(doc.data());
-                    });*/
-                    const other = querySnapshot.docs[0].data()
-                    other.id = querySnapshot.docs[0].id;
-                    setOtherUser(other);
-                }
+                        const other = doc.data()
+                        other.id = doc.id;
+                        if(other.isDisabled != true){
+                            setOtherUser(other);
+                            setNoResults(false);
+                            foundUsers.push(other);
+                        }
+                    });
+                    setOtherUsers(foundUsers);
+                    
+                }else{setNoResults(true);}
             }
         }catch(err){console.log(err)}
     };
 
-    const handleAdd = async ()=>{
+    const handleAdd = async (other)=>{
         try{
             if(user){
                 const chatRef = collection(db,"chats");
@@ -48,7 +56,7 @@ const AddUser = () => {
                     messages:[],
                 });
 
-                await updateDoc(doc(userChatsRef, otherUser.id), {
+                await updateDoc(doc(userChatsRef, other.id), {
                     chats:arrayUnion({
                         chatId: newChatRef.id,
                         lastMessage:"",
@@ -61,7 +69,7 @@ const AddUser = () => {
                     chats:arrayUnion({
                         chatId: newChatRef.id,
                         lastMessage:"",
-                        receiverId: otherUser.id,
+                        receiverId: other.id,
                         updatedAt: Date.now()
                     }),
                 });
@@ -75,12 +83,17 @@ const AddUser = () => {
                 <input type="text" placeholder="Username" name="username"/>
                 <button type="submit">Search</button>
             </form>
-            {otherUser && <div className="user">
-                <div className="detail">
-                    <img src={otherUser.profilePicture || chatterProfilePicture} alt="" />
-                    <span>{otherUser.firstName} {otherUser.lastName}</span>
+            {noResults && <span>No user found.</span>}
+            {otherUser && <div>
+                {otherUsers?.map((other) => (
+                    <div className="user" key={other.id}>
+                        <div className="detail">
+                            <img src={other.profilePicture || chatterProfilePicture} alt="" />
+                            <span>{other.firstName} {other.lastName}</span>
+                        </div>
+                        <button onClick={()=>handleAdd(other)}>Add User</button>
                 </div>
-                <button onClick={handleAdd}>Add User</button>
+                ))}
             </div>}
         </div>
     );

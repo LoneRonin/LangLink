@@ -28,8 +28,7 @@ const Chatlist = () => {
                 const userDocRef = doc(db, "users", item.receiverId);
                 const userDocSnap = await getDoc(userDocRef);
                 const newUser = userDocSnap.data();
-
-                return {...item, newUser}
+                if(newUser.isDisabled != true){return {...item, newUser}}
             });
             const chatData = await Promise.all(promises);
             setChats(chatData.sort((a,b) => b.updatedAt - a.updatedAt));

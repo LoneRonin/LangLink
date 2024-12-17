@@ -50,7 +50,6 @@
         padding: 8px;
         cursor: pointer;
         border-bottom: 1px solid #dddddd35;
-        background-color: #3e3e3e;
 
         img{
             width: 20px;
@@ -70,7 +69,7 @@
             p{
                 font-size: 10px;
                 font-weight: 300;
-                background-color: #3e3e3e;
+                background-color: none;
                 border: none;
                 margin: 0;
                 height: 8px;
