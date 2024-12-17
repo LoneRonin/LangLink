@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setDoc, doc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
-
+import './quiz.css';
 const JapaneseQuiz = () => {
     const [quizAvailable, setQuizAvailable] = useState(false);
     const [questions, setQuestions] = useState([]);
