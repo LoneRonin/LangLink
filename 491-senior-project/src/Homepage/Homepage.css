@@ -80,6 +80,7 @@ body {
   background-color: var(--background-color); /* Use variable for background */
   padding: 2rem;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Left Sidebar */
