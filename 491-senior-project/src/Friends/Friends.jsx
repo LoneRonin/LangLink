@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from "react-dom/client";
 import { Link } from 'react-router-dom';
-import { collection, query, where, doc, getDocs, getDoc, limit, deleteDoc, setDoc } from "firebase/firestore";
+import { collection, query, where, doc, getDocs, getDoc, limit, deleteDoc, setDoc, addDoc } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase';
 import './Friends.css';
@@ -67,6 +67,7 @@ const Friends = () => {
             const request = doc.data();
             requestsList.push({ ...request, id: doc.id });
         });
+        console.log(requestsList)
 
         if(requestsList.length <= 0){
             setNoRequests(true);
@@ -76,7 +77,7 @@ const Friends = () => {
     }
 
     //creates a "friend request" document in another users subcollection
-    const sendFriendRequest = async(recipientId) => {
+    const sendFriendRequest = async(recipient) => {
         try{
             if(!user){
                 console.error("User is not authenticated");
@@ -84,17 +85,20 @@ const Friends = () => {
             }
 
             //constrcuts document reference and a document to create
-            const reqRef = doc(db, "users", fid, "friendrequests", user.uid);
+            const reqRef = doc(db, "users", recipient.id, "friendrequests", user.uid);
             //uses setDoc to prevent duplicate requests from being made
             await setDoc(reqRef, {
                 firstName: userData.firstName,
                 lastName: userData.lastName,
+                email: userData.email,
                 timestamp: new Date(),
             });
             console.log("Friend request sent successfully!");
 
+            await deleteDoc(doc(db, "users", user.uid, "usersuggestions", recipient.id));
+
             // Now add a notification for the recipient about the new friend request
-            const notificationRef = collection(db, "users", recipientId, "notifications");
+            const notificationRef = collection(db, "users", recipient.id, "notifications");
             await addDoc(notificationRef, {
                 message: `${user.displayName} sent you a friend request.`,
                 timestamp: new Date(),
@@ -109,6 +113,7 @@ const Friends = () => {
 
     //moves a users details from the requests subcollection to the friends one
     const acceptFriendRequest = async(friend) => {
+        console.log(friend)
         try{
             if(user){
                 const friendRef = doc(db, "users", user.uid, "friendlist", friend.id);
@@ -157,7 +162,7 @@ const Friends = () => {
                 const userRef = doc(db, "users", id, "friendrequests", user.uid);
                 await deleteDoc(userRef);
                 //this is supposed to remove the element from the html
-                document.getElementById(elementID).style.display='none';
+                //document.getElementById(elementID).style.display='none';
             }
         }
         catch(err){console.log(err);}
@@ -444,7 +449,7 @@ const Friends = () => {
                     {loading2 && "Loading..."}
                     <ul className='list'>
                         {suggestions?.map((guy) => (
-                            <li className='listElement' key={guy.id} id={guy.id}>
+                            <li className='listElement' key={guy.id} id={guy.email}>
                                 <span>{guy.firstName} {guy.lastName} </span>
                                 <button className='friendbutton' id='addFriendButton' onClick={(event) => sendFriendRequest(guy)}>+</button>
                             </li>

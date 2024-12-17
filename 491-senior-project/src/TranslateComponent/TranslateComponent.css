@@ -35,7 +35,7 @@ select {
     margin-bottom: 20px; /* Space below the select */
 }
 
-button {
+.translate-button {
     width: 100%; /* Full width */
     padding: 10px; /* Padding for button */
     border: none; /* Remove default border */
