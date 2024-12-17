@@ -47,13 +47,13 @@ const ColorDialogue = () => {
       <Link to='/lessons' className="back-button"> 
           Back to Lessons
           </Link>
-        <Link to="/color" className="back-button"> 
+        <Link to="/color" className="numlesson-button"> 
           Do Flashcards
           </Link>
-        <Link to="/lesson/colormatching" className="back-button">          
+        <Link to="/lesson/colormatching" className="numlesson-button">          
         Do Color Matching
         </Link>
-        <Link to="/lesson/colortest" className="back-button">  
+        <Link to="/lesson/colortest" className="numlesson-button">  
           Take Test
           </Link>
       </div>

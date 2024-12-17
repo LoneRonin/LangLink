@@ -58,13 +58,13 @@ const Color = ({ language }) => {
         <button className="back-button" onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
-        <button className="back-button" onClick={() => navigate('/lesson/colormatching')}>
+        <button className="numlesson-button" onClick={() => navigate('/lesson/colormatching')}>
           Do Color Matching
         </button>
-        <button className="back-button" onClick={() => navigate('/lesson/colordialouge')}>
+        <button className="numlesson-button" onClick={() => navigate('/lesson/colordialouge')}>
           Learn Vocabulary
         </button>
-        <button className="back-button" onClick={() => navigate('/lesson/colortest')}>
+        <button className="numlesson-button" onClick={() => navigate('/lesson/colortest')}>
           Take Test
         </button>
       </div>

@@ -41,16 +41,16 @@ const NumberDialogue = () => {
       </table>
       {/* Button to navigate to Shopping List */}
       <div className="back-button-container">
-        <button className="back-button" onClick={() => navigate('/lessons')}>
+        <button className="back-button " onClick={() => navigate('/lessons')}>
           Back to Lessons
         </button>
-        <button className="back-button" onClick={() => navigate("/lesson/shoppinglist")}>
+        <button className="numlesson-button" onClick={() => navigate("/lesson/shoppinglist")}>
           Do Shopping Activity
         </button>
-        <button className="back-button" onClick={() => navigate("/number")}>
+        <button className="numlesson-button " onClick={() => navigate("/number")}>
           Do Flashcards
         </button>
-        <button className="back-button" onClick={() => navigate("/lesson/numbertest")}>
+        <button className="numlesson-button " onClick={() => navigate("/lesson/numbertest")}>
           Take Test
         </button>
       </div>
