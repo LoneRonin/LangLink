@@ -157,8 +157,6 @@ const App = () => {
       {showMenu && (
         <ul className="dropdown-menu">
           <li className="dropdown-item" onClick={handleSignOut}>Sign Out</li>
-          <li className="nav-item"><Link to="/dailyquiz">DailyQuiz</Link></li>
-          <li></li>
         
         </ul>
       )}

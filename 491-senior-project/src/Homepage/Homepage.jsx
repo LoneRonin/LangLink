@@ -106,10 +106,7 @@ const Homepage = ({ language }) => {
       {/* Left Sidebar for Daily Quiz and Lesson Themes */}
       <div className="left-sidebar">
         <button className="circle-button" onClick={() => handleRedirect('/dailyquiz')}>
-          Daily Quiz
-        </button>
-        <button className="circle-button" onClick={() => handleRedirect('/lesson-themes')}>
-          Lesson Themes
+        Daily Quiz
         </button>
       </div>
 
@@ -120,9 +117,6 @@ const Homepage = ({ language }) => {
         <button onClick={handleShowPopup}>Show Word of the Day</button>
         {showPopup && wordOfTheDay && <Popup word={word} definition={definition} audioSrc={audioSrc} onClose={handlePopupClose} />}
         <div className="button-container">
-          <button className="action-button" onClick={() => handleRedirect('/conjugate')}>
-            Learn Spanish Grammar
-          </button>
           <button className="action-button" onClick={() => handleRedirect('/alpha')}>
             Learn Alphabet
           </button>

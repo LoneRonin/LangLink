@@ -11,7 +11,7 @@ body {
     display: flex;
     justify-content: center;
     width: 400px;
-    background-color: #135115;
+    background-color: var(--background-color);
   }
   
   button {
