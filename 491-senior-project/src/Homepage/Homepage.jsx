@@ -106,7 +106,7 @@ const Homepage = ({ language }) => {
       {/* Left Sidebar for Daily Quiz and Lesson Themes */}
       <div className="left-sidebar">
         <button className="circle-button" onClick={() => handleRedirect('/dailyquiz')}>
-        Daily Quiz
+          Daily Quiz
         </button>
       </div>
 
@@ -133,6 +133,7 @@ const Homepage = ({ language }) => {
           <Friends /> {/* Use the Friends component to display friend suggestions }
         </div>
       </div>*/}
+      <div><Friends/></div>
     </section>
   );
 };
